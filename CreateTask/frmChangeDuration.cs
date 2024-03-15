@@ -16,6 +16,10 @@ namespace TimeTracker
         public DateTime endTime;
         public string duration;
 
+        private DateTime tmpStartTime;
+        private DateTime tmpEndTime;
+
+
         
         public frmChangeDuration()
         {
@@ -35,7 +39,11 @@ namespace TimeTracker
 
         private void txtStartTime_Leave(object sender, EventArgs e)
         {
-            startTime = Convert.ToDateTime(txtStartTime.Text);
+            if (DateTime.TryParse(txtStartTime.Text, out startTime) == false)
+            {
+                txtStartTime.Text = tmpStartTime.ToShortTimeString();
+                startTime = tmpStartTime;
+            }
             endTime = Convert.ToDateTime(txtEndTime.Text);
 
             lblDuration.Text = endTime.Subtract(startTime).ToString(@"hh\:mm");
@@ -45,9 +53,13 @@ namespace TimeTracker
 
         private void txtEndTime_Leave(object sender, EventArgs e)
         {
+            if (DateTime.TryParse(txtEndTime.Text, out endTime) == false)
+            {
+                txtEndTime.Text = tmpEndTime.ToShortTimeString();
+                endTime = tmpEndTime;
+            }
             startTime = Convert.ToDateTime(txtStartTime.Text);
-            endTime = Convert.ToDateTime(txtEndTime.Text);
-
+            
             lblDuration.Text = endTime.Subtract(startTime).ToString(@"hh\:mm");
             duration = lblDuration.Text;
 
@@ -56,6 +68,16 @@ namespace TimeTracker
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void txtStartTime_Enter(object sender, EventArgs e)
+        {
+            DateTime.TryParse(txtStartTime.Text, out tmpStartTime);
+        }
+
+        private void txtEndTime_Enter(object sender, EventArgs e)
+        {
+            DateTime.TryParse(txtEndTime.Text, out tmpEndTime);
         }
     }
 }

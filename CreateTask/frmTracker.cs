@@ -23,8 +23,10 @@ namespace TimeTracker
         private string itemTags;
         private string assignedTo;
         private bool isTimerRunning;
+        private bool isTimerPaused = false;
         private bool isSettingsOk = false;
         private string dataDirectory;
+        private 
 
         ADOHelper ado = new ADOHelper();
         ADOTask task = new ADOTask();
@@ -37,7 +39,7 @@ namespace TimeTracker
         private void frmTracker_Load(object sender, EventArgs e)
         {
             timer = new System.Timers.Timer();
-            timer.Interval = 10; // Set the timer interval to 1 second
+            timer.Interval = 1000; // Set the timer interval to 1 second
             timer.Elapsed += Timer_Elapsed; // Add the event handler for the timer
             elapsedTime = TimeSpan.Zero; // Set the elapsed time to zero
 
@@ -52,11 +54,13 @@ namespace TimeTracker
                 ado.Organization = Properties.Settings.Default.Organization;
                 ado.OrganizationUrl = Properties.Settings.Default.OrganizationUrl;
                 ado.PersonalAccessToken = Properties.Settings.Default.PersonalAccessToken;
-                ado.Project = Properties.Settings.Default.Project;
+                //ado.Project = Properties.Settings.Default.Project;
                 assignedTo = Properties.Settings.Default.User;
 
                 //load existing projects for the user
                 LoadProjects();
+
+                ado.Project = cmbProject.Text;
 
                 //SQLiteConnection conn = new SQLiteConnection(Properties.Settings.Default.ConnectionString);
 
@@ -78,7 +82,6 @@ namespace TimeTracker
             return !(String.IsNullOrWhiteSpace(Properties.Settings.Default.Organization) ||
                      String.IsNullOrWhiteSpace(Properties.Settings.Default.OrganizationUrl) ||
                      String.IsNullOrWhiteSpace(Properties.Settings.Default.PersonalAccessToken) ||
-                     String.IsNullOrWhiteSpace(Properties.Settings.Default.Project) ||
                      String.IsNullOrWhiteSpace(Properties.Settings.Default.User));
         }
         private void btnStart_Click(object sender, EventArgs e)
@@ -145,7 +148,14 @@ namespace TimeTracker
             }
 
             isTimerRunning = true;
-            lblStartTime.Text = DateTime.Now.ToString("HH\\:mm");
+            if (isTimerPaused)
+            {
+                isTimerPaused = false;
+            }
+            else
+            {
+                lblStartTime.Text = DateTime.Now.ToString("HH\\:mm");
+            }
             timer.Start(); // Start the timer
 
             btnStart.Enabled = false;
@@ -164,6 +174,7 @@ namespace TimeTracker
             }
 
             isTimerRunning = false;
+            isTimerPaused = true;
             timer.Stop(); // Stop the timer
 
             btnStart.Enabled = true;
@@ -184,6 +195,7 @@ namespace TimeTracker
             timer.Stop(); // Stop the timer
             elapsedTime = TimeSpan.Zero; // Reset the elapsed time
             isTimerRunning = false;
+            isTimerPaused = false;
 
             //add time entry to the list
             DataGridViewRow row = new DataGridViewRow();
@@ -222,6 +234,7 @@ namespace TimeTracker
                 row.Cells[dgEntries.Columns["colBoard"].Index].Value = cmbBoard.Text;
                 row.Cells[dgEntries.Columns["colAreaPath"].Index].Value = cmbArea.Text;
                 row.Cells[dgEntries.Columns["colItemType"].Index].Value = rbTask.Checked ? "Task" : "Bug";
+                row.Cells[dgEntries.Columns["colDescription"].Index].Value = txtDescription.Text;
                 row.Cells[dgEntries.Columns["colTags"].Index].Value = CreateTagList();
                 row.Cells[dgEntries.Columns["colCloseItem"].Index].Value = chkCloseItem.Checked;
                 row.Cells[dgEntries.Columns["colIteration"].Index].Value = cmbIteration.Text;
@@ -244,6 +257,9 @@ namespace TimeTracker
             btnPause.Enabled = false;
             btnStop.Enabled = false;
             btnCancel.Enabled = false;
+
+            txtTitle.Text = "";
+            txtDescription.Text = "";
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -252,6 +268,7 @@ namespace TimeTracker
             timer.Stop(); 
             elapsedTime = TimeSpan.Zero; 
             isTimerRunning = false;
+            isTimerPaused = false;
 
             btnStart.Enabled = true;
             btnStart.Text = "Start";
@@ -469,6 +486,7 @@ namespace TimeTracker
                         newItem.OriginalEstimate = CalculateHour(row.Cells["colDuration"].Value.ToString());
                         newItem.ParentUserStoryId = row.Cells["colParentId"].Value.ToString();
                         newItem.Tags = row.Cells["colTags"].Value.ToString();
+                        newItem.History = "Created by Time Tracker for ADO at " + DateTime.Now.ToString();
 
                         //create the ADO item
                         int itemId = ado.CreateAdoItem(newItem);
@@ -489,6 +507,7 @@ namespace TimeTracker
                         updateItem.TargetDate = dtTargetDate.Value;
                         updateItem.IterationPath = row.Cells["colIteration"].Value.ToString();
                         updateItem.OriginalEstimate = CalculateHour(row.Cells["colDuration"].Value.ToString());
+                        updateItem.History = row.Cells[dgEntries.Columns["colDescription"].Index].Value.ToString() + "<br>Updated by Time Tracker for ADO at " + DateTime.Now.ToString();
                         _ = ado.UpdateTaskAsync(updateItem);
 
                         //set status again
@@ -570,34 +589,37 @@ namespace TimeTracker
 
         private void rbCreateNew_CheckedChanged(object sender, EventArgs e)
         {
-            grpText.Enabled = true;
+            txtTitle.Enabled = true;
             grpMain.Enabled = true;
             grpNewItem.Enabled = true;
             grpExistingItem.Enabled = false;
 
             chkCloseItem.Checked = false;
             chkCloseItem.Enabled = true;
+            lblItemText.Text = "Description";
         }
         private void rbUpdateTask_CheckedChanged(object sender, EventArgs e)
         {
-            grpText.Enabled = false;
+            txtTitle.Enabled = false;
             grpMain.Enabled = true;
             grpNewItem.Enabled = false;
             grpExistingItem.Enabled = true;
 
             chkCloseItem.Checked = false;
             chkCloseItem.Enabled = true;
+            lblItemText.Text = "Discussion";
         }
 
         private void rbTimeEntry_CheckedChanged(object sender, EventArgs e)
         {
-            grpText.Enabled = true;
+            txtTitle.Enabled = true;
             grpMain.Enabled = false;
             grpNewItem.Enabled = false;
             grpExistingItem.Enabled = false;
 
             chkCloseItem.Checked = false;
-            chkCloseItem.Enabled = false;    
+            chkCloseItem.Enabled = false;
+            lblItemText.Text = "Description";
         }
         private async Task LoadTasksAsync(string areaPath, string itemType)
         {
@@ -794,7 +816,7 @@ namespace TimeTracker
                 ProcessListForAdo();
                 SaveGridToFile();
 
-                MessageBox.Show("List saved successfully!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("List sent to ADO for proccessing. You may wait a little!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (AggregateException ex)
             {
@@ -859,9 +881,9 @@ namespace TimeTracker
                 }
             }
 
-            statusStrip1.Items[1].Text = "Total time: " + totalDuration.ToString();
-            statusStrip1.Items[2].Text = "ADO: " + adoDuration.ToString();
-            statusStrip1.Items[3].Text = "Others: " + otherDuration.ToString();
+            statusStrip1.Items[1].Text = "ADO: " + adoDuration.ToString();
+            statusStrip1.Items[2].Text = "Others: " + otherDuration.ToString();
+            statusStrip1.Items[3].Text = "Total: " + totalDuration.ToString();
         }
 
         private void rbTask_CheckedChanged(object sender, EventArgs e)
@@ -1081,7 +1103,7 @@ namespace TimeTracker
         private List<String> LoadMyFavoriteBoards()
         {
             List<string> myBoards = new List<string>();
-            myBoards.Add("");
+            
 
             string fileName = dataDirectory + "\\boards.txt";
             if (File.Exists(fileName))
@@ -1096,6 +1118,12 @@ namespace TimeTracker
 
                 reader.Close();
             }
+            
+            if (myBoards.Count > 0)
+            {
+                myBoards.Insert(0, "");
+            }
+
             return myBoards;
         }
     }

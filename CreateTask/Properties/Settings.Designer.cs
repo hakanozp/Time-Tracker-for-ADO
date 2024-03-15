@@ -61,18 +61,6 @@ namespace TimeTracker.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string PersonalAccessToken {
-            get {
-                return ((string)(this["PersonalAccessToken"]));
-            }
-            set {
-                this["PersonalAccessToken"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Data Source=mydb.db;Version=3;")]
         public string ConnectionString {
             get {
@@ -92,6 +80,18 @@ namespace TimeTracker.Properties {
             }
             set {
                 this["User"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string PersonalAccessToken {
+            get {
+                return ((string)(this["PersonalAccessToken"]));
+            }
+            set {
+                this["PersonalAccessToken"] = value;
             }
         }
     }

@@ -56,6 +56,7 @@
             this.txtStartTime.Size = new System.Drawing.Size(63, 22);
             this.txtStartTime.TabIndex = 3;
             this.txtStartTime.ValidatingType = typeof(System.DateTime);
+            this.txtStartTime.Enter += new System.EventHandler(this.txtStartTime_Enter);
             this.txtStartTime.Leave += new System.EventHandler(this.txtStartTime_Leave);
             // 
             // txtEndTime
@@ -67,6 +68,7 @@
             this.txtEndTime.Size = new System.Drawing.Size(63, 22);
             this.txtEndTime.TabIndex = 4;
             this.txtEndTime.ValidatingType = typeof(System.DateTime);
+            this.txtEndTime.Enter += new System.EventHandler(this.txtEndTime_Enter);
             this.txtEndTime.Leave += new System.EventHandler(this.txtEndTime_Leave);
             // 
             // label1

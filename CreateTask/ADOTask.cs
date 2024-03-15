@@ -22,5 +22,6 @@ namespace TimeTracker
         public double OriginalEstimate { get; set; }
         public double TotalEstimate { get; set; }
         public string Tags { get; set; }
+        public string History { get; set; }
     }
 }

@@ -34,16 +34,23 @@
             this.btnDeleteRow = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.mnTimeTracket = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnSaveList = new System.Windows.Forms.ToolStripMenuItem();
             this.mnLoadData = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnTodoList = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnFavoriteBoards = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.mnSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.mnExit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.grpNewItem = new System.Windows.Forms.GroupBox();
+            this.btnRefreshStory = new System.Windows.Forms.Button();
             this.dtTargetDate = new System.Windows.Forms.DateTimePicker();
             this.label13 = new System.Windows.Forms.Label();
             this.dtStartDate = new System.Windows.Forms.DateTimePicker();
@@ -57,11 +64,13 @@
             this.label2 = new System.Windows.Forms.Label();
             this.cmbStory = new System.Windows.Forms.ComboBox();
             this.grpText = new System.Windows.Forms.GroupBox();
-            this.label5 = new System.Windows.Forms.Label();
+            this.btnGetFromTodoList = new System.Windows.Forms.Button();
+            this.lblItemText = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.txtDescription = new System.Windows.Forms.TextBox();
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.grpExistingItem = new System.Windows.Forms.GroupBox();
+            this.btnRefreshTaskBug = new System.Windows.Forms.Button();
             this.lblItemtype = new System.Windows.Forms.Label();
             this.cmbTask = new System.Windows.Forms.ComboBox();
             this.grpMain = new System.Windows.Forms.GroupBox();
@@ -86,8 +95,6 @@
             this.btnStart = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnTodoList = new System.Windows.Forms.ToolStripMenuItem();
             this.colCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colItemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -102,18 +109,11 @@
             this.colProject = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colAreaPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colIteration = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colClose = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colCloseItem = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colParentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCreateDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colOperationMode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSaved = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.mnFavoriteBoards = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnRefreshTaskBug = new System.Windows.Forms.Button();
-            this.btnRefreshStory = new System.Windows.Forms.Button();
-            this.btnGetFromTodoList = new System.Windows.Forms.Button();
-            this.mnSaveList = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.colStartDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTargetDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgEntries)).BeginInit();
@@ -144,7 +144,7 @@
             this.colProject,
             this.colAreaPath,
             this.colIteration,
-            this.colClose,
+            this.colCloseItem,
             this.colParentId,
             this.colCreateDate,
             this.colOperationMode,
@@ -184,9 +184,9 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1,
-            this.toolStripStatusLabel2,
             this.toolStripStatusLabel3,
-            this.toolStripStatusLabel4});
+            this.toolStripStatusLabel4,
+            this.toolStripStatusLabel2});
             this.statusStrip1.Location = new System.Drawing.Point(0, 688);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1104, 22);
@@ -197,18 +197,34 @@
             // 
             this.toolStripStatusLabel1.AutoSize = false;
             this.toolStripStatusLabel1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripStatusLabel1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.toolStripStatusLabel1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(90, 17);
             this.toolStripStatusLabel1.Text = "Date";
             this.toolStripStatusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
+            // toolStripStatusLabel3
+            // 
+            this.toolStripStatusLabel3.AutoSize = false;
+            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
+            this.toolStripStatusLabel3.Size = new System.Drawing.Size(100, 17);
+            this.toolStripStatusLabel3.Text = "ADO:";
+            this.toolStripStatusLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // toolStripStatusLabel4
+            // 
+            this.toolStripStatusLabel4.AutoSize = false;
+            this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
+            this.toolStripStatusLabel4.Size = new System.Drawing.Size(100, 17);
+            this.toolStripStatusLabel4.Text = "Others:";
+            this.toolStripStatusLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // toolStripStatusLabel2
             // 
             this.toolStripStatusLabel2.AutoSize = false;
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(130, 17);
-            this.toolStripStatusLabel2.Text = "Total time: ";
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(100, 17);
+            this.toolStripStatusLabel2.Text = "Total: ";
             this.toolStripStatusLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // menuStrip1
@@ -239,12 +255,39 @@
             this.mnTimeTracket.Size = new System.Drawing.Size(41, 23);
             this.mnTimeTracket.Text = "File";
             // 
+            // mnSaveList
+            // 
+            this.mnSaveList.Image = ((System.Drawing.Image)(resources.GetObject("mnSaveList.Image")));
+            this.mnSaveList.Name = "mnSaveList";
+            this.mnSaveList.Size = new System.Drawing.Size(203, 24);
+            this.mnSaveList.Text = "Save list";
+            this.mnSaveList.Click += new System.EventHandler(this.saveListToolStripMenuItem1_Click);
+            // 
             // mnLoadData
             // 
             this.mnLoadData.Name = "mnLoadData";
             this.mnLoadData.Size = new System.Drawing.Size(203, 24);
             this.mnLoadData.Text = "Load data";
             this.mnLoadData.Click += new System.EventHandler(this.mnLoadData_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(200, 6);
+            // 
+            // mnTodoList
+            // 
+            this.mnTodoList.Name = "mnTodoList";
+            this.mnTodoList.Size = new System.Drawing.Size(203, 24);
+            this.mnTodoList.Text = "My to-do List...";
+            this.mnTodoList.Click += new System.EventHandler(this.mnTodoList_Click);
+            // 
+            // mnFavoriteBoards
+            // 
+            this.mnFavoriteBoards.Name = "mnFavoriteBoards";
+            this.mnFavoriteBoards.Size = new System.Drawing.Size(203, 24);
+            this.mnFavoriteBoards.Text = "My favorite boards...";
+            this.mnFavoriteBoards.Click += new System.EventHandler(this.mnFavoriteBoards_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -297,6 +340,17 @@
             this.grpNewItem.Size = new System.Drawing.Size(476, 168);
             this.grpNewItem.TabIndex = 37;
             this.grpNewItem.TabStop = false;
+            // 
+            // btnRefreshStory
+            // 
+            this.btnRefreshStory.BackgroundImage = global::TimeTracker.Properties.Resources.refresh;
+            this.btnRefreshStory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnRefreshStory.Location = new System.Drawing.Point(441, 47);
+            this.btnRefreshStory.Name = "btnRefreshStory";
+            this.btnRefreshStory.Size = new System.Drawing.Size(23, 23);
+            this.btnRefreshStory.TabIndex = 71;
+            this.btnRefreshStory.UseVisualStyleBackColor = true;
+            this.btnRefreshStory.Click += new System.EventHandler(this.btnRefreshStory_Click);
             // 
             // dtTargetDate
             // 
@@ -438,7 +492,7 @@
             // grpText
             // 
             this.grpText.Controls.Add(this.btnGetFromTodoList);
-            this.grpText.Controls.Add(this.label5);
+            this.grpText.Controls.Add(this.lblItemText);
             this.grpText.Controls.Add(this.label4);
             this.grpText.Controls.Add(this.txtDescription);
             this.grpText.Controls.Add(this.txtTitle);
@@ -448,15 +502,27 @@
             this.grpText.TabIndex = 38;
             this.grpText.TabStop = false;
             // 
-            // label5
+            // btnGetFromTodoList
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(19, 52);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(71, 13);
-            this.label5.TabIndex = 25;
-            this.label5.Text = "Description";
+            this.btnGetFromTodoList.BackgroundImage = global::TimeTracker.Properties.Resources.to_do_list;
+            this.btnGetFromTodoList.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnGetFromTodoList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnGetFromTodoList.Location = new System.Drawing.Point(528, 17);
+            this.btnGetFromTodoList.Name = "btnGetFromTodoList";
+            this.btnGetFromTodoList.Size = new System.Drawing.Size(22, 22);
+            this.btnGetFromTodoList.TabIndex = 73;
+            this.btnGetFromTodoList.UseVisualStyleBackColor = true;
+            this.btnGetFromTodoList.Click += new System.EventHandler(this.btnGetFromTodoList_Click);
+            // 
+            // lblItemText
+            // 
+            this.lblItemText.AutoSize = true;
+            this.lblItemText.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblItemText.Location = new System.Drawing.Point(19, 52);
+            this.lblItemText.Name = "lblItemText";
+            this.lblItemText.Size = new System.Drawing.Size(71, 13);
+            this.lblItemText.TabIndex = 25;
+            this.lblItemText.Text = "Description";
             // 
             // label4
             // 
@@ -494,6 +560,17 @@
             this.grpExistingItem.Size = new System.Drawing.Size(476, 50);
             this.grpExistingItem.TabIndex = 43;
             this.grpExistingItem.TabStop = false;
+            // 
+            // btnRefreshTaskBug
+            // 
+            this.btnRefreshTaskBug.BackgroundImage = global::TimeTracker.Properties.Resources.refresh;
+            this.btnRefreshTaskBug.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnRefreshTaskBug.Location = new System.Drawing.Point(441, 18);
+            this.btnRefreshTaskBug.Name = "btnRefreshTaskBug";
+            this.btnRefreshTaskBug.Size = new System.Drawing.Size(23, 23);
+            this.btnRefreshTaskBug.TabIndex = 72;
+            this.btnRefreshTaskBug.UseVisualStyleBackColor = true;
+            this.btnRefreshTaskBug.Click += new System.EventHandler(this.btnRefreshTaskBug_Click);
             // 
             // lblItemtype
             // 
@@ -770,18 +847,6 @@
             this.openFileDialog1.Title = "Select a data file";
             this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
             // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(200, 6);
-            // 
-            // mnTodoList
-            // 
-            this.mnTodoList.Name = "mnTodoList";
-            this.mnTodoList.Size = new System.Drawing.Size(203, 24);
-            this.mnTodoList.Text = "My to-do List...";
-            this.mnTodoList.Click += new System.EventHandler(this.mnTodoList_Click);
-            // 
             // colCategory
             // 
             this.colCategory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -866,10 +931,10 @@
             // colDescription
             // 
             this.colDescription.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colDescription.HeaderText = "Description";
+            this.colDescription.HeaderText = "Description/Discussion";
             this.colDescription.Name = "colDescription";
             this.colDescription.ReadOnly = true;
-            this.colDescription.Width = 85;
+            this.colDescription.Width = 141;
             // 
             // colProject
             // 
@@ -895,13 +960,13 @@
             this.colIteration.ReadOnly = true;
             this.colIteration.Width = 70;
             // 
-            // colClose
+            // colCloseItem
             // 
-            this.colClose.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colClose.HeaderText = "Close Item";
-            this.colClose.Name = "colClose";
-            this.colClose.ReadOnly = true;
-            this.colClose.Width = 62;
+            this.colCloseItem.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colCloseItem.HeaderText = "Close Item";
+            this.colCloseItem.Name = "colCloseItem";
+            this.colCloseItem.ReadOnly = true;
+            this.colCloseItem.Width = 62;
             // 
             // colParentId
             // 
@@ -933,71 +998,6 @@
             this.colSaved.Name = "colSaved";
             this.colSaved.ReadOnly = true;
             this.colSaved.Width = 70;
-            // 
-            // mnFavoriteBoards
-            // 
-            this.mnFavoriteBoards.Name = "mnFavoriteBoards";
-            this.mnFavoriteBoards.Size = new System.Drawing.Size(203, 24);
-            this.mnFavoriteBoards.Text = "My favorite boards...";
-            this.mnFavoriteBoards.Click += new System.EventHandler(this.mnFavoriteBoards_Click);
-            // 
-            // btnRefreshTaskBug
-            // 
-            this.btnRefreshTaskBug.BackgroundImage = global::TimeTracker.Properties.Resources.refresh;
-            this.btnRefreshTaskBug.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnRefreshTaskBug.Location = new System.Drawing.Point(441, 18);
-            this.btnRefreshTaskBug.Name = "btnRefreshTaskBug";
-            this.btnRefreshTaskBug.Size = new System.Drawing.Size(23, 23);
-            this.btnRefreshTaskBug.TabIndex = 72;
-            this.btnRefreshTaskBug.UseVisualStyleBackColor = true;
-            this.btnRefreshTaskBug.Click += new System.EventHandler(this.btnRefreshTaskBug_Click);
-            // 
-            // btnRefreshStory
-            // 
-            this.btnRefreshStory.BackgroundImage = global::TimeTracker.Properties.Resources.refresh;
-            this.btnRefreshStory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnRefreshStory.Location = new System.Drawing.Point(441, 47);
-            this.btnRefreshStory.Name = "btnRefreshStory";
-            this.btnRefreshStory.Size = new System.Drawing.Size(23, 23);
-            this.btnRefreshStory.TabIndex = 71;
-            this.btnRefreshStory.UseVisualStyleBackColor = true;
-            this.btnRefreshStory.Click += new System.EventHandler(this.btnRefreshStory_Click);
-            // 
-            // btnGetFromTodoList
-            // 
-            this.btnGetFromTodoList.BackgroundImage = global::TimeTracker.Properties.Resources.to_do_list;
-            this.btnGetFromTodoList.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnGetFromTodoList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGetFromTodoList.Location = new System.Drawing.Point(528, 17);
-            this.btnGetFromTodoList.Name = "btnGetFromTodoList";
-            this.btnGetFromTodoList.Size = new System.Drawing.Size(22, 22);
-            this.btnGetFromTodoList.TabIndex = 73;
-            this.btnGetFromTodoList.UseVisualStyleBackColor = true;
-            this.btnGetFromTodoList.Click += new System.EventHandler(this.btnGetFromTodoList_Click);
-            // 
-            // mnSaveList
-            // 
-            this.mnSaveList.Image = ((System.Drawing.Image)(resources.GetObject("mnSaveList.Image")));
-            this.mnSaveList.Name = "mnSaveList";
-            this.mnSaveList.Size = new System.Drawing.Size(203, 24);
-            this.mnSaveList.Text = "Save list";
-            this.mnSaveList.Click += new System.EventHandler(this.saveListToolStripMenuItem1_Click);
-            // 
-            // toolStripStatusLabel3
-            // 
-            this.toolStripStatusLabel3.AutoSize = false;
-            this.toolStripStatusLabel3.Name = "toolStripStatusLabel3";
-            this.toolStripStatusLabel3.Size = new System.Drawing.Size(100, 17);
-            this.toolStripStatusLabel3.Text = "ADO:";
-            this.toolStripStatusLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // toolStripStatusLabel4
-            // 
-            this.toolStripStatusLabel4.AutoSize = false;
-            this.toolStripStatusLabel4.Name = "toolStripStatusLabel4";
-            this.toolStripStatusLabel4.Size = new System.Drawing.Size(100, 17);
-            this.toolStripStatusLabel4.Text = "Others:";
-            this.toolStripStatusLabel4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // colStartDate
             // 
@@ -1087,7 +1087,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cmbStory;
         private System.Windows.Forms.GroupBox grpText;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lblItemText;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.TextBox txtTitle;
@@ -1130,6 +1130,10 @@
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem mnTodoList;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.Button btnGetFromTodoList;
+        private System.Windows.Forms.ToolStripMenuItem mnFavoriteBoards;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCategory;
         private System.Windows.Forms.DataGridViewTextBoxColumn colItemId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colItemType;
@@ -1144,15 +1148,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colProject;
         private System.Windows.Forms.DataGridViewTextBoxColumn colAreaPath;
         private System.Windows.Forms.DataGridViewTextBoxColumn colIteration;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn colClose;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colCloseItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn colParentId;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCreateDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn colOperationMode;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colSaved;
-        private System.Windows.Forms.Button btnGetFromTodoList;
-        private System.Windows.Forms.ToolStripMenuItem mnFavoriteBoards;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
         private System.Windows.Forms.DataGridViewTextBoxColumn colStartDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTargetDate;
     }

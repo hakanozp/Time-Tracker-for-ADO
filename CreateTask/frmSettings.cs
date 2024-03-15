@@ -30,6 +30,8 @@ namespace TimeTracker
             Properties.Settings.Default.User = txtUser.Text;
 
             Properties.Settings.Default.Save();
+
+            MessageBox.Show("Setting saved successfully. Please restart application!");
         }
 
     }

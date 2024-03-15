@@ -394,6 +394,14 @@ namespace TimeTracker
 
                 patchDocument.Add(new JsonPatchOperation()
                 {
+                    Operation = Operation.Add,
+                    Path = "/fields/System.History",
+                    Value = updateEntry.History
+                }
+                  );
+
+                patchDocument.Add(new JsonPatchOperation()
+                {
                     Operation = Operation.Replace,
                     Path = "/fields/Microsoft.VSTS.Scheduling.TargetDate",
                     Value = updateEntry.TargetDate.ToString("yyyy-MM-ddTHH:mm:ssZ")
@@ -404,6 +412,8 @@ namespace TimeTracker
                 WorkItemTrackingHttpClient workItemTrackingHttpClient = connection.GetClient<WorkItemTrackingHttpClient>();
 
                 WorkItem result = workItemTrackingHttpClient.UpdateWorkItemAsync(patchDocument, updateEntry.Id).Result;
+
+               
             }
 
         }

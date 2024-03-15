@@ -11,13 +11,13 @@
     <Setting Name="OrganizationUrl" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="PersonalAccessToken" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="ConnectionString" Type="System.String" Scope="User">
       <Value Profile="(Default)">Data Source=mydb.db;Version=3;</Value>
     </Setting>
     <Setting Name="User" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="PersonalAccessToken" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
   </Settings>
