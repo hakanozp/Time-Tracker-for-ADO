@@ -18,8 +18,6 @@ namespace TimeTracker
 
         private DateTime tmpStartTime;
         private DateTime tmpEndTime;
-
-
         
         public frmChangeDuration()
         {
@@ -29,40 +27,49 @@ namespace TimeTracker
         private void frmChangeDuration_Load(object sender, EventArgs e)
         {
 
-            txtStartTime.Text = startTime.ToShortTimeString();
-            txtEndTime.Text = endTime.ToShortTimeString();
+            txtStartTime.Text = startTime.ToString("HH\\:mm");
+            txtEndTime.Text = endTime.ToString("HH\\:mm");
 
             TimeSpan duration = endTime.Subtract(startTime);
-            lblDuration.Text = duration.ToString(@"hh\:mm"); 
-
+            lblDuration.Text = duration.ToString("hh\\:mm"); 
         }
 
         private void txtStartTime_Leave(object sender, EventArgs e)
         {
             if (DateTime.TryParse(txtStartTime.Text, out startTime) == false)
             {
-                txtStartTime.Text = tmpStartTime.ToShortTimeString();
+                txtStartTime.Text = tmpStartTime.ToString("HH\\:mm");
                 startTime = tmpStartTime;
             }
             endTime = Convert.ToDateTime(txtEndTime.Text);
 
-            lblDuration.Text = endTime.Subtract(startTime).ToString(@"hh\:mm");
-            duration = lblDuration.Text;
+            if (startTime > endTime)
+            {
+                txtStartTime.Text = tmpStartTime.ToString("HH\\:mm");
+                startTime = tmpStartTime;
+            }
 
+            lblDuration.Text = endTime.Subtract(startTime).ToString("hh\\:mm");
+            duration = lblDuration.Text;
         }
 
         private void txtEndTime_Leave(object sender, EventArgs e)
         {
             if (DateTime.TryParse(txtEndTime.Text, out endTime) == false)
             {
-                txtEndTime.Text = tmpEndTime.ToShortTimeString();
+                txtEndTime.Text = tmpEndTime.ToString("HH\\:mm");
                 endTime = tmpEndTime;
             }
             startTime = Convert.ToDateTime(txtStartTime.Text);
-            
-            lblDuration.Text = endTime.Subtract(startTime).ToString(@"hh\:mm");
-            duration = lblDuration.Text;
 
+            if (startTime > endTime)
+            {
+                txtEndTime.Text = tmpEndTime.ToString("HH\\:mm");
+                endTime = tmpEndTime;
+            }
+
+            lblDuration.Text = endTime.Subtract(startTime).ToString("hh\\:mm");
+            duration = lblDuration.Text;
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)

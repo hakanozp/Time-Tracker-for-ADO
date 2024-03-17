@@ -46,6 +46,11 @@ namespace TimeTracker
             statusStrip1.Items[0].Text = DateTime.Now.ToString("dd\\-MM\\-yyyy");
 
             dataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\TimeTrackerData";
+            //create data directory if not exists.
+            if (!Directory.Exists(dataDirectory))
+            {
+                Directory.CreateDirectory(dataDirectory);
+            }
 
             isSettingsOk = CheckSettings();
             if (isSettingsOk)
@@ -64,12 +69,6 @@ namespace TimeTracker
 
                 //SQLiteConnection conn = new SQLiteConnection(Properties.Settings.Default.ConnectionString);
 
-                //create data directory if not exists.
-                if (!Directory.Exists(dataDirectory))
-                {
-                    Directory.CreateDirectory(dataDirectory);
-
-                }
 
                 //load today' s data
                 string fileName = dataDirectory + "\\Entry " + DateTime.Now.ToString("yyyy\\-MM\\-dd") + ".hkn";
@@ -204,7 +203,7 @@ namespace TimeTracker
             row.Cells[dgEntries.Columns["colCategory"].Index].Value = cmbCategory.Text;
             row.Cells[dgEntries.Columns["colStartTime"].Index].Value = lblStartTime.Text;
             row.Cells[dgEntries.Columns["colEndTime"].Index].Value = DateTime.Now.ToString("HH\\:mm"); ;
-            row.Cells[dgEntries.Columns["colDuration"].Index].Value = Convert.ToDateTime(lblDuration.Text).ToShortTimeString();
+            row.Cells[dgEntries.Columns["colDuration"].Index].Value = Convert.ToDateTime(lblDuration.Text).ToString("HH\\:mm");
             row.Cells[dgEntries.Columns["colCreateDate"].Index].Value = DateTime.Now.ToString("dd\\-MM\\-yyyy");
 
             if (rbCreateNew.Checked)
@@ -222,8 +221,8 @@ namespace TimeTracker
                 row.Cells[dgEntries.Columns["colTags"].Index].Value = CreateTagList();
                 row.Cells[dgEntries.Columns["colCloseItem"].Index].Value = chkCloseItem.Checked;
                 row.Cells[dgEntries.Columns["colOperationMode"].Index].Value = "Create";
-                row.Cells[dgEntries.Columns["colStartDate"].Index].Value = dtStartDate.Value.ToShortDateString();
-                row.Cells[dgEntries.Columns["colTargetDate"].Index].Value = dtTargetDate.Value.ToShortDateString();
+                row.Cells[dgEntries.Columns["colStartDate"].Index].Value = dtStartDate.Value.ToString("HH\\:mm");
+                row.Cells[dgEntries.Columns["colTargetDate"].Index].Value = dtTargetDate.Value.ToString("HH\\:mm");
             }
             else if (rbUpdateTask.Checked)
             {
@@ -288,7 +287,7 @@ namespace TimeTracker
         private void UpdateLabel()
         {
             lblDuration.Text = elapsedTime.ToString(@"hh\:mm\:ss"); // Format the elapsed time as hh:mm:ss
-            //this.Text = "Time Tracker / " + elapsedTime.ToString(@"hh\:mm");
+            //this.Text = "Time Tracker / " + elapsedTime.ToString(@"HH\:mm");
         }
 
         private void cmbBoard_SelectedIndexChanged(object sender, EventArgs e)
@@ -936,8 +935,8 @@ namespace TimeTracker
 
             row.Cells[dgEntries.Columns["colCategory"].Index].Value = cmbCategory.Text;
             row.Cells[dgEntries.Columns["colStartTime"].Index].Value = lblStartTime.Text;
-            row.Cells[dgEntries.Columns["colEndTime"].Index].Value = DateTime.Now.ToString("HH\\:mm"); ;
-            row.Cells[dgEntries.Columns["colDuration"].Index].Value = Convert.ToDateTime(lblDuration.Text).ToShortTimeString();
+            row.Cells[dgEntries.Columns["colEndTime"].Index].Value = DateTime.Now.ToString("HH\\:mm");
+            row.Cells[dgEntries.Columns["colDuration"].Index].Value = Convert.ToDateTime(lblDuration.Text).ToString("HH\\:mm");
             row.Cells[dgEntries.Columns["colCreateDate"].Index].Value = DateTime.Now.ToString("dd\\-MM\\-yyyy");
 
             if (rbCreateNew.Checked)
@@ -1029,8 +1028,8 @@ namespace TimeTracker
             f2.endTime = Convert.ToDateTime(row.Cells[dgEntries.Columns["colEndtime"].Index].Value.ToString());
             f2.ShowDialog();
 
-            row.Cells[dgEntries.Columns["colStartTime"].Index].Value = f2.startTime.ToShortTimeString();
-            row.Cells[dgEntries.Columns["colEndtime"].Index].Value = f2.endTime.ToShortTimeString();
+            row.Cells[dgEntries.Columns["colStartTime"].Index].Value = f2.startTime.ToString("HH\\:mm");
+            row.Cells[dgEntries.Columns["colEndtime"].Index].Value = f2.endTime.ToString("HH\\:mm");
             row.Cells[dgEntries.Columns["colDuration"].Index].Value = f2.duration;
             row.SetValues();
 

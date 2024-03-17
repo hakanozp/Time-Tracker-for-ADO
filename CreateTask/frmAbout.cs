@@ -16,5 +16,10 @@ namespace TimeTracker
         {
             InitializeComponent();
         }
+
+        private void frmAbout_Load(object sender, EventArgs e)
+        {
+            lblVersion.Text = Application.ProductVersion;
+        }
     }
 }
