@@ -1255,6 +1255,7 @@ namespace TimeTracker
 			//populate combobox using list
 			cmbBoard.DataSource = myFavoriteBoardList.ToList();
 			cmbBoard.DisplayMember = "Value";
+            //
 		}
 	}
 }
