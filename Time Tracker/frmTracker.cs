@@ -10,6 +10,7 @@ using System.IO;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Threading;
 using Microsoft.Win32;
+using System.Collections;
 
 namespace TimeTracker
 {
@@ -67,19 +68,10 @@ namespace TimeTracker
                                 String.IsNullOrWhiteSpace(ado.PersonalAccessToken) ||
                                 String.IsNullOrWhiteSpace(assignedTo));
             }
-            //else
-            //{
-            //    //set the parameters for ado
-            //    ado.organization = properties.settings.default.organization;
-            //    ado.organizationurl = properties.settings.default.organizationurl;
-            //    ado.personalaccesstoken = properties.settings.default.personalaccesstoken;
-            //    assignedto = properties.settings.default.user;
-            //}
 
             //load existing projects for the user
             if (isSettingsOk)
             {
-
                 try
                 {
                     LoadProjects();
@@ -90,8 +82,7 @@ namespace TimeTracker
                         MessageBox.Show("Error in loading projects!/n" + exc.InnerException.Message);
                     else
                         MessageBox.Show("Error in loading projects!/n" + exc.Message);
-                }
-                
+                }                
 
                 ado.Project = cmbProject.Text;
 
@@ -527,14 +518,17 @@ namespace TimeTracker
                         newItem.TargetDate = dt;                        
                         
                         newItem.OriginalEstimate = CalculateHour(row.Cells["colOriginalEstimate"].Value.ToString());
-
                         newItem.CompletedWork = CalculateHour(row.Cells["colDuration"].Value.ToString());
                         newItem.ParentUserStoryId = row.Cells["colParentId"].Value.ToString();
                         newItem.Tags = row.Cells["colTags"].Value.ToString();
-                        newItem.History = "Created by Time Tracker for ADO at " + DateTime.Now.ToString();                        
+                        newItem.History = "Created by Time Tracker for ADO at " + DateTime.Now.ToString();
+						newItem.UpdateOriginalEstimate = Convert.ToBoolean(row.Cells["colUpdateOrgEst"].Value.ToString());
+
+                        if (newItem.UpdateOriginalEstimate == true)
+                            newItem.OriginalEstimate = newItem.CompletedWork;
 
                         //create the ADO item
-                        int itemId = ado.CreateAdoItem(newItem);
+						int itemId = ado.CreateAdoItem(newItem);
 
                         //set item status again
                         bool closeItem = Convert.ToBoolean(row.Cells["colCloseItem"].Value.ToString());
@@ -556,7 +550,7 @@ namespace TimeTracker
                         updateItem.IterationPath = row.Cells["colIteration"].Value.ToString();
                         updateItem.CompletedWork = CalculateHour(row.Cells["colDuration"].Value.ToString());
                         updateItem.History = row.Cells[dgEntries.Columns["colDescription"].Index].Value.ToString() + "<br>Updated by Time Tracker for ADO at " + DateTime.Now.ToString();
-                        updateItem.UpdateOriginalEstimate = Convert.ToBoolean(row.Cells["colCloseItem"].Value.ToString());
+                        updateItem.UpdateOriginalEstimate = Convert.ToBoolean(row.Cells["colUpdateOrgEst"].Value.ToString());
                         
                         _ = ado.UpdateTaskAsync(updateItem);
 
@@ -1193,13 +1187,14 @@ namespace TimeTracker
             
             if (myBoards.Count > 0)
             {
-                myBoards.Insert(0, "");
+				myBoards.Sort();
+				myBoards.Insert(0, "");
             }
-
+			
             return myBoards;
-        }
+		}
 
-        private void txtStartTime_Leave(object sender, EventArgs e)
+		private void txtStartTime_Leave(object sender, EventArgs e)
         {
             DateTime startTime;
 
@@ -1250,5 +1245,16 @@ namespace TimeTracker
         {
             txtOriginalEstimate.Text = txtOriginalEstimate.Text.Replace('_', '0');
         }
-    }
+
+		private void btnRefreshBoard_Click(object sender, EventArgs e)
+		{
+			List<String> myFavoriteBoardList;
+			
+			myFavoriteBoardList = LoadMyFavoriteBoards();
+
+			//populate combobox using list
+			cmbBoard.DataSource = myFavoriteBoardList.ToList();
+			cmbBoard.DisplayMember = "Value";
+		}
+	}
 }
