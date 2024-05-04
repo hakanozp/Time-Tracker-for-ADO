@@ -100,6 +100,7 @@
 			this.lblItemtype = new System.Windows.Forms.Label();
 			this.cmbTask = new System.Windows.Forms.ComboBox();
 			this.grpMain = new System.Windows.Forms.GroupBox();
+			this.btnRefreshBoard = new System.Windows.Forms.Button();
 			this.btnOpenBoardLink = new System.Windows.Forms.Button();
 			this.label9 = new System.Windows.Forms.Label();
 			this.cmbIteration = new System.Windows.Forms.ComboBox();
@@ -126,7 +127,7 @@
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.txtStartTime = new System.Windows.Forms.MaskedTextBox();
 			this.chkUpdateOriginal = new System.Windows.Forms.CheckBox();
-			this.btnRefreshBoard = new System.Windows.Forms.Button();
+			this.mnStartNewDay = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.dgEntries)).BeginInit();
 			this.statusStrip1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -441,6 +442,7 @@
 			this.mnTimeTracket.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnSaveList,
             this.mnLoadData,
+            this.mnStartNewDay,
             this.toolStripSeparator1,
             this.mnTodoList,
             this.mnFavoriteBoards,
@@ -449,7 +451,7 @@
             this.toolStripMenuItem2,
             this.mnExit});
 			this.mnTimeTracket.Font = new System.Drawing.Font("Segoe UI", 10F);
-			this.mnTimeTracket.Name = "mnTimeTracket";
+			this.mnTimeTracket.Name = "mnTimeTracker";
 			this.mnTimeTracket.Size = new System.Drawing.Size(41, 23);
 			this.mnTimeTracket.Text = "File";
 			// 
@@ -838,6 +840,17 @@
 			this.grpMain.TabIndex = 50;
 			this.grpMain.TabStop = false;
 			// 
+			// btnRefreshBoard
+			// 
+			this.btnRefreshBoard.BackgroundImage = global::TimeTracker.Properties.Resources.refresh;
+			this.btnRefreshBoard.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+			this.btnRefreshBoard.Location = new System.Drawing.Point(375, 44);
+			this.btnRefreshBoard.Name = "btnRefreshBoard";
+			this.btnRefreshBoard.Size = new System.Drawing.Size(23, 23);
+			this.btnRefreshBoard.TabIndex = 73;
+			this.btnRefreshBoard.UseVisualStyleBackColor = true;
+			this.btnRefreshBoard.Click += new System.EventHandler(this.btnRefreshBoard_Click);
+			// 
 			// btnOpenBoardLink
 			// 
 			this.btnOpenBoardLink.BackgroundImage = global::TimeTracker.Properties.Resources.Azure_DevOps;
@@ -1133,16 +1146,12 @@
 			this.chkUpdateOriginal.Text = "Update original estimate when closed";
 			this.chkUpdateOriginal.UseVisualStyleBackColor = true;
 			// 
-			// btnRefreshBoard
+			// mnStartNewDay
 			// 
-			this.btnRefreshBoard.BackgroundImage = global::TimeTracker.Properties.Resources.refresh;
-			this.btnRefreshBoard.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.btnRefreshBoard.Location = new System.Drawing.Point(375, 44);
-			this.btnRefreshBoard.Name = "btnRefreshBoard";
-			this.btnRefreshBoard.Size = new System.Drawing.Size(23, 23);
-			this.btnRefreshBoard.TabIndex = 73;
-			this.btnRefreshBoard.UseVisualStyleBackColor = true;
-			this.btnRefreshBoard.Click += new System.EventHandler(this.btnRefreshBoard_Click);
+			this.mnStartNewDay.Name = "mnStartNewDay";
+			this.mnStartNewDay.Size = new System.Drawing.Size(203, 24);
+			this.mnStartNewDay.Text = "Start New Day";
+			this.mnStartNewDay.Click += new System.EventHandler(this.mnStartNewDay_Click);
 			// 
 			// frmTracker
 			// 
@@ -1298,6 +1307,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colOriginalEstimate;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colUpdateOrgEst;
 		private System.Windows.Forms.Button btnRefreshBoard;
+		private System.Windows.Forms.ToolStripMenuItem mnStartNewDay;
 	}
 }
 

@@ -558,7 +558,6 @@ namespace TimeTracker
                         if (closeItem == true)
                             ado.SetItemState(updateItem.Id, "Closed");
 
-
                         break;
                     
                     default:
@@ -1232,7 +1231,6 @@ namespace TimeTracker
 
             string link = String.Format("{0}/{1}/_workitems/edit//{2}", ado.OrganizationUrl, cmbProject.Text, cmbTask.Text.Split('-')[0].Trim());
             System.Diagnostics.Process.Start(link);
-
         }
 
         private void chkCloseItem_CheckedChanged(object sender, EventArgs e)
@@ -1256,6 +1254,22 @@ namespace TimeTracker
 			cmbBoard.DataSource = myFavoriteBoardList.ToList();
 			cmbBoard.DisplayMember = "Value";
             //
+		}
+
+		private void mnStartNewDay_Click(object sender, EventArgs e)
+		{
+			if (isTimerRunning)
+			{
+				MessageBox.Show("Timer is running. Stop timer first!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+			
+            string todaysDate = DateTime.Now.ToString("dd\\-MM\\-yyyy");
+            if ((todaysDate != statusStrip1.Items[0].Text) || (todaysDate == statusStrip1.Items[0].Text && MessageBox.Show("Your time entries will be deleted, are you sure?", "", MessageBoxButtons.YesNo) == DialogResult.Yes))
+            {
+                statusStrip1.Items[0].Text = todaysDate;
+                dgEntries.RowCount = 0;
+			}
 		}
 	}
 }
