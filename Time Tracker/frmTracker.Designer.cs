@@ -65,6 +65,7 @@
 			this.mnTimeTracket = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnSaveList = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnLoadData = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnStartNewDay = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.mnTodoList = new System.Windows.Forms.ToolStripMenuItem();
 			this.mnFavoriteBoards = new System.Windows.Forms.ToolStripMenuItem();
@@ -127,7 +128,7 @@
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.txtStartTime = new System.Windows.Forms.MaskedTextBox();
 			this.chkUpdateOriginal = new System.Windows.Forms.CheckBox();
-			this.mnStartNewDay = new System.Windows.Forms.ToolStripMenuItem();
+			this.cmbTag4 = new System.Windows.Forms.ComboBox();
 			((System.ComponentModel.ISupportInitialize)(this.dgEntries)).BeginInit();
 			this.statusStrip1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -451,7 +452,7 @@
             this.toolStripMenuItem2,
             this.mnExit});
 			this.mnTimeTracket.Font = new System.Drawing.Font("Segoe UI", 10F);
-			this.mnTimeTracket.Name = "mnTimeTracker";
+			this.mnTimeTracket.Name = "mnTimeTracket";
 			this.mnTimeTracket.Size = new System.Drawing.Size(41, 23);
 			this.mnTimeTracket.Text = "File";
 			// 
@@ -469,6 +470,13 @@
 			this.mnLoadData.Size = new System.Drawing.Size(203, 24);
 			this.mnLoadData.Text = "Load data";
 			this.mnLoadData.Click += new System.EventHandler(this.mnLoadData_Click);
+			// 
+			// mnStartNewDay
+			// 
+			this.mnStartNewDay.Name = "mnStartNewDay";
+			this.mnStartNewDay.Size = new System.Drawing.Size(203, 24);
+			this.mnStartNewDay.Text = "Start New Day";
+			this.mnStartNewDay.Click += new System.EventHandler(this.mnStartNewDay_Click);
 			// 
 			// toolStripSeparator1
 			// 
@@ -522,6 +530,7 @@
 			// 
 			// grpNewItem
 			// 
+			this.grpNewItem.Controls.Add(this.cmbTag4);
 			this.grpNewItem.Controls.Add(this.label5);
 			this.grpNewItem.Controls.Add(this.txtOriginalEstimate);
 			this.grpNewItem.Controls.Add(this.btnOpenStoryLink);
@@ -639,13 +648,7 @@
 			// 
 			this.cmbTag3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cmbTag3.FormattingEnabled = true;
-			this.cmbTag3.Items.AddRange(new object[] {
-            "Dev",
-            "Reqs",
-            "Test",
-            "Support",
-            "Data Refresh"});
-			this.cmbTag3.Location = new System.Drawing.Point(267, 44);
+			this.cmbTag3.Location = new System.Drawing.Point(266, 44);
 			this.cmbTag3.Name = "cmbTag3";
 			this.cmbTag3.Size = new System.Drawing.Size(80, 21);
 			this.cmbTag3.TabIndex = 65;
@@ -654,18 +657,7 @@
 			// 
 			this.cmbTag2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cmbTag2.FormattingEnabled = true;
-			this.cmbTag2.Items.AddRange(new object[] {
-            "MVP0",
-            "MVP1",
-            "MVP2",
-            "MVP3",
-            "MVP4",
-            "MVP5",
-            "MVP6",
-            "MVP7",
-            "MVP8",
-            "MVP9"});
-			this.cmbTag2.Location = new System.Drawing.Point(182, 44);
+			this.cmbTag2.Location = new System.Drawing.Point(181, 44);
 			this.cmbTag2.Name = "cmbTag2";
 			this.cmbTag2.Size = new System.Drawing.Size(80, 21);
 			this.cmbTag2.TabIndex = 64;
@@ -674,12 +666,6 @@
 			// 
 			this.cmbTag1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cmbTag1.FormattingEnabled = true;
-			this.cmbTag1.Items.AddRange(new object[] {
-            "Phase 1",
-            "Phase 2",
-            "Phase 3A",
-            "Phase 3B",
-            "Phase 3C"});
 			this.cmbTag1.Location = new System.Drawing.Point(96, 44);
 			this.cmbTag1.Name = "cmbTag1";
 			this.cmbTag1.Size = new System.Drawing.Size(80, 21);
@@ -1146,12 +1132,14 @@
 			this.chkUpdateOriginal.Text = "Update original estimate when closed";
 			this.chkUpdateOriginal.UseVisualStyleBackColor = true;
 			// 
-			// mnStartNewDay
+			// cmbTag4
 			// 
-			this.mnStartNewDay.Name = "mnStartNewDay";
-			this.mnStartNewDay.Size = new System.Drawing.Size(203, 24);
-			this.mnStartNewDay.Text = "Start New Day";
-			this.mnStartNewDay.Click += new System.EventHandler(this.mnStartNewDay_Click);
+			this.cmbTag4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cmbTag4.FormattingEnabled = true;
+			this.cmbTag4.Location = new System.Drawing.Point(351, 44);
+			this.cmbTag4.Name = "cmbTag4";
+			this.cmbTag4.Size = new System.Drawing.Size(80, 21);
+			this.cmbTag4.TabIndex = 76;
 			// 
 			// frmTracker
 			// 
@@ -1308,6 +1296,7 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn colUpdateOrgEst;
 		private System.Windows.Forms.Button btnRefreshBoard;
 		private System.Windows.Forms.ToolStripMenuItem mnStartNewDay;
+		private System.Windows.Forms.ComboBox cmbTag4;
 	}
 }
 

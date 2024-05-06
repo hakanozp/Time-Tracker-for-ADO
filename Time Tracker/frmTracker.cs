@@ -11,6 +11,7 @@ using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Threading;
 using Microsoft.Win32;
 using System.Collections;
+using System.Text;
 
 namespace TimeTracker
 {
@@ -91,6 +92,7 @@ namespace TimeTracker
                 //load today' s data
                 string fileName = dataDirectory + "\\Entry " + DateTime.Now.ToString("yyyy\\-MM\\-dd") + ".hkn";
                 LoadGridFromFile(fileName);
+                LoadTags();
             }
             statusStrip1.Items[0].Text = DateTime.Now.ToString("dd\\-MM\\-yyyy");
             statusStrip1.Items[4].Text = assignedTo;
@@ -629,7 +631,8 @@ namespace TimeTracker
             }
 
             frmSettings f2 = new frmSettings(); //this is the change, code for redirect  
-            f2.ShowDialog();
+			f2.dataDirectory = dataDirectory;
+			f2.ShowDialog();
         }
 
         private void rbCreateNew_CheckedChanged(object sender, EventArgs e)
@@ -1265,11 +1268,52 @@ namespace TimeTracker
 			}
 			
             string todaysDate = DateTime.Now.ToString("dd\\-MM\\-yyyy");
-            if ((todaysDate != statusStrip1.Items[0].Text) || (todaysDate == statusStrip1.Items[0].Text && MessageBox.Show("Your time entries will be deleted, are you sure?", "", MessageBoxButtons.YesNo) == DialogResult.Yes))
+            if ((todaysDate != statusStrip1.Items[0].Text) || (todaysDate == statusStrip1.Items[0].Text && MessageBox.Show("Your time entries will be deleted, are you sure?","Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes))
             {
                 statusStrip1.Items[0].Text = todaysDate;
                 dgEntries.RowCount = 0;
 			}
 		}
+
+		private void LoadTags()
+		{
+			string fileName = dataDirectory + "\\tags.txt";
+			if (!File.Exists(fileName)) return;
+
+
+			StreamReader reader = new StreamReader(fileName);
+
+			string line;
+			int ix = 1;
+
+			while ((line = reader.ReadLine()) != null)
+			{
+				if (line == "")
+				{
+					ix++;
+					continue;
+				}
+				switch (ix)
+				{
+					case 1:
+						cmbTag1.Items.Add(line);
+						break;
+					case 2:
+						cmbTag2.Items.Add(line);
+						break;
+					case 3:
+						cmbTag3.Items.Add(line);
+						break;
+					case 4:
+						cmbTag4.Items.Add(line);
+						break;
+					default:
+						break;
+				}
+			}
+
+			reader.Close();
+		}
+
 	}
 }
