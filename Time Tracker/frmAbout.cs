@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Deployment.Application;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,13 @@ namespace TimeTracker
 
         private void frmAbout_Load(object sender, EventArgs e)
         {
-            lblVersion.Text = Application.ProductVersion;
+
+            if (ApplicationDeployment.IsNetworkDeployed)
+            {
+                Version version = ApplicationDeployment.CurrentDeployment.CurrentVersion;
+                lblVersion.Text = version.Major.ToString() + "." + version.Minor.ToString() + "." + version.Revision.ToString();
+            }
+            
         }
     }
 }

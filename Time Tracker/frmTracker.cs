@@ -12,6 +12,8 @@ using System.Threading;
 using Microsoft.Win32;
 using System.Collections;
 using System.Text;
+using System.Deployment.Application;
+using System.Reflection;
 
 namespace TimeTracker
 {
@@ -46,6 +48,8 @@ namespace TimeTracker
             timer.Elapsed += Timer_Elapsed; // Add the event handler for the timerbn
             elapsedTime = TimeSpan.Zero; // Set the elapsed time to zero
 
+            //Version ver = Assembly.GetExecutingAssembly().GetName().Version;
+            //System.Deployment.Application.ApplicationDeployment ad = System.Deployment.Application.ApplicationDeployment.CurrentDeployment;
 
             dataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\TimeTrackerData";
             //create data directory if not exists.
@@ -96,6 +100,13 @@ namespace TimeTracker
             }
             statusStrip1.Items[0].Text = DateTime.Now.ToString("dd\\-MM\\-yyyy");
             statusStrip1.Items[4].Text = assignedTo;
+
+            if (ApplicationDeployment.IsNetworkDeployed)
+            {
+                Version version = ApplicationDeployment.CurrentDeployment.CurrentVersion;
+                statusStrip1.Items[5].Text = version.Major.ToString() + "." + version.Minor.ToString() + "." + version.Revision.ToString();
+            }
+            
 
         }
         private void btnStart_Click(object sender, EventArgs e)
