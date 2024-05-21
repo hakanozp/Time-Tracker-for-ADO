@@ -30,8 +30,9 @@ namespace TimeTracker
         private bool isTimerPaused = false;
         private bool isSettingsOk = false;
         private string dataDirectory;
+		private List<string> areaPathsList = new List<string>();
 
-        ADOHelper ado = new ADOHelper();
+		ADOHelper ado = new ADOHelper();
         
         //CultureInfo culture = new CultureInfo("en-US");
         public frmTracker()
@@ -80,16 +81,18 @@ namespace TimeTracker
                 try
                 {
                     LoadProjects();
-                }
+
+					ado.Project = cmbProject.Text;
+
+					_ = LoadAreaPathsAsync();
+				}
                 catch (Exception exc)
                 {
                     if (exc.InnerException != null)
                         MessageBox.Show("Error in loading projects!/n" + exc.InnerException.Message);
                     else
                         MessageBox.Show("Error in loading projects!/n" + exc.Message);
-                }                
-
-                ado.Project = cmbProject.Text;
+                }       
 
                 //SQLiteConnection conn = new SQLiteConnection(Properties.Settings.Default.ConnectionString);
 
@@ -104,7 +107,7 @@ namespace TimeTracker
             if (ApplicationDeployment.IsNetworkDeployed)
             {
                 Version version = ApplicationDeployment.CurrentDeployment.CurrentVersion;
-                statusStrip1.Items[5].Text = version.Major.ToString() + "." + version.Minor.ToString() + "." + version.Revision.ToString();
+                statusStrip1.Items[5].Text = "Ver: " + version.Major.ToString() + "." + version.Minor.ToString();
             }
             
 
@@ -333,7 +336,7 @@ namespace TimeTracker
         {
             if (cmbBoard.SelectedIndex > 0)
             {
-                _ = LoadAreaPathsAsync(cmbBoard.Text);
+                SetAreaPath(cmbBoard.Text);
 
                 cmbStory.DataSource = null;
                 cmbStory.Items.Clear();
@@ -342,6 +345,9 @@ namespace TimeTracker
 
         private void btnDeleteRows_Click(object sender, EventArgs e)
         {
+            if (MessageBox.Show("Are you sure to delete the row?","Confirm", MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.No)
+                return;
+            
             if (dgEntries.SelectedRows.Count > 0)
             {
                 dgEntries.Rows.RemoveAt(dgEntries.SelectedRows[0].Index);
@@ -440,38 +446,48 @@ namespace TimeTracker
             cmbIteration.SelectedIndex = FindCurrentIterationIndex(iterationList);
         }
 
-        private async Task LoadAreaPathsAsync(string board)
+        private async Task LoadAreaPathsAsync()
         {
-            //clear combo first.
-            cmbArea.DataSource = null;
-            cmbArea.Items.Clear();
-            List<string> areaList = new List<string>();
-
-            //get list of area paths from epics. Epic count is less when compared to other item.
-            //bigger count causes issue in loading data.
-            var workItems = await ado.GetItemList("Epic");
+			//get list of area paths from epics. Epic count is less when compared to other item.
+			//bigger count causes issue in loading data.
+			var workItems = await ado.GetItemList("Epic");
 
             foreach (var workItem in workItems)
             {
-                if (!workItem.Fields["System.AreaPath"].ToString().Contains(board))
-                {
-                    continue;
-                }
-                areaList.Add(workItem.Fields["System.AreaPath"].ToString());
+				areaPathsList.Add(workItem.Fields["System.AreaPath"].ToString());
             }
 
-            //sort the list and add empty line to top
-            areaList = areaList.Distinct().ToList();
-            areaList.Sort();
+			//sort the list
+			areaPathsList = areaPathsList.Distinct().ToList();
+			areaPathsList.Sort();
 
-            areaList.Insert(0, "");
-
-            //populate combo box using list.
-            cmbArea.DataSource = areaList.ToList();
-            cmbStory.DisplayMember = "Value";
         }
-        
-        private void SaveGridToFile()
+
+        private void SetAreaPath(string board)
+        {
+			//clear combo first.
+			cmbArea.DataSource = null;
+			cmbArea.Items.Clear();
+
+			List<string> areaList = new List<string>();
+
+            //get area paths containing board name
+			foreach (var areaPath in areaPathsList)
+            {
+				if (areaPath.Contains(board))
+				{
+					areaList.Add(areaPath);
+				}
+			}
+
+			areaList.Insert(0, "");
+
+			//populate combo box using list.
+			cmbArea.DataSource = areaList.ToList();
+			cmbArea.DisplayMember = "Value";
+		}
+
+		private void SaveGridToFile()
         {
             DateTime saveDate;
             
@@ -656,7 +672,10 @@ namespace TimeTracker
             chkCloseItem.Checked = false;
             chkCloseItem.Enabled = true;
             lblItemText.Text = "Description";
-        }
+
+            btnListActiveItems.Enabled = false;
+
+		}
         private void rbUpdateTask_CheckedChanged(object sender, EventArgs e)
         {
             txtTitle.Enabled = false;
@@ -667,7 +686,10 @@ namespace TimeTracker
             chkCloseItem.Checked = false;
             chkCloseItem.Enabled = true;
             lblItemText.Text = "Discussion";
-        }
+
+            btnListActiveItems.Enabled = true;
+
+		}
 
         private void rbTimeEntry_CheckedChanged(object sender, EventArgs e)
         {
@@ -679,7 +701,10 @@ namespace TimeTracker
             chkCloseItem.Checked = false;
             chkCloseItem.Enabled = false;
             lblItemText.Text = "Description";
-        }
+
+            btnListActiveItems.Enabled = false;
+
+		}
         private async Task LoadTasksAsync(string areaPath, string itemType)
         {
             cmbTask.DataSource = null;
@@ -773,8 +798,12 @@ namespace TimeTracker
             {
                 tagList.Add(cmbTag3.Text);
             }
-                        
-            return string.Join(";", tagList.ToArray()); 
+			if (cmbTag4.SelectedIndex != -1)
+			{
+				tagList.Add(cmbTag4.Text);
+			}
+
+			return string.Join(";", tagList.ToArray()); 
         }
 
         private async void cmbStory_SelectedIndexChanged(object sender, EventArgs e)
@@ -785,6 +814,7 @@ namespace TimeTracker
             cmbTag1.SelectedIndex = -1;
             cmbTag2.SelectedIndex = -1;
             cmbTag3.SelectedIndex = -1;
+            cmbTag4.SelectedIndex = -1;
 
             if (cmbStory.SelectedItem == null) return;
 
@@ -802,34 +832,33 @@ namespace TimeTracker
             //for each tag search the combo boxes, if found select it
             foreach (var tag in tags)
             {
-                for (int i = 0; i < cmbTag1.Items.Count; i++) 
-                {
-                    if (cmbTag1.Items[i].ToString() == tag.ToString().Trim()) 
-                    { 
-                        cmbTag1.SelectedIndex = i; 
-                        break;
-                    }
-                }
+                if (cmbTag1.SelectedIndex == -1)
+                    cmbTag1.SelectedIndex = GetTagIndex(cmbTag1.Items, tag.ToString().Trim());
 
-                for (int i = 0; i < cmbTag2.Items.Count; i++)
-                {
-                    if (cmbTag2.Items[i].ToString() == tag.ToString().Trim())
-                    {
-                        cmbTag2.SelectedIndex = i;
-                        break;
-                    }
-                }
-
-                for (int i = 0; i < cmbTag3.Items.Count; i++)
-                {
-                    if (cmbTag3.Items[i].ToString() == tag.ToString().Trim())
-                    {
-                        cmbTag3.SelectedIndex = i;
-                        break;
-                    }
-                }
-            }
+				if (cmbTag2.SelectedIndex == -1)
+					cmbTag2.SelectedIndex = GetTagIndex(cmbTag2.Items, tag.ToString().Trim());
+				
+                if (cmbTag3.SelectedIndex == -1)
+					cmbTag3.SelectedIndex = GetTagIndex(cmbTag3.Items, tag.ToString().Trim());
+				
+                if (cmbTag4.SelectedIndex == -1)
+					cmbTag4.SelectedIndex = GetTagIndex(cmbTag4.Items, tag.ToString().Trim());
+			}
         }
+
+        private int GetTagIndex(ComboBox.ObjectCollection items, string tag )
+        {
+            int index = -1;
+			for (int i = 0; i < items.Count; i++)
+			{
+				if (items[i].ToString() == tag)
+				{
+					index = i;
+					break;
+				}
+			}
+            return index;
+		}
 
         private void frmTracker_Shown(object sender, EventArgs e)
         {
@@ -1277,13 +1306,14 @@ namespace TimeTracker
 				MessageBox.Show("Timer is running. Stop timer first!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 				return;
 			}
-			
-            string todaysDate = DateTime.Now.ToString("dd\\-MM\\-yyyy");
-            if ((todaysDate != statusStrip1.Items[0].Text) || (todaysDate == statusStrip1.Items[0].Text && MessageBox.Show("Your time entries will be deleted, are you sure?","Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes))
+
+            if (MessageBox.Show("Your time entries will be deleted, are you sure?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
+                string todaysDate = DateTime.Now.ToString("dd\\-MM\\-yyyy");
+
                 statusStrip1.Items[0].Text = todaysDate;
                 dgEntries.RowCount = 0;
-			}
+            }
 		}
 
 		private void LoadTags()
@@ -1326,5 +1356,40 @@ namespace TimeTracker
 			reader.Close();
 		}
 
+		private void btnListActiveItems_Click(object sender, EventArgs e)
+		{
+            ADOTask adoTask = new ADOTask();
+
+            using (var dialogForm = new frmActiveItems())
+			{
+				dialogForm.ado = ado;
+                dialogForm.projectName = cmbProject.Text;
+				if (dialogForm.ShowDialog() == DialogResult.OK)
+				{
+     //               adoTask = dialogForm.adoTask;
+
+     //               string board = adoTask.AreaPath.Split('\\')[3];
+
+     //               for (int i = 0; i < cmbBoard.Items.Count; i++)
+     //               {
+     //                   if (cmbBoard.Items[i].ToString() == board)
+     //                       cmbBoard.SelectedIndex = i;
+     //               }
+
+     //               cmbArea.SelectedIndex = 1;
+
+     //               rbTask.Checked = adoTask.ItemType == "Task" ? true : false;
+					//rbBug.Checked = adoTask.ItemType == "Bug" ? true : false;
+
+     //               string task = adoTask.Id.ToString() + " - " + adoTask.Title;
+
+					//for (int i = 0; i < cmbTask.Items.Count; i++)
+					//{
+					//	if (cmbTask.Items[i].ToString().Contains(adoTask.Id.ToString()))
+					//		cmbTask.SelectedIndex = i;
+					//}
+				}
+			}
+		}
 	}
 }

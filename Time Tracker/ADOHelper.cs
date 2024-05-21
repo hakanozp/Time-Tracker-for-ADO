@@ -202,6 +202,7 @@ namespace TimeTracker
 
             WorkHttpClient workClient = connection.GetClient<WorkHttpClient>();
             TeamContext tc = new TeamContext(projectId);
+            tc.Team = "PBI_DS";
 
             
             List<TeamSettingsIteration> teamSettings = workClient.GetTeamIterationsAsync(tc).Result;
@@ -460,5 +461,57 @@ namespace TimeTracker
             }
             return Math.Round(Convert.ToDouble(originalCompleted), 1);
         }
-    }
+
+		public async Task<System.Collections.Generic.IList<WorkItem>> GetOpenItems(string project)
+		{
+
+            string query = "Select [Id] " +
+                                "From WorkItems " +
+                                "Where [System.WorkItemType] IN ('Task', 'Bug') " +
+                                    "And [System.TeamProject] = '" + project + "' " +
+                                    "And [System.State] IN ('Active', 'New') " +
+                                    "And [System.AssignedTo] = @me " +
+								"Order By [System.AreaPath], [Id] Asc";
+
+			// create a wiql object and build our query
+			var wiql = new Wiql()
+			{
+				// NOTE: Even if other columns are specified, only the ID & URL are available in the WorkItemReference
+				Query = query,
+			};
+
+			Uri uri = new Uri(OrganizationUrl);
+			var credentials = new VssBasicCredential(string.Empty, PersonalAccessToken);
+
+			try
+			{
+				// create instance of work item tracking http client
+				using (var httpClient = new WorkItemTrackingHttpClient(uri, credentials))
+				{
+					// execute the query to get the list of work items in the results
+					var result = await httpClient.QueryByWiqlAsync(wiql).ConfigureAwait(false);
+					var ids = result.WorkItems.Select(item => item.Id).ToArray();
+
+					// some error handling
+					if (ids.Length == 0)
+					{
+						return Array.Empty<WorkItem>();
+					}
+
+					// build a list of the fields we want to see
+					var fields = new[] { "System.Id", "System.Title", "System.State", "System.AreaPath", "System.WorkItemType", "System.IterationPath", "System.Tags" };
+
+					// get work items for the ids found in query
+					return await httpClient.GetWorkItemsAsync(ids, fields, result.AsOf).ConfigureAwait(false);
+
+				}
+			}
+			catch (Exception exc)
+			{
+				MessageBox.Show(exc.Message);
+				return Array.Empty<WorkItem>();
+			}
+		}
+
+	}
 }
