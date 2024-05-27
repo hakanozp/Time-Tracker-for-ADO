@@ -28,6 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.dgActiveItems = new System.Windows.Forms.DataGridView();
 			this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colItemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -35,6 +37,8 @@
 			this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colAreaPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colIterationPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colOriginalEstimate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colCompeted = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.dgActiveItems)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -50,7 +54,9 @@
             this.colTitle,
             this.colState,
             this.colAreaPath,
-            this.colIterationPath});
+            this.colIterationPath,
+            this.colOriginalEstimate,
+            this.colCompeted});
 			this.dgActiveItems.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.dgActiveItems.Location = new System.Drawing.Point(0, 61);
 			this.dgActiveItems.Name = "dgActiveItems";
@@ -107,6 +113,25 @@
 			this.colIterationPath.ReadOnly = true;
 			this.colIterationPath.Width = 95;
 			// 
+			// colOriginalEstimate
+			// 
+			this.colOriginalEstimate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.colOriginalEstimate.DefaultCellStyle = dataGridViewCellStyle1;
+			this.colOriginalEstimate.HeaderText = "Original Estimate";
+			this.colOriginalEstimate.Name = "colOriginalEstimate";
+			this.colOriginalEstimate.ReadOnly = true;
+			this.colOriginalEstimate.Width = 101;
+			// 
+			// colCompeted
+			// 
+			this.colCompeted.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.colCompeted.DefaultCellStyle = dataGridViewCellStyle2;
+			this.colCompeted.HeaderText = "Competed Work";
+			this.colCompeted.Name = "colCompeted";
+			this.colCompeted.ReadOnly = true;
+			// 
 			// frmActiveItems
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -134,5 +159,7 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn colState;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colAreaPath;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colIterationPath;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colOriginalEstimate;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colCompeted;
 	}
 }

@@ -499,7 +499,7 @@ namespace TimeTracker
 					}
 
 					// build a list of the fields we want to see
-					var fields = new[] { "System.Id", "System.Title", "System.State", "System.AreaPath", "System.WorkItemType", "System.IterationPath", "System.Tags" };
+					var fields = new[] { "System.Id", "System.Title", "System.State", "System.AreaPath", "System.WorkItemType", "System.IterationPath", "System.Tags", "Microsoft.VSTS.Scheduling.OriginalEstimate", "Microsoft.VSTS.Scheduling.CompletedWork" };
 
 					// get work items for the ids found in query
 					return await httpClient.GetWorkItemsAsync(ids, fields, result.AsOf).ConfigureAwait(false);

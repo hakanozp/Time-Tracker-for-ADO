@@ -240,8 +240,9 @@ namespace TimeTracker
             row.Cells[dgEntries.Columns["colEndTime"].Index].Value = DateTime.Now.ToString("HH\\:mm"); ;
             row.Cells[dgEntries.Columns["colDuration"].Index].Value = Convert.ToDateTime(lblDuration.Text).ToString("HH\\:mm");
             row.Cells[dgEntries.Columns["colCreateDate"].Index].Value = DateTime.Now.ToString("dd\\-MM\\-yyyy");
+			row.Cells[dgEntries.Columns["colWbsCode"].Index].Value = cmbWbsCode.Text;
 
-            if (rbCreateNew.Checked)
+			if (rbCreateNew.Checked)
             {
                 row.Cells[dgEntries.Columns["colItemId"].Index].Value = string.Empty;
                 row.Cells[dgEntries.Columns["colTitle"].Index].Value = txtTitle.Text;
@@ -345,7 +346,7 @@ namespace TimeTracker
 
         private void btnDeleteRows_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure to delete the row?","Confirm", MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.No)
+            if (MessageBox.Show("Are you ure to delete the selected row?", "Confirm", MessageBoxButtons.YesNo,MessageBoxIcon.Question) == DialogResult.No)
                 return;
             
             if (dgEntries.SelectedRows.Count > 0)
@@ -1022,64 +1023,6 @@ namespace TimeTracker
             }
         }
 
-        private void btnAddToList_Click(object sender, EventArgs e)
-        {
-            //add time entry to the list
-            DataGridViewRow row = new DataGridViewRow();
-            row.CreateCells(dgEntries);
-
-            row.Cells[dgEntries.Columns["colCategory"].Index].Value = cmbCategory.Text;
-            row.Cells[dgEntries.Columns["colStartTime"].Index].Value = lblStartTime.Text;
-            row.Cells[dgEntries.Columns["colEndTime"].Index].Value = DateTime.Now.ToString("HH\\:mm");
-            row.Cells[dgEntries.Columns["colDuration"].Index].Value = Convert.ToDateTime(lblDuration.Text).ToString("HH\\:mm");
-            row.Cells[dgEntries.Columns["colCreateDate"].Index].Value = DateTime.Now.ToString("dd\\-MM\\-yyyy");
-
-            if (rbCreateNew.Checked)
-            {
-                row.Cells[dgEntries.Columns["colItemId"].Index].Value = string.Empty;
-                row.Cells[dgEntries.Columns["colTitle"].Index].Value = txtTitle.Text;
-                row.Cells[dgEntries.Columns["colDescription"].Index].Value = txtDescription.Text;
-                row.Cells[dgEntries.Columns["colProject"].Index].Value = cmbProject.Text;
-                row.Cells[dgEntries.Columns["colBoard"].Index].Value = cmbBoard.Text;
-                row.Cells[dgEntries.Columns["colAreaPath"].Index].Value = cmbArea.Text;
-                row.Cells[dgEntries.Columns["colItemType"].Index].Value = rbTask.Checked ? "Task" : "Bug";
-                row.Cells[dgEntries.Columns["colIteration"].Index].Value = cmbIteration.Text;
-                row.Cells[dgEntries.Columns["colStory"].Index].Value = cmbStory.Text;
-                row.Cells[dgEntries.Columns["colParentId"].Index].Value = cmbStory.SelectedValue != null ? cmbStory.SelectedValue.ToString() : String.Empty;
-                row.Cells[dgEntries.Columns["colTags"].Index].Value = CreateTagList();
-                row.Cells[dgEntries.Columns["colCloseItem"].Index].Value = chkCloseItem.Checked;
-                row.Cells[dgEntries.Columns["colOperationMode"].Index].Value = "Create";
-            }
-            else if (rbUpdateTask.Checked)
-            {
-                row.Cells[dgEntries.Columns["colItemId"].Index].Value = cmbTask.SelectedValue;
-                row.Cells[dgEntries.Columns["colTitle"].Index].Value = cmbTask.Text.Split('-')[1].Trim();
-                row.Cells[dgEntries.Columns["colProject"].Index].Value = cmbProject.Text;
-                row.Cells[dgEntries.Columns["colBoard"].Index].Value = cmbBoard.Text;
-                row.Cells[dgEntries.Columns["colAreaPath"].Index].Value = cmbArea.Text;
-                row.Cells[dgEntries.Columns["colItemType"].Index].Value = rbTask.Checked ? "Task" : "Bug";
-                row.Cells[dgEntries.Columns["colCloseItem"].Index].Value = chkCloseItem.Checked;
-                row.Cells[dgEntries.Columns["colIteration"].Index].Value = cmbIteration.Text;
-                row.Cells[dgEntries.Columns["colOperationMode"].Index].Value = "Update";
-            }
-            if (rbTimeEntry.Checked)
-            {
-                row.Cells[dgEntries.Columns["colTitle"].Index].Value = txtTitle.Text;
-                row.Cells[dgEntries.Columns["colDescription"].Index].Value = txtDescription.Text;
-                row.Cells[dgEntries.Columns["colOperationMode"].Index].Value = string.Empty;
-            }
-
-            dgEntries.Rows.Add(row);
-
-            lblDuration.Text = "00:00:00"; // Reset the label text
-            CalculateTotalDuration();
-
-            btnStart.Enabled = true;
-            btnStart.Text = "Start";
-            btnPause.Enabled = false;
-            btnStop.Enabled = false;
-        }
-
         private void mnExit_Click(object sender, EventArgs e)
         {
             SaveGridToFile();
@@ -1307,7 +1250,7 @@ namespace TimeTracker
 				return;
 			}
 
-            if (MessageBox.Show("Your time entries will be deleted, are you sure?", "Confirm", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            if (MessageBox.Show("Any unsaved entries will be lost, are you sure?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 string todaysDate = DateTime.Now.ToString("dd\\-MM\\-yyyy");
 
