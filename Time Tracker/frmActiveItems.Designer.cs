@@ -31,8 +31,8 @@
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.dgActiveItems = new System.Windows.Forms.DataGridView();
-			this.colId = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colItemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colId = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colAreaPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,8 +49,8 @@
 			this.dgActiveItems.AllowUserToOrderColumns = true;
 			this.dgActiveItems.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.dgActiveItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colId,
             this.colItemType,
+            this.colId,
             this.colTitle,
             this.colState,
             this.colAreaPath,
@@ -63,15 +63,8 @@
 			this.dgActiveItems.ReadOnly = true;
 			this.dgActiveItems.Size = new System.Drawing.Size(908, 371);
 			this.dgActiveItems.TabIndex = 0;
+			this.dgActiveItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgActiveItems_CellContentClick);
 			this.dgActiveItems.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgActiveItems_CellDoubleClick);
-			// 
-			// colId
-			// 
-			this.colId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.colId.HeaderText = "Id";
-			this.colId.Name = "colId";
-			this.colId.ReadOnly = true;
-			this.colId.Width = 41;
 			// 
 			// colItemType
 			// 
@@ -80,6 +73,16 @@
 			this.colItemType.Name = "colItemType";
 			this.colItemType.ReadOnly = true;
 			this.colItemType.Width = 79;
+			// 
+			// colId
+			// 
+			this.colId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.colId.HeaderText = "Id";
+			this.colId.Name = "colId";
+			this.colId.ReadOnly = true;
+			this.colId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.colId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			this.colId.Width = 41;
 			// 
 			// colTitle
 			// 
@@ -153,8 +156,8 @@
 		#endregion
 
 		private System.Windows.Forms.DataGridView dgActiveItems;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colId;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colItemType;
+		private System.Windows.Forms.DataGridViewLinkColumn colId;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colTitle;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colState;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colAreaPath;

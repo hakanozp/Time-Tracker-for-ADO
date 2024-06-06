@@ -180,7 +180,15 @@ namespace TimeTracker
                 }
             }
 
-            isTimerRunning = true;
+
+			if (cmbWbsCode.Text == string.Empty)
+			{
+				MessageBox.Show("You must select a WBS code!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+
+
+			isTimerRunning = true;
             if (isTimerPaused)
             {
                 isTimerPaused = false;
@@ -579,7 +587,7 @@ namespace TimeTracker
 
                         updateItem.IterationPath = row.Cells["colIteration"].Value.ToString();
                         updateItem.CompletedWork = CalculateHour(row.Cells["colDuration"].Value.ToString());
-                        updateItem.History = row.Cells[dgEntries.Columns["colDescription"].Index].Value.ToString() + "<br>Updated by Time Tracker for ADO at " + DateTime.Now.ToString();
+                        updateItem.History = row.Cells[dgEntries.Columns["colDescription"].Index].Value.ToString();
                         updateItem.UpdateOriginalEstimate = Convert.ToBoolean(row.Cells["colUpdateOrgEst"].Value.ToString());
                         
                         _ = ado.UpdateTaskAsync(updateItem);
@@ -674,7 +682,7 @@ namespace TimeTracker
             chkCloseItem.Enabled = true;
             lblItemText.Text = "Description";
 
-            btnListActiveItems.Enabled = false;
+            //btnListActiveItems.Enabled = false;
 
 		}
         private void rbUpdateTask_CheckedChanged(object sender, EventArgs e)
@@ -688,7 +696,7 @@ namespace TimeTracker
             chkCloseItem.Enabled = true;
             lblItemText.Text = "Discussion";
 
-            btnListActiveItems.Enabled = true;
+            //btnListActiveItems.Enabled = true;
 
 		}
 
@@ -703,7 +711,7 @@ namespace TimeTracker
             chkCloseItem.Enabled = false;
             lblItemText.Text = "Description";
 
-            btnListActiveItems.Enabled = false;
+            //btnListActiveItems.Enabled = false;
 
 		}
         private async Task LoadTasksAsync(string areaPath, string itemType)
@@ -1078,15 +1086,6 @@ namespace TimeTracker
                 //update the total hours according to the selected file
                 CalculateTotalDuration();
             }
-            else if (e.ColumnIndex == dgEntries.Columns["colItemId"].Index)
-            {
-
-                if (row.Cells["colItemId"].Value != null)
-                {
-                    string link = String.Format("{0}/{1}/_workitems/edit//{2}", ado.OrganizationUrl, cmbProject.Text, row.Cells[dgEntries.Columns["colItemId"].Index].Value.ToString());
-                    System.Diagnostics.Process.Start(link);
-                }
-            }
         }
 
         private void openFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
@@ -1334,5 +1333,18 @@ namespace TimeTracker
 				}
 			}
 		}
+
+        private void dgEntries_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == dgEntries.Columns["colItemId"].Index)
+            {
+                DataGridViewRow row = dgEntries.Rows[e.RowIndex];
+                if (row.Cells["colItemId"].Value != null)
+                {
+                    string link = String.Format("{0}/{1}/_workitems/edit//{2}", ado.OrganizationUrl, cmbProject.Text, row.Cells[dgEntries.Columns["colItemId"].Index].Value.ToString());
+                    System.Diagnostics.Process.Start(link);
+                }
+            }
+        }
 	}
 }

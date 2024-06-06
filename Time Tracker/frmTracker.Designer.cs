@@ -111,7 +111,7 @@
 			this.label10 = new System.Windows.Forms.Label();
 			this.cmbWbsCode = new System.Windows.Forms.ComboBox();
 			this.colCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.colItemId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colItemId = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.colItemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colBoard = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -177,6 +177,7 @@
 			this.dgEntries.ReadOnly = true;
 			this.dgEntries.Size = new System.Drawing.Size(1104, 235);
 			this.dgEntries.TabIndex = 13;
+			this.dgEntries.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgEntries_CellContentClick);
 			this.dgEntries.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgEntries_CellDoubleClick);
 			// 
 			// lblStartTime
@@ -679,7 +680,6 @@
 			// 
 			this.btnListActiveItems.BackgroundImage = global::TimeTracker.Properties.Resources.to_do_list;
 			this.btnListActiveItems.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.btnListActiveItems.Enabled = false;
 			this.btnListActiveItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnListActiveItems.Location = new System.Drawing.Point(422, 44);
 			this.btnListActiveItems.Name = "btnListActiveItems";
@@ -1046,6 +1046,8 @@
 			this.colItemId.HeaderText = "Item Id";
 			this.colItemId.Name = "colItemId";
 			this.colItemId.ReadOnly = true;
+			this.colItemId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.colItemId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
 			this.colItemId.Width = 70;
 			// 
 			// colItemType
@@ -1359,7 +1361,7 @@
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.ComboBox cmbWbsCode;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colCategory;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colItemId;
+		private System.Windows.Forms.DataGridViewLinkColumn colItemId;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colItemType;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colTitle;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colBoard;

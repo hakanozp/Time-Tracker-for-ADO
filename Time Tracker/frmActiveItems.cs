@@ -74,5 +74,18 @@ namespace TimeTracker
 			}
 
 		}
+
+		private void dgActiveItems_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
+			if (e.ColumnIndex == dgActiveItems.Columns["colId"].Index)
+			{
+				DataGridViewRow row = dgActiveItems.Rows[e.RowIndex];
+				if (row.Cells["colId"].Value != null)
+				{
+					string link = String.Format("{0}/{1}/_workitems/edit//{2}", ado.OrganizationUrl, "PBI_DS", row.Cells[dgActiveItems.Columns["colId"].Index].Value.ToString());
+					System.Diagnostics.Process.Start(link);
+				}
+			}
+		}
 	}
 }
