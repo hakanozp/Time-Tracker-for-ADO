@@ -46,10 +46,10 @@ namespace TimeTracker
 				row.Cells[dgActiveItems.Columns["colItemType"].Index].Value = workItem.Fields["System.WorkItemType"].ToString();
 				row.Cells[dgActiveItems.Columns["colState"].Index].Value = workItem.Fields["System.State"].ToString();
 				row.Cells[dgActiveItems.Columns["colIterationPath"].Index].Value = workItem.Fields["System.IterationPath"].ToString();
-				if (workItems[0].Fields.ContainsKey("Microsoft.VSTS.Scheduling.OriginalEstimate"))
+				if (workItem.Fields.ContainsKey("Microsoft.VSTS.Scheduling.OriginalEstimate"))
 					row.Cells[dgActiveItems.Columns["colOriginalEstimate"].Index].Value = workItem.Fields["Microsoft.VSTS.Scheduling.OriginalEstimate"].ToString();
 
-				if (workItems[0].Fields.ContainsKey("Microsoft.VSTS.Scheduling.CompletedWork"))
+				if (workItem.Fields.ContainsKey("Microsoft.VSTS.Scheduling.CompletedWork"))
 					row.Cells[dgActiveItems.Columns["colCompeted"].Index].Value = workItem.Fields["Microsoft.VSTS.Scheduling.CompletedWork"].ToString();
 
 				dgActiveItems.Rows.Add(row);

@@ -270,6 +270,7 @@ namespace TimeTracker
 
                 txtOriginalEstimate.Text = txtOriginalEstimate.Text.Replace('_', '0');
                 row.Cells[dgEntries.Columns["colOriginalEstimate"].Index].Value = Convert.ToDateTime(txtOriginalEstimate.Text).ToString("HH\\:mm");
+                row.Cells[dgEntries.Columns["colUpdateOrgEst"].Index].Value = chkUpdateOriginal.Checked;
             }
             else if (rbUpdateTask.Checked)
             {
@@ -488,8 +489,18 @@ namespace TimeTracker
 					areaList.Add(areaPath);
 				}
 			}
+            
+            //if there is no corresponding name populate the full list, so user can choose.
+            if (areaList.Count == 0) 
+            {
+                foreach (var areaPath in areaPathsList)
+                {
+                    areaList.Add(areaPath);
+                }
 
-			areaList.Insert(0, "");
+            }
+
+            areaList.Insert(0, "");
 
 			//populate combo box using list.
 			cmbArea.DataSource = areaList.ToList();
@@ -560,8 +571,10 @@ namespace TimeTracker
                         newItem.ParentUserStoryId = row.Cells["colParentId"].Value.ToString();
                         newItem.Tags = row.Cells["colTags"].Value.ToString();
                         newItem.History = "Created by Time Tracker for ADO at " + DateTime.Now.ToString();
-						newItem.UpdateOriginalEstimate = Convert.ToBoolean(row.Cells["colUpdateOrgEst"].Value.ToString());
-
+                        if (row.Cells["colUpdateOrgEst"].Value != null)
+                        {
+                            newItem.UpdateOriginalEstimate = Convert.ToBoolean(row.Cells["colUpdateOrgEst"].Value.ToString());
+                        }
                         if (newItem.UpdateOriginalEstimate == true)
                             newItem.OriginalEstimate = newItem.CompletedWork;
 
