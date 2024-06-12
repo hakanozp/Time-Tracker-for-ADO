@@ -58,20 +58,20 @@ namespace TimeTracker
 
 		private void dgActiveItems_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
 		{
-			if (dgActiveItems.SelectedRows.Count > 0)
-			{
-				DataGridViewRow row = dgActiveItems.Rows[e.RowIndex];
+			//if (dgActiveItems.SelectedRows.Count > 0)
+			//{
+			//	DataGridViewRow row = dgActiveItems.Rows[e.RowIndex];
 
-				adoTask = new ADOTask();
-				adoTask.Id = Convert.ToInt32(row.Cells[dgActiveItems.Columns["colId"].Index].Value.ToString());
-				adoTask.AreaPath = row.Cells[dgActiveItems.Columns["colAreaPath"].Index].Value.ToString();
-				adoTask.Title = row.Cells[dgActiveItems.Columns["colTitle"].Index].Value.ToString();
-				adoTask.ItemType = row.Cells[dgActiveItems.Columns["colItemType"].Index].Value.ToString();
-				adoTask.State = row.Cells[dgActiveItems.Columns["colState"].Index].Value.ToString();
-				adoTask.IterationPath = row.Cells[dgActiveItems.Columns["colIterationPath"].Index].Value.ToString();
-				DialogResult = DialogResult.OK;
-				Close();
-			}
+			//	adoTask = new ADOTask();
+			//	adoTask.Id = Convert.ToInt32(row.Cells[dgActiveItems.Columns["colId"].Index].Value.ToString());
+			//	adoTask.AreaPath = row.Cells[dgActiveItems.Columns["colAreaPath"].Index].Value.ToString();
+			//	adoTask.Title = row.Cells[dgActiveItems.Columns["colTitle"].Index].Value.ToString();
+			//	adoTask.ItemType = row.Cells[dgActiveItems.Columns["colItemType"].Index].Value.ToString();
+			//	adoTask.State = row.Cells[dgActiveItems.Columns["colState"].Index].Value.ToString();
+			//	adoTask.IterationPath = row.Cells[dgActiveItems.Columns["colIterationPath"].Index].Value.ToString();
+			//	DialogResult = DialogResult.OK;
+			//	Close();
+			//}
 
 		}
 

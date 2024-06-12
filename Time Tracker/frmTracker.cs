@@ -109,11 +109,20 @@ namespace TimeTracker
                 Version version = ApplicationDeployment.CurrentDeployment.CurrentVersion;
                 statusStrip1.Items[5].Text = "Ver: " + version.Major.ToString() + "." + version.Minor.ToString();
             }
+
+            cmbItemType.SelectedIndex = 0;
+            cmbState.SelectedIndex = 0;
             
 
         }
         private void btnStart_Click(object sender, EventArgs e)
         {
+            if (cmbState.Text == "New")
+            {
+                return;
+            }
+            
+            
             if (isTimerRunning)
             {
                 MessageBox.Show("Timer has already started!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -167,7 +176,7 @@ namespace TimeTracker
                 }
                 if (cmbTask.SelectedIndex <= 0)
                 {
-                    MessageBox.Show("You must select a " + (rbTask.Checked ? "task!" : "bug!"), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("You must select a " + cmbItemType.Text, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
@@ -228,7 +237,7 @@ namespace TimeTracker
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-            if (!isTimerRunning && !isTimerPaused)
+            if (cmbState.Text == "Active" && (!isTimerRunning && !isTimerPaused))
             {
                 MessageBox.Show("Timer is not started!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
@@ -258,7 +267,7 @@ namespace TimeTracker
                 row.Cells[dgEntries.Columns["colProject"].Index].Value = cmbProject.Text;
                 row.Cells[dgEntries.Columns["colBoard"].Index].Value = cmbBoard.Text;
                 row.Cells[dgEntries.Columns["colAreaPath"].Index].Value = cmbArea.Text;
-                row.Cells[dgEntries.Columns["colItemType"].Index].Value = rbTask.Checked ? "Task" : "Bug";
+                row.Cells[dgEntries.Columns["colItemType"].Index].Value = cmbItemType.Text;
                 row.Cells[dgEntries.Columns["colIteration"].Index].Value = cmbIteration.Text;
                 row.Cells[dgEntries.Columns["colStory"].Index].Value = cmbStory.Text;
                 row.Cells[dgEntries.Columns["colParentId"].Index].Value = cmbStory.SelectedValue != null ? cmbStory.SelectedValue.ToString() : String.Empty;
@@ -271,7 +280,10 @@ namespace TimeTracker
                 txtOriginalEstimate.Text = txtOriginalEstimate.Text.Replace('_', '0');
                 row.Cells[dgEntries.Columns["colOriginalEstimate"].Index].Value = Convert.ToDateTime(txtOriginalEstimate.Text).ToString("HH\\:mm");
                 row.Cells[dgEntries.Columns["colUpdateOrgEst"].Index].Value = chkUpdateOriginal.Checked;
-            }
+                row.Cells[dgEntries.Columns["colState"].Index].Value = cmbState.Text;
+
+
+			}
             else if (rbUpdateTask.Checked)
             {
                 row.Cells[dgEntries.Columns["colItemId"].Index].Value = cmbTask.SelectedValue;
@@ -280,7 +292,7 @@ namespace TimeTracker
                 row.Cells[dgEntries.Columns["colProject"].Index].Value = cmbProject.Text;
                 row.Cells[dgEntries.Columns["colBoard"].Index].Value = cmbBoard.Text;
                 row.Cells[dgEntries.Columns["colAreaPath"].Index].Value = cmbArea.Text;
-                row.Cells[dgEntries.Columns["colItemType"].Index].Value = rbTask.Checked ? "Task" : "Bug";
+                row.Cells[dgEntries.Columns["colItemType"].Index].Value = cmbItemType.Text;
                 row.Cells[dgEntries.Columns["colDescription"].Index].Value = txtDescription.Text.Replace("\r\n", "<br>");
                 row.Cells[dgEntries.Columns["colTags"].Index].Value = CreateTagList();
                 row.Cells[dgEntries.Columns["colCloseItem"].Index].Value = chkCloseItem.Checked;
@@ -301,15 +313,25 @@ namespace TimeTracker
             lblDuration.Text = "00:00:00"; // Reset the label text
             CalculateTotalDuration();
 
-            btnStart.Enabled = true;
-            btnStart.Text = "Start";
-            btnPause.Enabled = false;
-            btnStop.Enabled = false;
-            btnCancel.Enabled = false;
-
+            if (cmbState.Text == "Active")
+            {
+                btnStart.Enabled = true;
+                btnStart.Text = "Start";
+                btnPause.Enabled = false;
+                btnStop.Enabled = false;
+                btnCancel.Enabled = false;
+            }
             txtTitle.Text = "";
             txtDescription.Text = "";
             txtStartTime.Text = "";
+            cmbCategory.SelectedIndex = -1;
+            cmbWbsCode.SelectedIndex = -1;
+            chkCloseItem.Checked = false;
+            chkUpdateOriginal.Checked = false;
+            txtOriginalEstimate.Text = "";
+            dtStartDate.Value = DateTime.Now.Date;
+            dtTargetDate.Value = DateTime.Now.Date;
+            cmbTask.SelectedIndex = -1;
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -564,8 +586,8 @@ namespace TimeTracker
                         newItem.StartDate = dt;
 
                         DateTime.TryParseExact(row.Cells["colTargetDate"].Value.ToString(), "dd-MM-yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out dt);
-                        newItem.TargetDate = dt;                        
-                        
+                        newItem.TargetDate = dt;
+
                         newItem.OriginalEstimate = CalculateHour(row.Cells["colOriginalEstimate"].Value.ToString());
                         newItem.CompletedWork = CalculateHour(row.Cells["colDuration"].Value.ToString());
                         newItem.ParentUserStoryId = row.Cells["colParentId"].Value.ToString();
@@ -575,16 +597,20 @@ namespace TimeTracker
                         {
                             newItem.UpdateOriginalEstimate = Convert.ToBoolean(row.Cells["colUpdateOrgEst"].Value.ToString());
                         }
+
                         if (newItem.UpdateOriginalEstimate == true)
                             newItem.OriginalEstimate = newItem.CompletedWork;
 
                         //create the ADO item
-						int itemId = ado.CreateAdoItem(newItem);
+                        int itemId = ado.CreateAdoItem(newItem);
 
                         //set item status again
                         bool closeItem = Convert.ToBoolean(row.Cells["colCloseItem"].Value.ToString());
-                        newItem.State = closeItem ? "Closed" : "Active";
-                        ado.SetItemState(itemId, newItem.State);
+						if (row.Cells["colState"].Value.ToString() == "Active")
+                        { 
+                            newItem.State = closeItem ? "Closed" : "Active";
+                            ado.SetItemState(itemId, newItem.State);
+                        }
 
                         //update the item id
                         row.Cells["colItemId"].Value = itemId.ToString();
@@ -608,8 +634,10 @@ namespace TimeTracker
                         closeItem = Convert.ToBoolean(row.Cells["colCloseItem"].Value.ToString());
                         if (closeItem == true)
                             ado.SetItemState(updateItem.Id, "Closed");
+                        else
+							ado.SetItemState(updateItem.Id, "Active");
 
-                        break;
+						break;
                     
                     default:
                         break;
@@ -667,7 +695,7 @@ namespace TimeTracker
             {
                 _ = LoadStoriesAsync(cmbArea.Text);
 
-                _ = LoadTasksAsync(cmbArea.Text, rbTask.Checked ? "Task" : "Bug");
+                _ = LoadTasksAsync(cmbArea.Text, cmbItemType.Text);
             }
         }
 
@@ -700,7 +728,15 @@ namespace TimeTracker
 		}
         private void rbUpdateTask_CheckedChanged(object sender, EventArgs e)
         {
-            txtTitle.Enabled = false;
+			btnStart.Visible = true;
+			btnPause.Visible = true;
+			btnStop.Text = "Stop";
+            btnStop.Enabled = false;
+			btnCancel.Visible = true;
+			lblDuration.Visible = true;
+            cmbState.SelectedIndex = 0;
+
+			txtTitle.Enabled = false;
             grpMain.Enabled = true;
             grpNewItem.Enabled = false;
             grpExistingItem.Enabled = true;
@@ -715,7 +751,15 @@ namespace TimeTracker
 
         private void rbTimeEntry_CheckedChanged(object sender, EventArgs e)
         {
-            txtTitle.Enabled = true;
+			btnStart.Visible = true;
+			btnPause.Visible = true;
+			btnStop.Text = "Stop";
+			btnStop.Enabled = false;
+			btnCancel.Visible = true;
+			lblDuration.Visible = true;
+			cmbState.SelectedIndex = 0;
+
+			txtTitle.Enabled = true;
             grpMain.Enabled = false;
             grpNewItem.Enabled = false;
             grpExistingItem.Enabled = false;
@@ -734,10 +778,11 @@ namespace TimeTracker
             Dictionary<int, string> taskList = new Dictionary<int, string>();
 
             //get list of open tasks under a given area path
-            var workItems = await ado.GetItemList(itemType, areaPath: areaPath, state: "Active", assignedToMe: true);
+            //var workItems = await ado.GetItemList(itemType, areaPath: areaPath, state: "Active", assignedToMe: true);
+			var workItems = await ado.GetItemList(itemType, areaPath: areaPath, assignedToMe: true);
 
-            //add tasks to a dictionary
-            foreach (var workItem in workItems)
+			//add tasks to a dictionary
+			foreach (var workItem in workItems)
             {
                 taskList.Add(Convert.ToInt32(workItem.Id), workItem.Id.ToString() + " - " + workItem.Fields["System.Title"].ToString());
             }
@@ -1002,37 +1047,11 @@ namespace TimeTracker
             statusStrip1.Items[3].Text = "Total: " + totalDuration.ToString();
         }
 
-        private void rbTask_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbTask.Checked)
-            {
-                lblItemtype.Text = rbTask.Text;
-
-                if (cmbArea.SelectedIndex > 0)
-                {
-                    _ = LoadTasksAsync(cmbArea.Text, "Task");
-                }
-            }
-        }
-
-        private void rbBug_CheckedChanged(object sender, EventArgs e)
-        {
-            if (rbBug.Checked)
-            {
-                lblItemtype.Text = rbBug.Text;
-
-                if (cmbArea.SelectedIndex > 0)
-                {
-                    _ = LoadTasksAsync(cmbArea.Text, "Bug");
-                }
-            }
-        }
-
         private void btnRefreshTaskBug_Click(object sender, EventArgs e)
         {
             if (cmbArea.SelectedIndex > 0)
             {
-                _ = LoadTasksAsync(cmbArea.Text, rbTask.Checked ? "Task" : "Bug");
+                _ = LoadTasksAsync(cmbArea.Text, cmbItemType.Text);
             }
         }
 
@@ -1357,6 +1376,47 @@ namespace TimeTracker
                     string link = String.Format("{0}/{1}/_workitems/edit//{2}", ado.OrganizationUrl, cmbProject.Text, row.Cells[dgEntries.Columns["colItemId"].Index].Value.ToString());
                     System.Diagnostics.Process.Start(link);
                 }
+            }
+        }
+
+		private void cmbItemType_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			lblItemtype.Text = cmbItemType.Text;
+            if (cmbArea.Text != string.Empty)
+            {
+                _ = LoadTasksAsync(cmbArea.Text, cmbItemType.Text);
+            }
+		}
+
+		private void cmbState_SelectedIndexChanged(object sender, EventArgs e)
+		{
+            switch (cmbState.Text)
+            {
+                case "Active":
+                    dtStartDate.Enabled = false;
+                    dtStartDate.Value = DateTime.Now.Date;
+                    chkCloseItem.Enabled = true;
+
+                    btnStart.Visible = true;
+                    btnPause.Visible = true;
+					btnStop.Text = "Stop";
+					btnStop.Enabled = false;
+					btnCancel.Visible = true;
+					lblDuration.Visible = true;
+					break;
+                case "New":
+                    dtStartDate.Enabled = true;
+                    chkCloseItem.Enabled = false;
+
+                    btnStart.Visible = false;
+                    btnPause.Visible = false;
+                    btnStop.Text = "Add to List";
+					btnStop.Enabled = true;
+					btnCancel.Visible = false;
+                    lblDuration.Visible = false;
+                    break;
+                default:
+                    break;
             }
         }
 	}

@@ -40,10 +40,14 @@ namespace TimeTracker
             {
                 query += "And [System.AreaPath] = '" + areaPath + "' ";
             }
-            if (state != "")
+            if (state == "")
             {
-                query += "And [System.State] = '" + state + "' ";
+                query += "And [System.State] <> 'Closed'";
             }
+            else
+            {
+				query += "And [System.State] = '" + state + "' ";
+			}
 
             if (assignedToMe)
             {
