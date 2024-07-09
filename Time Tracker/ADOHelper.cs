@@ -323,10 +323,17 @@ namespace TimeTracker
                     Path = "/fields/System.History",
                     Value = newEntry.History
                 }
-  );
+                );
 
+				patchDocument.Add(new JsonPatchOperation()
+				{
+					Operation = Operation.Add,
+					Path = "/fields/Custom.AccountType",
+					Value = newEntry.WBS
+				}
+				);
 
-                string rel_url = string.Format("{0}/{1}/_apis/wit/workitems/{2}", OrganizationUrl, Project, newEntry.ParentUserStoryId);
+				string rel_url = string.Format("{0}/{1}/_apis/wit/workitems/{2}", OrganizationUrl, Project, newEntry.ParentUserStoryId);
 
                 patchDocument.Add(new JsonPatchOperation()
                 {

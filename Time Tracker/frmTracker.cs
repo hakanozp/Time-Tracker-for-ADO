@@ -31,6 +31,8 @@ namespace TimeTracker
         private bool isSettingsOk = false;
         private string dataDirectory;
 		private List<string> areaPathsList = new List<string>();
+        private string wbsRun = string.Empty;
+        private string wbsProject = string.Empty;
 
 		ADOHelper ado = new ADOHelper();
         
@@ -69,11 +71,18 @@ namespace TimeTracker
                 ado.PersonalAccessToken = key.GetValue("PersonalAccessToken").ToString();
                 assignedTo = key.GetValue("User").ToString();
 
-                isSettingsOk = !(String.IsNullOrWhiteSpace(ado.Organization) ||
-                                String.IsNullOrWhiteSpace(ado.OrganizationUrl) ||
-                                String.IsNullOrWhiteSpace(ado.PersonalAccessToken) ||
-                                String.IsNullOrWhiteSpace(assignedTo));
-            }
+				if (key.GetValue("WBSRUN") != null)
+					wbsRun = key.GetValue("WBSRUN").ToString() + "-RUN";
+
+				if (key.GetValue("WBSPROJECT") != null)
+					wbsProject = key.GetValue("WBSPROJECT").ToString() + "-PROJECT";
+			}
+            
+            isSettingsOk = !(String.IsNullOrWhiteSpace(ado.Organization) ||
+                            String.IsNullOrWhiteSpace(ado.OrganizationUrl) ||
+                            String.IsNullOrWhiteSpace(ado.PersonalAccessToken) ||
+                            String.IsNullOrWhiteSpace(assignedTo));
+            
 
             //load existing projects for the user
             if (isSettingsOk)
@@ -151,12 +160,19 @@ namespace TimeTracker
                     MessageBox.Show("You must select a parent story!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-                if (txtTitle.Text == "")
+
+				if (cmbWbsCode.Text == string.Empty)
+				{
+					MessageBox.Show("You must select a WBS breakdown!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					return;
+				}
+
+				if (txtTitle.Text == "")
                 {
                     MessageBox.Show("You must enter a title!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-            }
+			}
             else if (rbUpdateTask.Checked)
             {
                 if (cmbBoard.SelectedIndex <= 0)
@@ -188,13 +204,6 @@ namespace TimeTracker
                     return;
                 }
             }
-
-
-			if (cmbWbsCode.Text == string.Empty)
-			{
-				MessageBox.Show("You must select a WBS code!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-				return;
-			}
 
 
 			isTimerRunning = true;
@@ -243,6 +252,41 @@ namespace TimeTracker
                 return;
             }
 
+            if (cmbState.Text == "New")
+            {
+				if (cmbBoard.SelectedIndex <= 0)
+				{
+					MessageBox.Show("You must select a board!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					return;
+				}
+				if (cmbArea.SelectedIndex <= 0)
+				{
+					MessageBox.Show("You must select a area path!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					return;
+				}
+				if (cmbIteration.SelectedIndex <= 0)
+				{
+					MessageBox.Show("You must select a iteration!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					return;
+				}
+				if (cmbStory.SelectedIndex <= 0)
+				{
+					MessageBox.Show("You must select a parent story!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					return;
+				}
+				if (cmbWbsCode.Text == string.Empty)
+				{
+					MessageBox.Show("You must select a WBS breakdown!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					return;
+				}
+				if (txtTitle.Text == "")
+				{
+					MessageBox.Show("You must enter a title!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					return;
+				}
+			}
+
+
             timer.Stop(); // Stop the timer
             elapsedTime = TimeSpan.Zero; // Reset the elapsed time
             isTimerRunning = false;
@@ -257,8 +301,7 @@ namespace TimeTracker
             row.Cells[dgEntries.Columns["colEndTime"].Index].Value = DateTime.Now.ToString("HH\\:mm"); ;
             row.Cells[dgEntries.Columns["colDuration"].Index].Value = Convert.ToDateTime(lblDuration.Text).ToString("HH\\:mm");
             row.Cells[dgEntries.Columns["colCreateDate"].Index].Value = DateTime.Now.ToString("dd\\-MM\\-yyyy");
-			row.Cells[dgEntries.Columns["colWbsCode"].Index].Value = cmbWbsCode.Text;
-
+			
 			if (rbCreateNew.Checked)
             {
                 row.Cells[dgEntries.Columns["colItemId"].Index].Value = string.Empty;
@@ -281,10 +324,10 @@ namespace TimeTracker
                 row.Cells[dgEntries.Columns["colOriginalEstimate"].Index].Value = Convert.ToDateTime(txtOriginalEstimate.Text).ToString("HH\\:mm");
                 row.Cells[dgEntries.Columns["colUpdateOrgEst"].Index].Value = chkUpdateOriginal.Checked;
                 row.Cells[dgEntries.Columns["colState"].Index].Value = cmbState.Text;
-
+				row.Cells[dgEntries.Columns["colWbsCode"].Index].Value = cmbWbsCode.Text;
 
 			}
-            else if (rbUpdateTask.Checked)
+			else if (rbUpdateTask.Checked)
             {
                 row.Cells[dgEntries.Columns["colItemId"].Index].Value = cmbTask.SelectedValue;
                 row.Cells[dgEntries.Columns["colTitle"].Index].Value = cmbTask.Text.Substring(cmbTask.Text.IndexOf("-") + 2);
@@ -601,8 +644,15 @@ namespace TimeTracker
                         if (newItem.UpdateOriginalEstimate == true)
                             newItem.OriginalEstimate = newItem.CompletedWork;
 
-                        //create the ADO item
-                        int itemId = ado.CreateAdoItem(newItem);
+                        if (row.Cells["colWbsCode"].Value != null)
+                        {
+                            if (row.Cells["colWbsCode"].Value.ToString().Contains("Run"))
+                                newItem.WBS = wbsRun;
+                            else if (row.Cells["colWbsCode"].Value.ToString().Contains("Project"))
+                                newItem.WBS = wbsProject;
+                        }
+						//create the ADO item
+						int itemId = ado.CreateAdoItem(newItem);
 
                         //set item status again
                         bool closeItem = Convert.ToBoolean(row.Cells["colCloseItem"].Value.ToString());
@@ -1292,42 +1342,34 @@ namespace TimeTracker
 
 		private void LoadTags()
 		{
-			string fileName = dataDirectory + "\\tags.txt";
-			if (!File.Exists(fileName)) return;
-
-
-			StreamReader reader = new StreamReader(fileName);
-
-			string line;
-			int ix = 1;
-
-			while ((line = reader.ReadLine()) != null)
+			RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Time Tracker for ADO");
+			if (key != null)
 			{
-				if (line == "")
+
+				if (key.GetValue("TagGroup1") != null)
 				{
-					ix++;
-					continue;
+					string[] items = key.GetValue("TagGroup1").ToString().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+					cmbTag1.Items.AddRange(items.Select(item => item.Trim()).ToArray());
 				}
-				switch (ix)
+
+				if (key.GetValue("TagGroup2") != null)
 				{
-					case 1:
-						cmbTag1.Items.Add(line);
-						break;
-					case 2:
-						cmbTag2.Items.Add(line);
-						break;
-					case 3:
-						cmbTag3.Items.Add(line);
-						break;
-					case 4:
-						cmbTag4.Items.Add(line);
-						break;
-					default:
-						break;
+					string[] items = key.GetValue("TagGroup2").ToString().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+					cmbTag2.Items.AddRange(items.Select(item => item.Trim()).ToArray());
+				}
+
+				if (key.GetValue("TagGroup3") != null)
+				{
+					string[] items = key.GetValue("TagGroup3").ToString().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+					cmbTag3.Items.AddRange(items.Select(item => item.Trim()).ToArray());
+				}
+
+				if (key.GetValue("TagGroup4") != null)
+				{
+					string[] items = key.GetValue("TagGroup4").ToString().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+					cmbTag4.Items.AddRange(items.Select(item => item.Trim()).ToArray());
 				}
 			}
-
-			reader.Close();
 		}
 
 		private void btnListActiveItems_Click(object sender, EventArgs e)

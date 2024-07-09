@@ -30,87 +30,6 @@
         {
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmTracker));
 			this.dgEntries = new System.Windows.Forms.DataGridView();
-			this.lblStartTime = new System.Windows.Forms.Label();
-			this.btnDeleteRow = new System.Windows.Forms.Button();
-			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-			this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
-			this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
-			this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
-			this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
-			this.toolStripStatusLabel6 = new System.Windows.Forms.ToolStripStatusLabel();
-			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-			this.mnTimeTracket = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnSaveList = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnLoadData = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnStartNewDay = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnTodoList = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnFavoriteBoards = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnSettings = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnExit = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnAbout = new System.Windows.Forms.ToolStripMenuItem();
-			this.grpNewItem = new System.Windows.Forms.GroupBox();
-			this.cmbTag4 = new System.Windows.Forms.ComboBox();
-			this.label5 = new System.Windows.Forms.Label();
-			this.txtOriginalEstimate = new System.Windows.Forms.MaskedTextBox();
-			this.btnOpenStoryLink = new System.Windows.Forms.Button();
-			this.btnRefreshStory = new System.Windows.Forms.Button();
-			this.dtTargetDate = new System.Windows.Forms.DateTimePicker();
-			this.label13 = new System.Windows.Forms.Label();
-			this.dtStartDate = new System.Windows.Forms.DateTimePicker();
-			this.label12 = new System.Windows.Forms.Label();
-			this.label11 = new System.Windows.Forms.Label();
-			this.cmbTag3 = new System.Windows.Forms.ComboBox();
-			this.cmbTag2 = new System.Windows.Forms.ComboBox();
-			this.cmbTag1 = new System.Windows.Forms.ComboBox();
-			this.label2 = new System.Windows.Forms.Label();
-			this.cmbStory = new System.Windows.Forms.ComboBox();
-			this.grpText = new System.Windows.Forms.GroupBox();
-			this.btnGetFromTodoList = new System.Windows.Forms.Button();
-			this.lblItemText = new System.Windows.Forms.Label();
-			this.label4 = new System.Windows.Forms.Label();
-			this.txtDescription = new System.Windows.Forms.TextBox();
-			this.txtTitle = new System.Windows.Forms.TextBox();
-			this.grpExistingItem = new System.Windows.Forms.GroupBox();
-			this.btnOpenItemLink = new System.Windows.Forms.Button();
-			this.btnRefreshTaskBug = new System.Windows.Forms.Button();
-			this.lblItemtype = new System.Windows.Forms.Label();
-			this.cmbTask = new System.Windows.Forms.ComboBox();
-			this.grpMain = new System.Windows.Forms.GroupBox();
-			this.btnListActiveItems = new System.Windows.Forms.Button();
-			this.btnRefreshBoard = new System.Windows.Forms.Button();
-			this.btnOpenBoardLink = new System.Windows.Forms.Button();
-			this.label9 = new System.Windows.Forms.Label();
-			this.cmbIteration = new System.Windows.Forms.ComboBox();
-			this.label6 = new System.Windows.Forms.Label();
-			this.label8 = new System.Windows.Forms.Label();
-			this.cmbArea = new System.Windows.Forms.ComboBox();
-			this.label7 = new System.Windows.Forms.Label();
-			this.cmbProject = new System.Windows.Forms.ComboBox();
-			this.label1 = new System.Windows.Forms.Label();
-			this.cmbBoard = new System.Windows.Forms.ComboBox();
-			this.chkCloseItem = new System.Windows.Forms.CheckBox();
-			this.rbUpdateTask = new System.Windows.Forms.RadioButton();
-			this.rbCreateNew = new System.Windows.Forms.RadioButton();
-			this.rbTimeEntry = new System.Windows.Forms.RadioButton();
-			this.label3 = new System.Windows.Forms.Label();
-			this.cmbCategory = new System.Windows.Forms.ComboBox();
-			this.lblDuration = new System.Windows.Forms.Label();
-			this.btnStop = new System.Windows.Forms.Button();
-			this.btnPause = new System.Windows.Forms.Button();
-			this.btnStart = new System.Windows.Forms.Button();
-			this.btnCancel = new System.Windows.Forms.Button();
-			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-			this.txtStartTime = new System.Windows.Forms.MaskedTextBox();
-			this.chkUpdateOriginal = new System.Windows.Forms.CheckBox();
-			this.label10 = new System.Windows.Forms.Label();
-			this.cmbWbsCode = new System.Windows.Forms.ComboBox();
-			this.cmbItemType = new System.Windows.Forms.ComboBox();
-			this.cmbState = new System.Windows.Forms.ComboBox();
-			this.label14 = new System.Windows.Forms.Label();
 			this.colCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colItemId = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.colItemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -136,6 +55,87 @@
 			this.colUpdateOrgEst = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.colWbsCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.lblStartTime = new System.Windows.Forms.Label();
+			this.btnDeleteRow = new System.Windows.Forms.Button();
+			this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+			this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.toolStripStatusLabel5 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.toolStripStatusLabel6 = new System.Windows.Forms.ToolStripStatusLabel();
+			this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+			this.mnTimeTracket = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnSaveList = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnLoadData = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnStartNewDay = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnTodoList = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnFavoriteBoards = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnSettings = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+			this.mnExit = new System.Windows.Forms.ToolStripMenuItem();
+			this.mnAbout = new System.Windows.Forms.ToolStripMenuItem();
+			this.grpNewItem = new System.Windows.Forms.GroupBox();
+			this.label10 = new System.Windows.Forms.Label();
+			this.label14 = new System.Windows.Forms.Label();
+			this.cmbWbsCode = new System.Windows.Forms.ComboBox();
+			this.cmbState = new System.Windows.Forms.ComboBox();
+			this.cmbItemType = new System.Windows.Forms.ComboBox();
+			this.cmbTag4 = new System.Windows.Forms.ComboBox();
+			this.label5 = new System.Windows.Forms.Label();
+			this.txtOriginalEstimate = new System.Windows.Forms.MaskedTextBox();
+			this.label6 = new System.Windows.Forms.Label();
+			this.btnOpenStoryLink = new System.Windows.Forms.Button();
+			this.label9 = new System.Windows.Forms.Label();
+			this.btnRefreshStory = new System.Windows.Forms.Button();
+			this.cmbIteration = new System.Windows.Forms.ComboBox();
+			this.dtTargetDate = new System.Windows.Forms.DateTimePicker();
+			this.label13 = new System.Windows.Forms.Label();
+			this.dtStartDate = new System.Windows.Forms.DateTimePicker();
+			this.label12 = new System.Windows.Forms.Label();
+			this.label11 = new System.Windows.Forms.Label();
+			this.cmbTag3 = new System.Windows.Forms.ComboBox();
+			this.cmbTag2 = new System.Windows.Forms.ComboBox();
+			this.cmbTag1 = new System.Windows.Forms.ComboBox();
+			this.label2 = new System.Windows.Forms.Label();
+			this.cmbStory = new System.Windows.Forms.ComboBox();
+			this.grpText = new System.Windows.Forms.GroupBox();
+			this.btnGetFromTodoList = new System.Windows.Forms.Button();
+			this.lblItemText = new System.Windows.Forms.Label();
+			this.label4 = new System.Windows.Forms.Label();
+			this.txtDescription = new System.Windows.Forms.TextBox();
+			this.txtTitle = new System.Windows.Forms.TextBox();
+			this.grpExistingItem = new System.Windows.Forms.GroupBox();
+			this.btnOpenItemLink = new System.Windows.Forms.Button();
+			this.btnRefreshTaskBug = new System.Windows.Forms.Button();
+			this.lblItemtype = new System.Windows.Forms.Label();
+			this.cmbTask = new System.Windows.Forms.ComboBox();
+			this.grpMain = new System.Windows.Forms.GroupBox();
+			this.btnListActiveItems = new System.Windows.Forms.Button();
+			this.btnRefreshBoard = new System.Windows.Forms.Button();
+			this.btnOpenBoardLink = new System.Windows.Forms.Button();
+			this.label8 = new System.Windows.Forms.Label();
+			this.cmbArea = new System.Windows.Forms.ComboBox();
+			this.label7 = new System.Windows.Forms.Label();
+			this.cmbProject = new System.Windows.Forms.ComboBox();
+			this.label1 = new System.Windows.Forms.Label();
+			this.cmbBoard = new System.Windows.Forms.ComboBox();
+			this.chkCloseItem = new System.Windows.Forms.CheckBox();
+			this.rbUpdateTask = new System.Windows.Forms.RadioButton();
+			this.rbCreateNew = new System.Windows.Forms.RadioButton();
+			this.rbTimeEntry = new System.Windows.Forms.RadioButton();
+			this.label3 = new System.Windows.Forms.Label();
+			this.cmbCategory = new System.Windows.Forms.ComboBox();
+			this.lblDuration = new System.Windows.Forms.Label();
+			this.btnStop = new System.Windows.Forms.Button();
+			this.btnPause = new System.Windows.Forms.Button();
+			this.btnStart = new System.Windows.Forms.Button();
+			this.btnCancel = new System.Windows.Forms.Button();
+			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+			this.txtStartTime = new System.Windows.Forms.MaskedTextBox();
+			this.chkUpdateOriginal = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.dgEntries)).BeginInit();
 			this.statusStrip1.SuspendLayout();
 			this.menuStrip1.SuspendLayout();
@@ -182,6 +182,201 @@
 			this.dgEntries.TabIndex = 13;
 			this.dgEntries.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgEntries_CellContentClick);
 			this.dgEntries.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgEntries_CellDoubleClick);
+			// 
+			// colCategory
+			// 
+			this.colCategory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.colCategory.HeaderText = "Category";
+			this.colCategory.Name = "colCategory";
+			this.colCategory.ReadOnly = true;
+			this.colCategory.Width = 74;
+			// 
+			// colItemId
+			// 
+			this.colItemId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.colItemId.HeaderText = "Item Id";
+			this.colItemId.Name = "colItemId";
+			this.colItemId.ReadOnly = true;
+			this.colItemId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.colItemId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			this.colItemId.Width = 70;
+			// 
+			// colItemType
+			// 
+			this.colItemType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.colItemType.HeaderText = "Item Type";
+			this.colItemType.Name = "colItemType";
+			this.colItemType.ReadOnly = true;
+			this.colItemType.Visible = false;
+			// 
+			// colTitle
+			// 
+			this.colTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.colTitle.HeaderText = "Title";
+			this.colTitle.Name = "colTitle";
+			this.colTitle.ReadOnly = true;
+			this.colTitle.Width = 52;
+			// 
+			// colBoard
+			// 
+			this.colBoard.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.colBoard.HeaderText = "Board";
+			this.colBoard.Name = "colBoard";
+			this.colBoard.ReadOnly = true;
+			this.colBoard.Width = 60;
+			// 
+			// colStory
+			// 
+			this.colStory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.colStory.HeaderText = "Parent Story";
+			this.colStory.Name = "colStory";
+			this.colStory.ReadOnly = true;
+			this.colStory.Width = 83;
+			// 
+			// colStartTime
+			// 
+			this.colStartTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.colStartTime.HeaderText = "Start Time";
+			this.colStartTime.Name = "colStartTime";
+			this.colStartTime.ReadOnly = true;
+			this.colStartTime.Width = 80;
+			// 
+			// colEndTime
+			// 
+			this.colEndTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.colEndTime.HeaderText = "End Time";
+			this.colEndTime.Name = "colEndTime";
+			this.colEndTime.ReadOnly = true;
+			this.colEndTime.Width = 80;
+			// 
+			// colDuration
+			// 
+			this.colDuration.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.colDuration.HeaderText = "Duration";
+			this.colDuration.Name = "colDuration";
+			this.colDuration.ReadOnly = true;
+			this.colDuration.Width = 72;
+			// 
+			// colTags
+			// 
+			this.colTags.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.colTags.HeaderText = "Tags";
+			this.colTags.Name = "colTags";
+			this.colTags.ReadOnly = true;
+			this.colTags.Width = 56;
+			// 
+			// colDescription
+			// 
+			this.colDescription.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.colDescription.HeaderText = "Description/Discussion";
+			this.colDescription.Name = "colDescription";
+			this.colDescription.ReadOnly = true;
+			this.colDescription.Width = 141;
+			// 
+			// colProject
+			// 
+			this.colProject.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.colProject.HeaderText = "Project";
+			this.colProject.Name = "colProject";
+			this.colProject.ReadOnly = true;
+			this.colProject.Width = 65;
+			// 
+			// colAreaPath
+			// 
+			this.colAreaPath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.colAreaPath.HeaderText = "Area Path";
+			this.colAreaPath.Name = "colAreaPath";
+			this.colAreaPath.ReadOnly = true;
+			this.colAreaPath.Width = 73;
+			// 
+			// colIteration
+			// 
+			this.colIteration.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.colIteration.HeaderText = "Iteration";
+			this.colIteration.Name = "colIteration";
+			this.colIteration.ReadOnly = true;
+			this.colIteration.Width = 70;
+			// 
+			// colCloseItem
+			// 
+			this.colCloseItem.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.colCloseItem.HeaderText = "Close Item";
+			this.colCloseItem.Name = "colCloseItem";
+			this.colCloseItem.ReadOnly = true;
+			this.colCloseItem.Width = 56;
+			// 
+			// colParentId
+			// 
+			this.colParentId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.colParentId.HeaderText = "Parent Id";
+			this.colParentId.Name = "colParentId";
+			this.colParentId.ReadOnly = true;
+			this.colParentId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.colParentId.Width = 75;
+			// 
+			// colCreateDate
+			// 
+			this.colCreateDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.colCreateDate.HeaderText = "Create Date";
+			this.colCreateDate.Name = "colCreateDate";
+			this.colCreateDate.ReadOnly = true;
+			this.colCreateDate.Width = 82;
+			// 
+			// colOperationMode
+			// 
+			this.colOperationMode.HeaderText = "Operation";
+			this.colOperationMode.Name = "colOperationMode";
+			this.colOperationMode.ReadOnly = true;
+			this.colOperationMode.Width = 80;
+			// 
+			// colSaved
+			// 
+			this.colSaved.HeaderText = "Saved";
+			this.colSaved.Name = "colSaved";
+			this.colSaved.ReadOnly = true;
+			this.colSaved.Width = 70;
+			// 
+			// colStartDate
+			// 
+			this.colStartDate.HeaderText = "Start Date";
+			this.colStartDate.Name = "colStartDate";
+			this.colStartDate.ReadOnly = true;
+			this.colStartDate.Visible = false;
+			// 
+			// colTargetDate
+			// 
+			this.colTargetDate.HeaderText = "Target Date";
+			this.colTargetDate.Name = "colTargetDate";
+			this.colTargetDate.ReadOnly = true;
+			this.colTargetDate.Visible = false;
+			// 
+			// colOriginalEstimate
+			// 
+			this.colOriginalEstimate.HeaderText = "Original Estimate";
+			this.colOriginalEstimate.Name = "colOriginalEstimate";
+			this.colOriginalEstimate.ReadOnly = true;
+			this.colOriginalEstimate.Width = 120;
+			// 
+			// colUpdateOrgEst
+			// 
+			this.colUpdateOrgEst.HeaderText = "Update Org.Est.";
+			this.colUpdateOrgEst.Name = "colUpdateOrgEst";
+			this.colUpdateOrgEst.ReadOnly = true;
+			// 
+			// colWbsCode
+			// 
+			this.colWbsCode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+			this.colWbsCode.HeaderText = "WBS Code";
+			this.colWbsCode.Name = "colWbsCode";
+			this.colWbsCode.ReadOnly = true;
+			this.colWbsCode.Width = 79;
+			// 
+			// colState
+			// 
+			this.colState.HeaderText = "State";
+			this.colState.Name = "colState";
+			this.colState.ReadOnly = true;
+			this.colState.Visible = false;
 			// 
 			// lblStartTime
 			// 
@@ -373,8 +568,12 @@
 			// 
 			// grpNewItem
 			// 
+			this.grpNewItem.Controls.Add(this.label10);
 			this.grpNewItem.Controls.Add(this.label14);
+			this.grpNewItem.Controls.Add(this.cmbWbsCode);
+			this.grpNewItem.Controls.Add(this.label3);
 			this.grpNewItem.Controls.Add(this.cmbState);
+			this.grpNewItem.Controls.Add(this.cmbCategory);
 			this.grpNewItem.Controls.Add(this.cmbItemType);
 			this.grpNewItem.Controls.Add(this.cmbTag4);
 			this.grpNewItem.Controls.Add(this.label5);
@@ -396,9 +595,83 @@
 			this.grpNewItem.Controls.Add(this.cmbStory);
 			this.grpNewItem.Location = new System.Drawing.Point(12, 164);
 			this.grpNewItem.Name = "grpNewItem";
-			this.grpNewItem.Size = new System.Drawing.Size(476, 193);
+			this.grpNewItem.Size = new System.Drawing.Size(476, 254);
 			this.grpNewItem.TabIndex = 37;
 			this.grpNewItem.TabStop = false;
+			// 
+			// label10
+			// 
+			this.label10.AutoSize = true;
+			this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label10.Location = new System.Drawing.Point(16, 196);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(102, 13);
+			this.label10.TabIndex = 79;
+			this.label10.Text = "WBS Breakdown";
+			// 
+			// label14
+			// 
+			this.label14.AutoSize = true;
+			this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label14.Location = new System.Drawing.Point(217, 19);
+			this.label14.Name = "label14";
+			this.label14.Size = new System.Drawing.Size(37, 13);
+			this.label14.TabIndex = 78;
+			this.label14.Text = "State";
+			// 
+			// cmbWbsCode
+			// 
+			this.cmbWbsCode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cmbWbsCode.FormattingEnabled = true;
+			this.cmbWbsCode.Items.AddRange(new object[] {
+            "",
+            "Run-Incidents / Break Fix",
+            "Run-Legal & Compliance",
+            "Run-Service Requests",
+            "Run-Minor Enhancements (<2 weeks)",
+            "Run-Tech Debt / Technology Lifecycle",
+            "Run-Access & Authorization",
+            "Run-Patching / Monitoring",
+            "Run-Application Maintenance",
+            "Run-Other",
+            "",
+            "Project-Discovery",
+            "Project-Proof of Concepts",
+            "Project-Working Demands",
+            "Project-Major Enhancements (>2 weeks)",
+            "Project-Strategic Initiatives",
+            "Project-Project Management",
+            "Project-Other"});
+			this.cmbWbsCode.Location = new System.Drawing.Point(124, 193);
+			this.cmbWbsCode.Name = "cmbWbsCode";
+			this.cmbWbsCode.Size = new System.Drawing.Size(216, 21);
+			this.cmbWbsCode.TabIndex = 78;
+			// 
+			// cmbState
+			// 
+			this.cmbState.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cmbState.FormattingEnabled = true;
+			this.cmbState.Items.AddRange(new object[] {
+            "Active",
+            "New"});
+			this.cmbState.Location = new System.Drawing.Point(263, 15);
+			this.cmbState.Name = "cmbState";
+			this.cmbState.Size = new System.Drawing.Size(82, 21);
+			this.cmbState.TabIndex = 77;
+			this.cmbState.SelectedIndexChanged += new System.EventHandler(this.cmbState_SelectedIndexChanged);
+			// 
+			// cmbItemType
+			// 
+			this.cmbItemType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cmbItemType.FormattingEnabled = true;
+			this.cmbItemType.Items.AddRange(new object[] {
+            "Task",
+            "Bug"});
+			this.cmbItemType.Location = new System.Drawing.Point(98, 15);
+			this.cmbItemType.Name = "cmbItemType";
+			this.cmbItemType.Size = new System.Drawing.Size(82, 21);
+			this.cmbItemType.TabIndex = 76;
+			this.cmbItemType.SelectedIndexChanged += new System.EventHandler(this.cmbItemType_SelectedIndexChanged);
 			// 
 			// cmbTag4
 			// 
@@ -431,6 +704,16 @@
 			this.txtOriginalEstimate.ValidatingType = typeof(System.DateTime);
 			this.txtOriginalEstimate.Leave += new System.EventHandler(this.txtOriginalEstimate_Leave);
 			// 
+			// label6
+			// 
+			this.label6.AutoSize = true;
+			this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label6.Location = new System.Drawing.Point(15, 19);
+			this.label6.Name = "label6";
+			this.label6.Size = new System.Drawing.Size(63, 13);
+			this.label6.TabIndex = 62;
+			this.label6.Text = "Item Type";
+			// 
 			// btnOpenStoryLink
 			// 
 			this.btnOpenStoryLink.BackgroundImage = global::TimeTracker.Properties.Resources.Azure_DevOps;
@@ -442,6 +725,16 @@
 			this.btnOpenStoryLink.UseVisualStyleBackColor = true;
 			this.btnOpenStoryLink.Click += new System.EventHandler(this.btnOpenStoryLink_Click);
 			// 
+			// label9
+			// 
+			this.label9.AutoSize = true;
+			this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label9.Location = new System.Drawing.Point(15, 48);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(54, 13);
+			this.label9.TabIndex = 66;
+			this.label9.Text = "Iteration";
+			// 
 			// btnRefreshStory
 			// 
 			this.btnRefreshStory.BackgroundImage = global::TimeTracker.Properties.Resources.refresh;
@@ -452,6 +745,15 @@
 			this.btnRefreshStory.TabIndex = 71;
 			this.btnRefreshStory.UseVisualStyleBackColor = true;
 			this.btnRefreshStory.Click += new System.EventHandler(this.btnRefreshStory_Click);
+			// 
+			// cmbIteration
+			// 
+			this.cmbIteration.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cmbIteration.FormattingEnabled = true;
+			this.cmbIteration.Location = new System.Drawing.Point(98, 45);
+			this.cmbIteration.Name = "cmbIteration";
+			this.cmbIteration.Size = new System.Drawing.Size(248, 21);
+			this.cmbIteration.TabIndex = 65;
 			// 
 			// dtTargetDate
 			// 
@@ -556,9 +858,9 @@
 			this.grpText.Controls.Add(this.label4);
 			this.grpText.Controls.Add(this.txtDescription);
 			this.grpText.Controls.Add(this.txtTitle);
-			this.grpText.Location = new System.Drawing.Point(526, 60);
+			this.grpText.Location = new System.Drawing.Point(526, 111);
 			this.grpText.Name = "grpText";
-			this.grpText.Size = new System.Drawing.Size(566, 105);
+			this.grpText.Size = new System.Drawing.Size(566, 100);
 			this.grpText.TabIndex = 38;
 			this.grpText.TabStop = false;
 			// 
@@ -567,7 +869,7 @@
 			this.btnGetFromTodoList.BackgroundImage = global::TimeTracker.Properties.Resources.to_do_list;
 			this.btnGetFromTodoList.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
 			this.btnGetFromTodoList.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnGetFromTodoList.Location = new System.Drawing.Point(528, 17);
+			this.btnGetFromTodoList.Location = new System.Drawing.Point(528, 14);
 			this.btnGetFromTodoList.Name = "btnGetFromTodoList";
 			this.btnGetFromTodoList.Size = new System.Drawing.Size(22, 22);
 			this.btnGetFromTodoList.TabIndex = 73;
@@ -578,7 +880,7 @@
 			// 
 			this.lblItemText.AutoSize = true;
 			this.lblItemText.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblItemText.Location = new System.Drawing.Point(19, 52);
+			this.lblItemText.Location = new System.Drawing.Point(19, 49);
 			this.lblItemText.Name = "lblItemText";
 			this.lblItemText.Size = new System.Drawing.Size(71, 13);
 			this.lblItemText.TabIndex = 25;
@@ -588,7 +890,7 @@
 			// 
 			this.label4.AutoSize = true;
 			this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label4.Location = new System.Drawing.Point(19, 21);
+			this.label4.Location = new System.Drawing.Point(19, 18);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(32, 13);
 			this.label4.TabIndex = 24;
@@ -596,7 +898,7 @@
 			// 
 			// txtDescription
 			// 
-			this.txtDescription.Location = new System.Drawing.Point(100, 48);
+			this.txtDescription.Location = new System.Drawing.Point(100, 45);
 			this.txtDescription.Multiline = true;
 			this.txtDescription.Name = "txtDescription";
 			this.txtDescription.Size = new System.Drawing.Size(451, 45);
@@ -604,7 +906,7 @@
 			// 
 			// txtTitle
 			// 
-			this.txtTitle.Location = new System.Drawing.Point(100, 18);
+			this.txtTitle.Location = new System.Drawing.Point(100, 15);
 			this.txtTitle.Name = "txtTitle";
 			this.txtTitle.Size = new System.Drawing.Size(428, 20);
 			this.txtTitle.TabIndex = 22;
@@ -616,7 +918,7 @@
 			this.grpExistingItem.Controls.Add(this.lblItemtype);
 			this.grpExistingItem.Controls.Add(this.cmbTask);
 			this.grpExistingItem.Enabled = false;
-			this.grpExistingItem.Location = new System.Drawing.Point(12, 357);
+			this.grpExistingItem.Location = new System.Drawing.Point(526, 60);
 			this.grpExistingItem.Name = "grpExistingItem";
 			this.grpExistingItem.Size = new System.Drawing.Size(476, 50);
 			this.grpExistingItem.TabIndex = 43;
@@ -626,7 +928,7 @@
 			// 
 			this.btnOpenItemLink.BackgroundImage = global::TimeTracker.Properties.Resources.Azure_DevOps;
 			this.btnOpenItemLink.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.btnOpenItemLink.Location = new System.Drawing.Point(440, 18);
+			this.btnOpenItemLink.Location = new System.Drawing.Point(440, 14);
 			this.btnOpenItemLink.Name = "btnOpenItemLink";
 			this.btnOpenItemLink.Size = new System.Drawing.Size(23, 23);
 			this.btnOpenItemLink.TabIndex = 73;
@@ -637,7 +939,7 @@
 			// 
 			this.btnRefreshTaskBug.BackgroundImage = global::TimeTracker.Properties.Resources.refresh;
 			this.btnRefreshTaskBug.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.btnRefreshTaskBug.Location = new System.Drawing.Point(417, 18);
+			this.btnRefreshTaskBug.Location = new System.Drawing.Point(417, 14);
 			this.btnRefreshTaskBug.Name = "btnRefreshTaskBug";
 			this.btnRefreshTaskBug.Size = new System.Drawing.Size(23, 23);
 			this.btnRefreshTaskBug.TabIndex = 72;
@@ -648,7 +950,7 @@
 			// 
 			this.lblItemtype.AutoSize = true;
 			this.lblItemtype.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblItemtype.Location = new System.Drawing.Point(16, 22);
+			this.lblItemtype.Location = new System.Drawing.Point(16, 18);
 			this.lblItemtype.Name = "lblItemtype";
 			this.lblItemtype.Size = new System.Drawing.Size(35, 13);
 			this.lblItemtype.TabIndex = 42;
@@ -658,7 +960,7 @@
 			// 
 			this.cmbTask.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cmbTask.FormattingEnabled = true;
-			this.cmbTask.Location = new System.Drawing.Point(97, 19);
+			this.cmbTask.Location = new System.Drawing.Point(97, 15);
 			this.cmbTask.Name = "cmbTask";
 			this.cmbTask.Size = new System.Drawing.Size(320, 21);
 			this.cmbTask.TabIndex = 41;
@@ -713,35 +1015,6 @@
 			this.btnOpenBoardLink.TabIndex = 72;
 			this.btnOpenBoardLink.UseVisualStyleBackColor = true;
 			this.btnOpenBoardLink.Click += new System.EventHandler(this.btnOpenBoardLink_Click);
-			// 
-			// label9
-			// 
-			this.label9.AutoSize = true;
-			this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label9.Location = new System.Drawing.Point(15, 48);
-			this.label9.Name = "label9";
-			this.label9.Size = new System.Drawing.Size(54, 13);
-			this.label9.TabIndex = 66;
-			this.label9.Text = "Iteration";
-			// 
-			// cmbIteration
-			// 
-			this.cmbIteration.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cmbIteration.FormattingEnabled = true;
-			this.cmbIteration.Location = new System.Drawing.Point(98, 45);
-			this.cmbIteration.Name = "cmbIteration";
-			this.cmbIteration.Size = new System.Drawing.Size(248, 21);
-			this.cmbIteration.TabIndex = 65;
-			// 
-			// label6
-			// 
-			this.label6.AutoSize = true;
-			this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label6.Location = new System.Drawing.Point(15, 19);
-			this.label6.Name = "label6";
-			this.label6.Size = new System.Drawing.Size(63, 13);
-			this.label6.TabIndex = 62;
-			this.label6.Text = "Item Type";
 			// 
 			// label8
 			// 
@@ -806,7 +1079,7 @@
 			// chkCloseItem
 			// 
 			this.chkCloseItem.AutoSize = true;
-			this.chkCloseItem.Location = new System.Drawing.Point(626, 241);
+			this.chkCloseItem.Location = new System.Drawing.Point(622, 229);
 			this.chkCloseItem.Name = "chkCloseItem";
 			this.chkCloseItem.Size = new System.Drawing.Size(150, 17);
 			this.chkCloseItem.TabIndex = 62;
@@ -860,7 +1133,7 @@
 			// 
 			this.label3.AutoSize = true;
 			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(545, 174);
+			this.label3.Location = new System.Drawing.Point(17, 230);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(57, 13);
 			this.label3.TabIndex = 74;
@@ -877,7 +1150,7 @@
             "Daily Work",
             "Learning",
             "Others"});
-			this.cmbCategory.Location = new System.Drawing.Point(626, 171);
+			this.cmbCategory.Location = new System.Drawing.Point(98, 227);
 			this.cmbCategory.Name = "cmbCategory";
 			this.cmbCategory.Size = new System.Drawing.Size(121, 21);
 			this.cmbCategory.TabIndex = 73;
@@ -887,7 +1160,7 @@
 			this.lblDuration.AutoSize = true;
 			this.lblDuration.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblDuration.ForeColor = System.Drawing.Color.Black;
-			this.lblDuration.Location = new System.Drawing.Point(769, 342);
+			this.lblDuration.Location = new System.Drawing.Point(765, 346);
 			this.lblDuration.Name = "lblDuration";
 			this.lblDuration.Size = new System.Drawing.Size(143, 37);
 			this.lblDuration.TabIndex = 72;
@@ -898,7 +1171,7 @@
 			this.btnStop.Enabled = false;
 			this.btnStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnStop.ForeColor = System.Drawing.Color.Red;
-			this.btnStop.Location = new System.Drawing.Point(840, 299);
+			this.btnStop.Location = new System.Drawing.Point(836, 303);
 			this.btnStop.Name = "btnStop";
 			this.btnStop.Size = new System.Drawing.Size(100, 31);
 			this.btnStop.TabIndex = 71;
@@ -911,7 +1184,7 @@
 			this.btnPause.Enabled = false;
 			this.btnPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnPause.ForeColor = System.Drawing.Color.Orange;
-			this.btnPause.Location = new System.Drawing.Point(733, 299);
+			this.btnPause.Location = new System.Drawing.Point(729, 303);
 			this.btnPause.Name = "btnPause";
 			this.btnPause.Size = new System.Drawing.Size(100, 31);
 			this.btnPause.TabIndex = 70;
@@ -923,7 +1196,7 @@
 			// 
 			this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnStart.ForeColor = System.Drawing.Color.Green;
-			this.btnStart.Location = new System.Drawing.Point(626, 299);
+			this.btnStart.Location = new System.Drawing.Point(622, 303);
 			this.btnStart.Name = "btnStart";
 			this.btnStart.Size = new System.Drawing.Size(100, 31);
 			this.btnStart.TabIndex = 69;
@@ -936,7 +1209,7 @@
 			this.btnCancel.Enabled = false;
 			this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnCancel.ForeColor = System.Drawing.Color.RoyalBlue;
-			this.btnCancel.Location = new System.Drawing.Point(947, 299);
+			this.btnCancel.Location = new System.Drawing.Point(943, 303);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(100, 31);
 			this.btnCancel.TabIndex = 75;
@@ -968,294 +1241,20 @@
 			// 
 			this.chkUpdateOriginal.AutoSize = true;
 			this.chkUpdateOriginal.Enabled = false;
-			this.chkUpdateOriginal.Location = new System.Drawing.Point(655, 264);
+			this.chkUpdateOriginal.Location = new System.Drawing.Point(651, 252);
 			this.chkUpdateOriginal.Name = "chkUpdateOriginal";
 			this.chkUpdateOriginal.Size = new System.Drawing.Size(202, 17);
 			this.chkUpdateOriginal.TabIndex = 77;
 			this.chkUpdateOriginal.Text = "Update original estimate when closed";
 			this.chkUpdateOriginal.UseVisualStyleBackColor = true;
 			// 
-			// label10
-			// 
-			this.label10.AutoSize = true;
-			this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label10.Location = new System.Drawing.Point(545, 201);
-			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(68, 13);
-			this.label10.TabIndex = 79;
-			this.label10.Text = "WBS Code";
-			// 
-			// cmbWbsCode
-			// 
-			this.cmbWbsCode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cmbWbsCode.FormattingEnabled = true;
-			this.cmbWbsCode.Items.AddRange(new object[] {
-            "",
-            "Run-Incidents / Break Fix",
-            "Run-Legal & Compliance",
-            "Run-Service Requests",
-            "Run-Minor Enhancements (<2 weeks)",
-            "Run-Tech Debt / Technology Lifecycle",
-            "Run-Access & Authorization",
-            "Run-Patching / Monitoring",
-            "Run-Application Maintenance",
-            "Run-Other",
-            "",
-            "Project-Discovery",
-            "Project-Proof of Concepts",
-            "Project-Working Demands",
-            "Project-Major Enhancements (>2 weeks)",
-            "Project-Strategic Initiatives",
-            "Project-Project Management",
-            "Project-Other"});
-			this.cmbWbsCode.Location = new System.Drawing.Point(626, 198);
-			this.cmbWbsCode.Name = "cmbWbsCode";
-			this.cmbWbsCode.Size = new System.Drawing.Size(216, 21);
-			this.cmbWbsCode.TabIndex = 78;
-			// 
-			// cmbItemType
-			// 
-			this.cmbItemType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cmbItemType.FormattingEnabled = true;
-			this.cmbItemType.Items.AddRange(new object[] {
-            "Task",
-            "Bug"});
-			this.cmbItemType.Location = new System.Drawing.Point(98, 15);
-			this.cmbItemType.Name = "cmbItemType";
-			this.cmbItemType.Size = new System.Drawing.Size(82, 21);
-			this.cmbItemType.TabIndex = 76;
-			this.cmbItemType.SelectedIndexChanged += new System.EventHandler(this.cmbItemType_SelectedIndexChanged);
-			// 
-			// cmbState
-			// 
-			this.cmbState.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cmbState.FormattingEnabled = true;
-			this.cmbState.Items.AddRange(new object[] {
-            "Active",
-            "New"});
-			this.cmbState.Location = new System.Drawing.Point(263, 15);
-			this.cmbState.Name = "cmbState";
-			this.cmbState.Size = new System.Drawing.Size(82, 21);
-			this.cmbState.TabIndex = 77;
-			this.cmbState.SelectedIndexChanged += new System.EventHandler(this.cmbState_SelectedIndexChanged);
-			// 
-			// label14
-			// 
-			this.label14.AutoSize = true;
-			this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label14.Location = new System.Drawing.Point(217, 19);
-			this.label14.Name = "label14";
-			this.label14.Size = new System.Drawing.Size(37, 13);
-			this.label14.TabIndex = 78;
-			this.label14.Text = "State";
-			// 
-			// colCategory
-			// 
-			this.colCategory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.colCategory.HeaderText = "Category";
-			this.colCategory.Name = "colCategory";
-			this.colCategory.ReadOnly = true;
-			this.colCategory.Width = 74;
-			// 
-			// colItemId
-			// 
-			this.colItemId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.colItemId.HeaderText = "Item Id";
-			this.colItemId.Name = "colItemId";
-			this.colItemId.ReadOnly = true;
-			this.colItemId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-			this.colItemId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-			this.colItemId.Width = 70;
-			// 
-			// colItemType
-			// 
-			this.colItemType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.colItemType.HeaderText = "Item Type";
-			this.colItemType.Name = "colItemType";
-			this.colItemType.ReadOnly = true;
-			this.colItemType.Visible = false;
-			this.colItemType.Width = 79;
-			// 
-			// colTitle
-			// 
-			this.colTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.colTitle.HeaderText = "Title";
-			this.colTitle.Name = "colTitle";
-			this.colTitle.ReadOnly = true;
-			this.colTitle.Width = 52;
-			// 
-			// colBoard
-			// 
-			this.colBoard.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.colBoard.HeaderText = "Board";
-			this.colBoard.Name = "colBoard";
-			this.colBoard.ReadOnly = true;
-			this.colBoard.Width = 60;
-			// 
-			// colStory
-			// 
-			this.colStory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.colStory.HeaderText = "Parent Story";
-			this.colStory.Name = "colStory";
-			this.colStory.ReadOnly = true;
-			this.colStory.Width = 90;
-			// 
-			// colStartTime
-			// 
-			this.colStartTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.colStartTime.HeaderText = "Start Time";
-			this.colStartTime.Name = "colStartTime";
-			this.colStartTime.ReadOnly = true;
-			this.colStartTime.Width = 80;
-			// 
-			// colEndTime
-			// 
-			this.colEndTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.colEndTime.HeaderText = "End Time";
-			this.colEndTime.Name = "colEndTime";
-			this.colEndTime.ReadOnly = true;
-			this.colEndTime.Width = 80;
-			// 
-			// colDuration
-			// 
-			this.colDuration.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.colDuration.HeaderText = "Duration";
-			this.colDuration.Name = "colDuration";
-			this.colDuration.ReadOnly = true;
-			this.colDuration.Width = 72;
-			// 
-			// colTags
-			// 
-			this.colTags.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.colTags.HeaderText = "Tags";
-			this.colTags.Name = "colTags";
-			this.colTags.ReadOnly = true;
-			this.colTags.Width = 56;
-			// 
-			// colDescription
-			// 
-			this.colDescription.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.colDescription.HeaderText = "Description/Discussion";
-			this.colDescription.Name = "colDescription";
-			this.colDescription.ReadOnly = true;
-			this.colDescription.Width = 141;
-			// 
-			// colProject
-			// 
-			this.colProject.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.colProject.HeaderText = "Project";
-			this.colProject.Name = "colProject";
-			this.colProject.ReadOnly = true;
-			this.colProject.Width = 65;
-			// 
-			// colAreaPath
-			// 
-			this.colAreaPath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.colAreaPath.HeaderText = "Area Path";
-			this.colAreaPath.Name = "colAreaPath";
-			this.colAreaPath.ReadOnly = true;
-			this.colAreaPath.Width = 79;
-			// 
-			// colIteration
-			// 
-			this.colIteration.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.colIteration.HeaderText = "Iteration";
-			this.colIteration.Name = "colIteration";
-			this.colIteration.ReadOnly = true;
-			this.colIteration.Width = 70;
-			// 
-			// colCloseItem
-			// 
-			this.colCloseItem.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.colCloseItem.HeaderText = "Close Item";
-			this.colCloseItem.Name = "colCloseItem";
-			this.colCloseItem.ReadOnly = true;
-			this.colCloseItem.Width = 62;
-			// 
-			// colParentId
-			// 
-			this.colParentId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.colParentId.HeaderText = "Parent Id";
-			this.colParentId.Name = "colParentId";
-			this.colParentId.ReadOnly = true;
-			this.colParentId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.colParentId.Width = 75;
-			// 
-			// colCreateDate
-			// 
-			this.colCreateDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.colCreateDate.HeaderText = "Create Date";
-			this.colCreateDate.Name = "colCreateDate";
-			this.colCreateDate.ReadOnly = true;
-			this.colCreateDate.Width = 89;
-			// 
-			// colOperationMode
-			// 
-			this.colOperationMode.HeaderText = "Operation";
-			this.colOperationMode.Name = "colOperationMode";
-			this.colOperationMode.ReadOnly = true;
-			this.colOperationMode.Width = 80;
-			// 
-			// colSaved
-			// 
-			this.colSaved.HeaderText = "Saved";
-			this.colSaved.Name = "colSaved";
-			this.colSaved.ReadOnly = true;
-			this.colSaved.Width = 70;
-			// 
-			// colStartDate
-			// 
-			this.colStartDate.HeaderText = "Start Date";
-			this.colStartDate.Name = "colStartDate";
-			this.colStartDate.ReadOnly = true;
-			this.colStartDate.Visible = false;
-			// 
-			// colTargetDate
-			// 
-			this.colTargetDate.HeaderText = "Target Date";
-			this.colTargetDate.Name = "colTargetDate";
-			this.colTargetDate.ReadOnly = true;
-			this.colTargetDate.Visible = false;
-			// 
-			// colOriginalEstimate
-			// 
-			this.colOriginalEstimate.HeaderText = "Original Estimate";
-			this.colOriginalEstimate.Name = "colOriginalEstimate";
-			this.colOriginalEstimate.ReadOnly = true;
-			this.colOriginalEstimate.Width = 120;
-			// 
-			// colUpdateOrgEst
-			// 
-			this.colUpdateOrgEst.HeaderText = "Update Org.Est.";
-			this.colUpdateOrgEst.Name = "colUpdateOrgEst";
-			this.colUpdateOrgEst.ReadOnly = true;
-			// 
-			// colWbsCode
-			// 
-			this.colWbsCode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			this.colWbsCode.HeaderText = "WBS Code";
-			this.colWbsCode.Name = "colWbsCode";
-			this.colWbsCode.ReadOnly = true;
-			this.colWbsCode.Width = 85;
-			// 
-			// colState
-			// 
-			this.colState.HeaderText = "State";
-			this.colState.Name = "colState";
-			this.colState.ReadOnly = true;
-			this.colState.Visible = false;
-			// 
 			// frmTracker
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.ClientSize = new System.Drawing.Size(1104, 710);
-			this.Controls.Add(this.label10);
-			this.Controls.Add(this.cmbWbsCode);
 			this.Controls.Add(this.chkUpdateOriginal);
 			this.Controls.Add(this.txtStartTime);
 			this.Controls.Add(this.btnCancel);
-			this.Controls.Add(this.label3);
-			this.Controls.Add(this.cmbCategory);
 			this.Controls.Add(this.lblDuration);
 			this.Controls.Add(this.btnStop);
 			this.Controls.Add(this.btnPause);

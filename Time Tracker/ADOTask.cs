@@ -24,5 +24,6 @@ namespace TimeTracker
         public string Tags { get; set; }
         public string History { get; set; }
         public Boolean UpdateOriginalEstimate { get; set; }
-    }
+		public string WBS { get; set; }
+	}
 }
