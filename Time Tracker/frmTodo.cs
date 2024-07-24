@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -16,7 +17,8 @@ namespace TimeTracker
 
         public string title { get; private set; }
         public string description { get; private set; }
-        public string dataDirectory;
+
+        DBHelper db = new DBHelper();
 
         public frmTodo()
         {
@@ -25,7 +27,8 @@ namespace TimeTracker
 
         private void frmTodo_Load(object sender, EventArgs e)
         {
-            LoadDataFromFile();
+            dgTodoList.Rows.Clear();
+            LoadTodoList();
         }
 
         private void btnAdd_Click(object sender, EventArgs e)
@@ -67,69 +70,48 @@ namespace TimeTracker
 
         private void frmTodo_FormClosed(object sender, FormClosedEventArgs e)
         {
-            SaveGridToFile();
+			SaveTodoList();
         }
 
-        private void SaveGridToFile()
+        private void SaveTodoList()
         {
-            //set date in file name to day loaded
-            string fileName = dataDirectory + "\\todo.txt";
+			try
+			{
+				db.SaveTodoList(dgTodoList.Rows);
+			}
+			catch (Exception exc)
+			{
+				MessageBox.Show("Error in saving favorite boards! /n" + exc.Message);
+			}
+			// Loop through each row
+			//foreach (DataGridViewRow row in dgTodoList.Rows)
+			//{
 
-            StreamWriter writer = new StreamWriter(fileName);
+			//}
+		}
 
-            // Write the header row (optional)
-            writer.WriteLine(string.Join("\t", dgTodoList.Columns.Cast<DataGridViewColumn>().Select(c => c.HeaderText)));
-
-            // Loop through each row
-            foreach (DataGridViewRow row in dgTodoList.Rows)
-            {
-                // Skip header row (if you wrote it already)
-                if (row.IsNewRow) continue;
-
-                // Build the line string
-                string line = string.Join("\t", row.Cells.Cast<DataGridViewCell>().Select(c => c.FormattedValue));
-
-                // Write the line to the file
-                writer.WriteLine(line);
-            }
-            writer.Close();
-        }
-
-        private void LoadDataFromFile()
+        private void LoadTodoList()
         {
-            string fileName = dataDirectory + "\\todo.txt";
-            if (!File.Exists(fileName)) return;
+			try
+			{
+				dgTodoList.Rows.Clear(); //clear existing data in grid
 
-            dgTodoList.Rows.Clear(); //clear existing data in grid
+				SQLiteDataReader reader = db.LoadTodoList();
+				while (reader.Read())
+				{
+					int rowIndex = dgTodoList.Rows.Add();
+					DataGridViewRow row = dgTodoList.Rows[rowIndex];
 
-            StreamReader reader = new StreamReader(fileName);
+					row.Cells["colTitle"].Value = reader["Title"].ToString();
+					row.Cells["colDescription"].Value = reader["Description"].ToString();
+				}
+				reader.Close();
 
-            // Skip the header row
-            string headerLine = reader.ReadLine();
-
-            string line;
-            while ((line = reader.ReadLine()) != null)
-            {
-
-                // Split the line based on the delimiter
-                string[] values = line.Split('\t'); // Adjust delimiter if needed
-
-                // Create a new DataRow
-                DataGridViewRow row = new DataGridViewRow();
-                row.CreateCells(dgTodoList);
-
-                // Add values to each cell
-                for (int i = 0; i < values.Length; i++)
-                {
-                    row.Cells[i].Value = values[i];
-                }
-
-                // Add the row to the DataGridView
-                dgTodoList.Rows.Add(row);
-            }
-
-            reader.Close();
-
+			}
+			catch (Exception exc)
+			{
+				MessageBox.Show("Error in saving favorite boards! /n" + exc.Message);
+			}
         }
 
         private void dgTodoList_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

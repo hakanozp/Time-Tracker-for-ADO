@@ -81,7 +81,9 @@
 			this.label10 = new System.Windows.Forms.Label();
 			this.label14 = new System.Windows.Forms.Label();
 			this.cmbWbsCode = new System.Windows.Forms.ComboBox();
+			this.label3 = new System.Windows.Forms.Label();
 			this.cmbState = new System.Windows.Forms.ComboBox();
+			this.cmbCategory = new System.Windows.Forms.ComboBox();
 			this.cmbItemType = new System.Windows.Forms.ComboBox();
 			this.cmbTag4 = new System.Windows.Forms.ComboBox();
 			this.label5 = new System.Windows.Forms.Label();
@@ -122,19 +124,15 @@
 			this.cmbProject = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.cmbBoard = new System.Windows.Forms.ComboBox();
-			this.chkCloseItem = new System.Windows.Forms.CheckBox();
 			this.rbUpdateTask = new System.Windows.Forms.RadioButton();
 			this.rbCreateNew = new System.Windows.Forms.RadioButton();
-			this.rbTimeEntry = new System.Windows.Forms.RadioButton();
-			this.label3 = new System.Windows.Forms.Label();
-			this.cmbCategory = new System.Windows.Forms.ComboBox();
 			this.lblDuration = new System.Windows.Forms.Label();
 			this.btnStop = new System.Windows.Forms.Button();
 			this.btnPause = new System.Windows.Forms.Button();
 			this.btnStart = new System.Windows.Forms.Button();
 			this.btnCancel = new System.Windows.Forms.Button();
-			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.txtStartTime = new System.Windows.Forms.MaskedTextBox();
+			this.chkCloseItem = new System.Windows.Forms.CheckBox();
 			this.chkUpdateOriginal = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.dgEntries)).BeginInit();
 			this.statusStrip1.SuspendLayout();
@@ -207,7 +205,7 @@
 			this.colItemType.HeaderText = "Item Type";
 			this.colItemType.Name = "colItemType";
 			this.colItemType.ReadOnly = true;
-			this.colItemType.Visible = false;
+			this.colItemType.Width = 73;
 			// 
 			// colTitle
 			// 
@@ -341,14 +339,12 @@
 			this.colStartDate.HeaderText = "Start Date";
 			this.colStartDate.Name = "colStartDate";
 			this.colStartDate.ReadOnly = true;
-			this.colStartDate.Visible = false;
 			// 
 			// colTargetDate
 			// 
 			this.colTargetDate.HeaderText = "Target Date";
 			this.colTargetDate.Name = "colTargetDate";
 			this.colTargetDate.ReadOnly = true;
-			this.colTargetDate.Visible = false;
 			// 
 			// colOriginalEstimate
 			// 
@@ -376,7 +372,6 @@
 			this.colState.HeaderText = "State";
 			this.colState.Name = "colState";
 			this.colState.ReadOnly = true;
-			this.colState.Visible = false;
 			// 
 			// lblStartTime
 			// 
@@ -571,9 +566,7 @@
 			this.grpNewItem.Controls.Add(this.label10);
 			this.grpNewItem.Controls.Add(this.label14);
 			this.grpNewItem.Controls.Add(this.cmbWbsCode);
-			this.grpNewItem.Controls.Add(this.label3);
 			this.grpNewItem.Controls.Add(this.cmbState);
-			this.grpNewItem.Controls.Add(this.cmbCategory);
 			this.grpNewItem.Controls.Add(this.cmbItemType);
 			this.grpNewItem.Controls.Add(this.cmbTag4);
 			this.grpNewItem.Controls.Add(this.label5);
@@ -595,7 +588,7 @@
 			this.grpNewItem.Controls.Add(this.cmbStory);
 			this.grpNewItem.Location = new System.Drawing.Point(12, 164);
 			this.grpNewItem.Name = "grpNewItem";
-			this.grpNewItem.Size = new System.Drawing.Size(476, 254);
+			this.grpNewItem.Size = new System.Drawing.Size(476, 233);
 			this.grpNewItem.TabIndex = 37;
 			this.grpNewItem.TabStop = false;
 			// 
@@ -603,7 +596,7 @@
 			// 
 			this.label10.AutoSize = true;
 			this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label10.Location = new System.Drawing.Point(16, 196);
+			this.label10.Location = new System.Drawing.Point(16, 198);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(102, 13);
 			this.label10.TabIndex = 79;
@@ -642,10 +635,20 @@
             "Project-Strategic Initiatives",
             "Project-Project Management",
             "Project-Other"});
-			this.cmbWbsCode.Location = new System.Drawing.Point(124, 193);
+			this.cmbWbsCode.Location = new System.Drawing.Point(124, 195);
 			this.cmbWbsCode.Name = "cmbWbsCode";
 			this.cmbWbsCode.Size = new System.Drawing.Size(216, 21);
 			this.cmbWbsCode.TabIndex = 78;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label3.Location = new System.Drawing.Point(19, 103);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(57, 13);
+			this.label3.TabIndex = 74;
+			this.label3.Text = "Category";
 			// 
 			// cmbState
 			// 
@@ -659,6 +662,22 @@
 			this.cmbState.Size = new System.Drawing.Size(82, 21);
 			this.cmbState.TabIndex = 77;
 			this.cmbState.SelectedIndexChanged += new System.EventHandler(this.cmbState_SelectedIndexChanged);
+			// 
+			// cmbCategory
+			// 
+			this.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cmbCategory.FormattingEnabled = true;
+			this.cmbCategory.Items.AddRange(new object[] {
+            "Development",
+            "User Support",
+            "Meeting",
+            "Daily Work",
+            "Learning",
+            "Others"});
+			this.cmbCategory.Location = new System.Drawing.Point(100, 100);
+			this.cmbCategory.Name = "cmbCategory";
+			this.cmbCategory.Size = new System.Drawing.Size(121, 21);
+			this.cmbCategory.TabIndex = 73;
 			// 
 			// cmbItemType
 			// 
@@ -694,12 +713,14 @@
 			// 
 			// txtOriginalEstimate
 			// 
+			this.txtOriginalEstimate.BeepOnError = true;
 			this.txtOriginalEstimate.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.txtOriginalEstimate.Location = new System.Drawing.Point(322, 134);
 			this.txtOriginalEstimate.Mask = "00:00";
 			this.txtOriginalEstimate.Name = "txtOriginalEstimate";
 			this.txtOriginalEstimate.Size = new System.Drawing.Size(52, 20);
 			this.txtOriginalEstimate.TabIndex = 74;
+			this.txtOriginalEstimate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
 			this.txtOriginalEstimate.TextMaskFormat = System.Windows.Forms.MaskFormat.IncludePromptAndLiterals;
 			this.txtOriginalEstimate.ValidatingType = typeof(System.DateTime);
 			this.txtOriginalEstimate.Leave += new System.EventHandler(this.txtOriginalEstimate_Leave);
@@ -853,14 +874,18 @@
 			// 
 			// grpText
 			// 
+			this.grpText.Controls.Add(this.chkUpdateOriginal);
 			this.grpText.Controls.Add(this.btnGetFromTodoList);
 			this.grpText.Controls.Add(this.lblItemText);
 			this.grpText.Controls.Add(this.label4);
+			this.grpText.Controls.Add(this.label3);
 			this.grpText.Controls.Add(this.txtDescription);
 			this.grpText.Controls.Add(this.txtTitle);
+			this.grpText.Controls.Add(this.cmbCategory);
+			this.grpText.Controls.Add(this.chkCloseItem);
 			this.grpText.Location = new System.Drawing.Point(526, 111);
 			this.grpText.Name = "grpText";
-			this.grpText.Size = new System.Drawing.Size(566, 100);
+			this.grpText.Size = new System.Drawing.Size(566, 187);
 			this.grpText.TabIndex = 38;
 			this.grpText.TabStop = false;
 			// 
@@ -920,7 +945,7 @@
 			this.grpExistingItem.Enabled = false;
 			this.grpExistingItem.Location = new System.Drawing.Point(526, 60);
 			this.grpExistingItem.Name = "grpExistingItem";
-			this.grpExistingItem.Size = new System.Drawing.Size(476, 50);
+			this.grpExistingItem.Size = new System.Drawing.Size(566, 50);
 			this.grpExistingItem.TabIndex = 43;
 			this.grpExistingItem.TabStop = false;
 			// 
@@ -928,7 +953,7 @@
 			// 
 			this.btnOpenItemLink.BackgroundImage = global::TimeTracker.Properties.Resources.Azure_DevOps;
 			this.btnOpenItemLink.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.btnOpenItemLink.Location = new System.Drawing.Point(440, 14);
+			this.btnOpenItemLink.Location = new System.Drawing.Point(440, 16);
 			this.btnOpenItemLink.Name = "btnOpenItemLink";
 			this.btnOpenItemLink.Size = new System.Drawing.Size(23, 23);
 			this.btnOpenItemLink.TabIndex = 73;
@@ -939,7 +964,7 @@
 			// 
 			this.btnRefreshTaskBug.BackgroundImage = global::TimeTracker.Properties.Resources.refresh;
 			this.btnRefreshTaskBug.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-			this.btnRefreshTaskBug.Location = new System.Drawing.Point(417, 14);
+			this.btnRefreshTaskBug.Location = new System.Drawing.Point(417, 16);
 			this.btnRefreshTaskBug.Name = "btnRefreshTaskBug";
 			this.btnRefreshTaskBug.Size = new System.Drawing.Size(23, 23);
 			this.btnRefreshTaskBug.TabIndex = 72;
@@ -950,7 +975,7 @@
 			// 
 			this.lblItemtype.AutoSize = true;
 			this.lblItemtype.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.lblItemtype.Location = new System.Drawing.Point(16, 18);
+			this.lblItemtype.Location = new System.Drawing.Point(16, 20);
 			this.lblItemtype.Name = "lblItemtype";
 			this.lblItemtype.Size = new System.Drawing.Size(35, 13);
 			this.lblItemtype.TabIndex = 42;
@@ -960,7 +985,7 @@
 			// 
 			this.cmbTask.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cmbTask.FormattingEnabled = true;
-			this.cmbTask.Location = new System.Drawing.Point(97, 15);
+			this.cmbTask.Location = new System.Drawing.Point(97, 17);
 			this.cmbTask.Name = "cmbTask";
 			this.cmbTask.Size = new System.Drawing.Size(320, 21);
 			this.cmbTask.TabIndex = 41;
@@ -1076,17 +1101,6 @@
 			this.cmbBoard.TabIndex = 49;
 			this.cmbBoard.SelectedIndexChanged += new System.EventHandler(this.cmbBoard_SelectedIndexChanged);
 			// 
-			// chkCloseItem
-			// 
-			this.chkCloseItem.AutoSize = true;
-			this.chkCloseItem.Location = new System.Drawing.Point(622, 229);
-			this.chkCloseItem.Name = "chkCloseItem";
-			this.chkCloseItem.Size = new System.Drawing.Size(150, 17);
-			this.chkCloseItem.TabIndex = 62;
-			this.chkCloseItem.Text = "Close item when list saved";
-			this.chkCloseItem.UseVisualStyleBackColor = true;
-			this.chkCloseItem.CheckedChanged += new System.EventHandler(this.chkCloseItem_CheckedChanged);
-			// 
 			// rbUpdateTask
 			// 
 			this.rbUpdateTask.AutoSize = true;
@@ -1115,52 +1129,12 @@
 			this.rbCreateNew.UseVisualStyleBackColor = true;
 			this.rbCreateNew.CheckedChanged += new System.EventHandler(this.rbCreateNew_CheckedChanged);
 			// 
-			// rbTimeEntry
-			// 
-			this.rbTimeEntry.AutoSize = true;
-			this.rbTimeEntry.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.rbTimeEntry.ForeColor = System.Drawing.Color.Navy;
-			this.rbTimeEntry.Location = new System.Drawing.Point(328, 37);
-			this.rbTimeEntry.Name = "rbTimeEntry";
-			this.rbTimeEntry.Size = new System.Drawing.Size(147, 17);
-			this.rbTimeEntry.TabIndex = 65;
-			this.rbTimeEntry.Text = "Just create time entry";
-			this.rbTimeEntry.UseVisualStyleBackColor = true;
-			this.rbTimeEntry.Visible = false;
-			this.rbTimeEntry.CheckedChanged += new System.EventHandler(this.rbTimeEntry_CheckedChanged);
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label3.Location = new System.Drawing.Point(17, 230);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(57, 13);
-			this.label3.TabIndex = 74;
-			this.label3.Text = "Category";
-			// 
-			// cmbCategory
-			// 
-			this.cmbCategory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.cmbCategory.FormattingEnabled = true;
-			this.cmbCategory.Items.AddRange(new object[] {
-            "Development",
-            "User Support",
-            "Meeting",
-            "Daily Work",
-            "Learning",
-            "Others"});
-			this.cmbCategory.Location = new System.Drawing.Point(98, 227);
-			this.cmbCategory.Name = "cmbCategory";
-			this.cmbCategory.Size = new System.Drawing.Size(121, 21);
-			this.cmbCategory.TabIndex = 73;
-			// 
 			// lblDuration
 			// 
 			this.lblDuration.AutoSize = true;
 			this.lblDuration.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.lblDuration.ForeColor = System.Drawing.Color.Black;
-			this.lblDuration.Location = new System.Drawing.Point(765, 346);
+			this.lblDuration.Location = new System.Drawing.Point(738, 360);
 			this.lblDuration.Name = "lblDuration";
 			this.lblDuration.Size = new System.Drawing.Size(143, 37);
 			this.lblDuration.TabIndex = 72;
@@ -1171,7 +1145,7 @@
 			this.btnStop.Enabled = false;
 			this.btnStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnStop.ForeColor = System.Drawing.Color.Red;
-			this.btnStop.Location = new System.Drawing.Point(836, 303);
+			this.btnStop.Location = new System.Drawing.Point(809, 317);
 			this.btnStop.Name = "btnStop";
 			this.btnStop.Size = new System.Drawing.Size(100, 31);
 			this.btnStop.TabIndex = 71;
@@ -1184,7 +1158,7 @@
 			this.btnPause.Enabled = false;
 			this.btnPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnPause.ForeColor = System.Drawing.Color.Orange;
-			this.btnPause.Location = new System.Drawing.Point(729, 303);
+			this.btnPause.Location = new System.Drawing.Point(702, 317);
 			this.btnPause.Name = "btnPause";
 			this.btnPause.Size = new System.Drawing.Size(100, 31);
 			this.btnPause.TabIndex = 70;
@@ -1196,7 +1170,7 @@
 			// 
 			this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnStart.ForeColor = System.Drawing.Color.Green;
-			this.btnStart.Location = new System.Drawing.Point(622, 303);
+			this.btnStart.Location = new System.Drawing.Point(595, 317);
 			this.btnStart.Name = "btnStart";
 			this.btnStart.Size = new System.Drawing.Size(100, 31);
 			this.btnStart.TabIndex = 69;
@@ -1209,19 +1183,13 @@
 			this.btnCancel.Enabled = false;
 			this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.btnCancel.ForeColor = System.Drawing.Color.RoyalBlue;
-			this.btnCancel.Location = new System.Drawing.Point(943, 303);
+			this.btnCancel.Location = new System.Drawing.Point(916, 317);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(100, 31);
 			this.btnCancel.TabIndex = 75;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = true;
 			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-			// 
-			// openFileDialog1
-			// 
-			this.openFileDialog1.Filter = "Timer files|*.hkn";
-			this.openFileDialog1.Title = "Select a data file";
-			this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
 			// 
 			// txtStartTime
 			// 
@@ -1237,11 +1205,22 @@
 			this.txtStartTime.ValidatingType = typeof(System.DateTime);
 			this.txtStartTime.Leave += new System.EventHandler(this.txtStartTime_Leave);
 			// 
+			// chkCloseItem
+			// 
+			this.chkCloseItem.AutoSize = true;
+			this.chkCloseItem.Location = new System.Drawing.Point(100, 133);
+			this.chkCloseItem.Name = "chkCloseItem";
+			this.chkCloseItem.Size = new System.Drawing.Size(150, 17);
+			this.chkCloseItem.TabIndex = 62;
+			this.chkCloseItem.Text = "Close item when list saved";
+			this.chkCloseItem.UseVisualStyleBackColor = true;
+			this.chkCloseItem.CheckedChanged += new System.EventHandler(this.chkCloseItem_CheckedChanged);
+			// 
 			// chkUpdateOriginal
 			// 
 			this.chkUpdateOriginal.AutoSize = true;
 			this.chkUpdateOriginal.Enabled = false;
-			this.chkUpdateOriginal.Location = new System.Drawing.Point(651, 252);
+			this.chkUpdateOriginal.Location = new System.Drawing.Point(129, 156);
 			this.chkUpdateOriginal.Name = "chkUpdateOriginal";
 			this.chkUpdateOriginal.Size = new System.Drawing.Size(202, 17);
 			this.chkUpdateOriginal.TabIndex = 77;
@@ -1252,17 +1231,14 @@
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.ClientSize = new System.Drawing.Size(1104, 710);
-			this.Controls.Add(this.chkUpdateOriginal);
 			this.Controls.Add(this.txtStartTime);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.lblDuration);
 			this.Controls.Add(this.btnStop);
 			this.Controls.Add(this.btnPause);
 			this.Controls.Add(this.btnStart);
-			this.Controls.Add(this.rbTimeEntry);
 			this.Controls.Add(this.rbUpdateTask);
 			this.Controls.Add(this.rbCreateNew);
-			this.Controls.Add(this.chkCloseItem);
 			this.Controls.Add(this.grpMain);
 			this.Controls.Add(this.grpExistingItem);
 			this.Controls.Add(this.grpNewItem);
@@ -1341,11 +1317,9 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.DateTimePicker dtStartDate;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.CheckBox chkCloseItem;
         private System.Windows.Forms.RadioButton rbUpdateTask;
         private System.Windows.Forms.RadioButton rbCreateNew;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.RadioButton rbTimeEntry;
         private System.Windows.Forms.Button btnRefreshStory;
         private System.Windows.Forms.Button btnRefreshTaskBug;
         private System.Windows.Forms.Label label3;
@@ -1357,7 +1331,6 @@
         private System.Windows.Forms.ToolStripMenuItem mnLoadData;
         private System.Windows.Forms.ToolStripMenuItem mnAbout;
         private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ToolStripMenuItem mnTodoList;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.Button btnGetFromTodoList;
@@ -1373,7 +1346,6 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel5;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.MaskedTextBox txtOriginalEstimate;
-        private System.Windows.Forms.CheckBox chkUpdateOriginal;
 		private System.Windows.Forms.Button btnRefreshBoard;
 		private System.Windows.Forms.ToolStripMenuItem mnStartNewDay;
 		private System.Windows.Forms.ComboBox cmbTag4;
@@ -1409,6 +1381,8 @@
 		private System.Windows.Forms.DataGridViewCheckBoxColumn colUpdateOrgEst;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colWbsCode;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colState;
+		private System.Windows.Forms.CheckBox chkUpdateOriginal;
+		private System.Windows.Forms.CheckBox chkCloseItem;
 	}
 }
 

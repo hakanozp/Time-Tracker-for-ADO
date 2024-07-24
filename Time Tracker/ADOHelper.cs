@@ -325,15 +325,15 @@ namespace TimeTracker
                 }
                 );
 
-				patchDocument.Add(new JsonPatchOperation()
-				{
-					Operation = Operation.Add,
-					Path = "/fields/Custom.AccountType",
-					Value = newEntry.WBS
-				}
-				);
+                patchDocument.Add(new JsonPatchOperation()
+                {
+                    Operation = Operation.Add,
+                    Path = "/fields/Custom.AccountType",
+                    Value = newEntry.WBS
+                }
+                );
 
-				string rel_url = string.Format("{0}/{1}/_apis/wit/workitems/{2}", OrganizationUrl, Project, newEntry.ParentUserStoryId);
+                string rel_url = string.Format("{0}/{1}/_apis/wit/workitems/{2}", OrganizationUrl, Project, newEntry.ParentUserStoryId);
 
                 patchDocument.Add(new JsonPatchOperation()
                 {
@@ -393,7 +393,42 @@ namespace TimeTracker
             }
         }
 
-        public async Task UpdateTaskAsync(ADOTask updateEntry)
+		public void CloseItem(int itemId, bool updateOriginalEstimate, double completed)
+		{
+			using (HttpClient client = new HttpClient())
+			{
+				VssBasicCredential credentials = new VssBasicCredential("", PersonalAccessToken);
+				JsonPatchDocument patchDocument = new JsonPatchDocument();
+
+				Uri uri = new Uri(OrganizationUrl);
+
+				patchDocument.Add(new JsonPatchOperation()
+				{
+					Operation = Operation.Replace,
+					Path = "/fields/System.State",
+					Value = "Closed"
+				}
+								  );
+
+                if (updateOriginalEstimate == true)
+                {
+                    patchDocument.Add(new JsonPatchOperation()
+                    {
+                        Operation = Operation.Replace,
+                        Path = "/fields/Microsoft.VSTS.Scheduling.OriginalEstimate",
+                        Value = completed
+                    }
+                                      );
+                }
+
+					VssConnection connection = new VssConnection(uri, credentials);
+				WorkItemTrackingHttpClient workItemTrackingHttpClient = connection.GetClient<WorkItemTrackingHttpClient>();
+
+				WorkItem result = workItemTrackingHttpClient.UpdateWorkItemAsync(patchDocument, itemId).Result;
+			}
+		}
+
+		public async Task UpdateTaskAsync(ADOTask updateEntry)
         {
 
             double existingCompleted= await GetOriginalCompletedAsync(updateEntry.Id);
@@ -510,6 +545,7 @@ namespace TimeTracker
 					}
 
 					// build a list of the fields we want to see
+					//var fields = new[] { "System.Id", "System.Title", "System.State", "System.AreaPath", "System.WorkItemType", "System.IterationPath", "System.Tags", "Microsoft.VSTS.Scheduling.OriginalEstimate", "Microsoft.VSTS.Scheduling.CompletedWork, Custom.AccountType" };
 					var fields = new[] { "System.Id", "System.Title", "System.State", "System.AreaPath", "System.WorkItemType", "System.IterationPath", "System.Tags", "Microsoft.VSTS.Scheduling.OriginalEstimate", "Microsoft.VSTS.Scheduling.CompletedWork" };
 
 					// get work items for the ids found in query

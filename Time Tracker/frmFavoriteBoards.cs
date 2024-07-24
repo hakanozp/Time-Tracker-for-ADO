@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SQLite;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -17,9 +18,10 @@ namespace TimeTracker
     {
 
         ADOHelper ado = new ADOHelper();
-        public string dataDirectory;
+        DBHelper db = new DBHelper();
 
-        public frmFavoriteBoards()
+
+		public frmFavoriteBoards()
         {
             InitializeComponent();
         }
@@ -110,36 +112,33 @@ namespace TimeTracker
 
         private void SaveFavoriteBoards()
         {
-            //set date in file name to day loaded
-            string fileName = dataDirectory + "\\boards.txt";
-
-            StreamWriter writer = new StreamWriter(fileName);
-
-            // Loop through each row
-            foreach (var item in lstFavoriteBoards.Items)
+            try
             {
-                // Write the line to the file
-                writer.WriteLine(item.ToString());
+                List<string> boardNames = lstFavoriteBoards.Items.Cast<string>().ToList();
+				db.SaveFavoriteBoards(boardNames);
+			
             }
-            writer.Close();
+            catch (Exception exc)
+            {
+				MessageBox.Show("Error in saving favorite boards! /n" + exc.Message);
+			}
         }
 
         private void LoadFavoriteBoards()
         {
-            string fileName = dataDirectory + "\\boards.txt";
-            if (!File.Exists(fileName)) return;
 
-            lstFavoriteBoards.Items.Clear(); //clear existing data in list
-
-            StreamReader reader = new StreamReader(fileName);
-
-            string line;
-            while ((line = reader.ReadLine()) != null)
+            try
             {
-                lstFavoriteBoards.Items.Add((string)line);
-            }
-
-            reader.Close();
+				SQLiteDataReader reader = db.LoadFavoriteBoards();
+                while (reader.Read())
+                {
+					lstFavoriteBoards.Items.Add(reader["BoardName"].ToString());
+				}
+			}
+            catch (Exception exc)
+            {
+				MessageBox.Show("Error in loading favorite boards! /n" + exc.Message);
+			}
         }
 
     }

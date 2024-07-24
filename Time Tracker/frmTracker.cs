@@ -4,16 +4,16 @@ using System.Windows.Forms;
 using System.Linq;
 using System.Timers;
 using System.Collections.Generic;
-//using System.Data.SQLite;
 using System.Globalization;
 using System.IO;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Threading;
 using Microsoft.Win32;
-using System.Collections;
-using System.Text;
 using System.Deployment.Application;
-using System.Reflection;
+using System.Data.SQLite;
+using System.Runtime.Remoting;
+using Newtonsoft.Json.Linq;
+
 
 namespace TimeTracker
 {
@@ -35,6 +35,7 @@ namespace TimeTracker
         private string wbsProject = string.Empty;
 
 		ADOHelper ado = new ADOHelper();
+        DBHelper db = new DBHelper();
         
         //CultureInfo culture = new CultureInfo("en-US");
         public frmTracker()
@@ -46,6 +47,17 @@ namespace TimeTracker
 
         private void frmTracker_Load(object sender, EventArgs e)
         {
+            try
+            {
+				db.CreateTables();
+			}
+            catch (Exception exc)
+            {
+
+                throw exc;
+            }
+            
+
             timer = new System.Timers.Timer();
             timer.Interval = 1000; // Set the timer interval to 1 second
             timer.Elapsed += Timer_Elapsed; // Add the event handler for the timerbn
@@ -54,14 +66,6 @@ namespace TimeTracker
             //Version ver = Assembly.GetExecutingAssembly().GetName().Version;
             //System.Deployment.Application.ApplicationDeployment ad = System.Deployment.Application.ApplicationDeployment.CurrentDeployment;
 
-            dataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\TimeTrackerData";
-            //create data directory if not exists.
-            if (!Directory.Exists(dataDirectory))
-            {
-                Directory.CreateDirectory(dataDirectory);
-            }
-
-            //isSettingsOk = CheckSettings();
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Time Tracker for ADO");
             if (key != null)
             {
@@ -101,16 +105,13 @@ namespace TimeTracker
                         MessageBox.Show("Error in loading projects!/n" + exc.InnerException.Message);
                     else
                         MessageBox.Show("Error in loading projects!/n" + exc.Message);
-                }       
+                }
 
-                //SQLiteConnection conn = new SQLiteConnection(Properties.Settings.Default.ConnectionString);
+				LoadTimeEntries(DateTime.Now);
+				LoadTags();
 
-                //load today' s data
-                string fileName = dataDirectory + "\\Entry " + DateTime.Now.ToString("yyyy\\-MM\\-dd") + ".hkn";
-                LoadGridFromFile(fileName);
-                LoadTags();
             }
-            statusStrip1.Items[0].Text = DateTime.Now.ToString("dd\\-MM\\-yyyy");
+            statusStrip1.Items[0].Text = DateTime.Now.ToShortDateString();
             statusStrip1.Items[4].Text = assignedTo;
 
             if (ApplicationDeployment.IsNetworkDeployed)
@@ -120,9 +121,7 @@ namespace TimeTracker
             }
 
             cmbItemType.SelectedIndex = 0;
-            cmbState.SelectedIndex = 0;
-            
-
+            cmbState.SelectedIndex = 0; 
         }
         private void btnStart_Click(object sender, EventArgs e)
         {
@@ -130,8 +129,7 @@ namespace TimeTracker
             {
                 return;
             }
-            
-            
+                        
             if (isTimerRunning)
             {
                 MessageBox.Show("Timer has already started!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -196,15 +194,6 @@ namespace TimeTracker
                     return;
                 }
             }
-            else if (rbTimeEntry.Checked)
-            {
-                if (txtTitle.Text == "")
-                {
-                    MessageBox.Show("You must enter a title!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-            }
-
 
 			isTimerRunning = true;
             if (isTimerPaused)
@@ -286,7 +275,6 @@ namespace TimeTracker
 				}
 			}
 
-
             timer.Stop(); // Stop the timer
             elapsedTime = TimeSpan.Zero; // Reset the elapsed time
             isTimerRunning = false;
@@ -301,7 +289,7 @@ namespace TimeTracker
             row.Cells[dgEntries.Columns["colEndTime"].Index].Value = DateTime.Now.ToString("HH\\:mm"); ;
             row.Cells[dgEntries.Columns["colDuration"].Index].Value = Convert.ToDateTime(lblDuration.Text).ToString("HH\\:mm");
             row.Cells[dgEntries.Columns["colCreateDate"].Index].Value = DateTime.Now.ToString("dd\\-MM\\-yyyy");
-			
+
 			if (rbCreateNew.Checked)
             {
                 row.Cells[dgEntries.Columns["colItemId"].Index].Value = string.Empty;
@@ -326,6 +314,7 @@ namespace TimeTracker
                 row.Cells[dgEntries.Columns["colState"].Index].Value = cmbState.Text;
 				row.Cells[dgEntries.Columns["colWbsCode"].Index].Value = cmbWbsCode.Text;
 
+
 			}
 			else if (rbUpdateTask.Checked)
             {
@@ -343,13 +332,7 @@ namespace TimeTracker
                 row.Cells[dgEntries.Columns["colOperationMode"].Index].Value = "Update";
                 row.Cells[dgEntries.Columns["colTargetDate"].Index].Value = dtTargetDate.Value.ToString("dd\\-MM\\-yyyy");
                 row.Cells[dgEntries.Columns["colUpdateOrgEst"].Index].Value = chkUpdateOriginal.Checked;
-            }
-            if (rbTimeEntry.Checked)
-            {
-                row.Cells[dgEntries.Columns["colTitle"].Index].Value = txtTitle.Text;
-                row.Cells[dgEntries.Columns["colDescription"].Index].Value = txtDescription.Text;
-                row.Cells[dgEntries.Columns["colOperationMode"].Index].Value = string.Empty;
-            }
+			}
 
             dgEntries.Rows.Add(row);
 
@@ -364,20 +347,21 @@ namespace TimeTracker
                 btnStop.Enabled = false;
                 btnCancel.Enabled = false;
             }
-            txtTitle.Text = "";
-            txtDescription.Text = "";
-            txtStartTime.Text = "";
-            cmbCategory.SelectedIndex = -1;
-            cmbWbsCode.SelectedIndex = -1;
-            chkCloseItem.Checked = false;
-            chkUpdateOriginal.Checked = false;
-            txtOriginalEstimate.Text = "";
-            dtStartDate.Value = DateTime.Now.Date;
-            dtTargetDate.Value = DateTime.Now.Date;
-            cmbTask.SelectedIndex = -1;
-        }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+			txtTitle.Text = "";
+			txtDescription.Text = "";
+			txtStartTime.Text = "";
+			cmbCategory.SelectedIndex = -1;
+			cmbWbsCode.SelectedIndex = -1;
+			chkCloseItem.Checked = false;
+			chkUpdateOriginal.Checked = false;
+			txtOriginalEstimate.Text = "";
+			dtStartDate.Value = DateTime.Now.Date;
+			dtTargetDate.Value = DateTime.Now.Date;
+			cmbTask.SelectedIndex = -1;
+		}
+
+		private void btnCancel_Click(object sender, EventArgs e)
         {
             lblDuration.Text = "00:00:00";
             timer.Stop(); 
@@ -495,15 +479,13 @@ namespace TimeTracker
         private void LoadBoardList(Guid projectId)
         {
             List<String> boardList;
-            List<String> myFavoriteBoardList;
+            
+            boardList = LoadMyFavoriteBoards();
+            if (boardList.Count == 0)
+				boardList = ado.GetBoardList(projectId);
 
-            //get list of boards
-            boardList = ado.GetBoardList(projectId);
-
-            myFavoriteBoardList = LoadMyFavoriteBoards();
-
-            //populate combobox using list
-            cmbBoard.DataSource = myFavoriteBoardList.Count == 0 ? boardList.ToList() : myFavoriteBoardList.ToList();
+			//populate combobox using list
+			cmbBoard.DataSource = boardList.ToList();
             cmbBoard.DisplayMember = "Value";
         }
 
@@ -572,36 +554,7 @@ namespace TimeTracker
 			cmbArea.DisplayMember = "Value";
 		}
 
-		private void SaveGridToFile()
-        {
-            DateTime saveDate;
-            
-            //set date in file name to day loaded
-            DateTime.TryParseExact(statusStrip1.Items[0].Text, "dd-MM-yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out saveDate);
-
-            string fileName = dataDirectory + "\\Entry " + saveDate.ToString("yyyy\\-MM\\-dd") + ".hkn";
-
-            StreamWriter writer = new StreamWriter(fileName);
-
-            // Write the header row (optional)
-            writer.WriteLine(string.Join("\t", dgEntries.Columns.Cast<DataGridViewColumn>().Select(c => c.HeaderText)));
-
-            // Loop through each row
-            foreach (DataGridViewRow row in dgEntries.Rows)
-            {
-                // Skip header row (if you wrote it already)
-                if (row.IsNewRow) continue;
-
-                // Build the line string
-                string line = string.Join("\t", row.Cells.Cast<DataGridViewCell>().Select(c => c.FormattedValue));
-
-                // Write the line to the file
-                writer.WriteLine(line);
-            }
-            writer.Close();
-        }
-
-        private void ProcessListForAdo()
+        private void SaveTimeEntriesToAdo()
         {
             DateTime dt;
 
@@ -664,6 +617,8 @@ namespace TimeTracker
 
                         //update the item id
                         row.Cells["colItemId"].Value = itemId.ToString();
+
+                        db.SaveNewItem(itemId, newItem.WBS);
                         
                         break;
                     case "Update":
@@ -700,46 +655,117 @@ namespace TimeTracker
             }
         }
 
-        private void LoadGridFromFile(string fileName)
+        private void SaveTimeEntries()
         {
-            //check if the file exists
-            if (!File.Exists(fileName)) return;
+			TimeEntry timeEntry = new TimeEntry();
+            DateTime dt;
 
-            dgEntries.Rows.Clear(); //clear existing data in grid
+            
+			foreach (DataGridViewRow row in dgEntries.Rows)
+			{
+				if (row.Cells["colItemId"].Value != null && row.Cells["colItemId"].Value.ToString() != "")
+					timeEntry.ItemId = Convert.ToInt32(row.Cells["colItemId"].Value.ToString());
 
-            StreamReader reader = new StreamReader(fileName);
+				timeEntry.Category = row.Cells["colCategory"].Value.ToString();
+				timeEntry.StartTime = row.Cells["colStartTime"].Value.ToString();
+				timeEntry.EndTime = row.Cells["colEndTime"].Value.ToString();
+				timeEntry.Duration = row.Cells["colDuration"].Value.ToString();
+				timeEntry.CreateDate = Convert.ToDateTime(DateTime.Now.ToString("dd\\-MM\\-yyyy"));
 
-            // Skip the header row
-            string headerLine = reader.ReadLine();
+				timeEntry.Title = row.Cells["colTitle"].Value.ToString();
+				timeEntry.Project = row.Cells["colProject"].Value.ToString();
+				timeEntry.Board = row.Cells["colBoard"].Value.ToString();
+				timeEntry.AreaPath = row.Cells["colAreaPath"].Value.ToString();
+				timeEntry.ItemType = row.Cells["colItemType"].Value.ToString();
+				timeEntry.Description = row.Cells["colDescription"].Value.ToString();
+				timeEntry.Iteration = row.Cells["colIteration"].Value.ToString();
+				timeEntry.Tags = row.Cells["colTags"].Value.ToString();
+				timeEntry.OperationMode = row.Cells["colOperationMode"].Value.ToString();
+				timeEntry.CloseItem = Convert.ToBoolean(row.Cells["colCloseItem"].Value.ToString());
+				timeEntry.UpdateOrgEst = Convert.ToBoolean(row.Cells["colUpdateOrgEst"].Value.ToString());
 
-            string line;
-            while ((line = reader.ReadLine()) != null)
-            {
-                
-                // Split the line based on the delimiter
-                string[] values = line.Split('\t'); // Adjust delimiter if needed
+				if (row.Cells["colSaved"].Value != null && row.Cells["colSaved"].Value.ToString() != "")
+					timeEntry.Saved = Convert.ToBoolean(row.Cells["colSaved"].Value.ToString());
 
-                // Create a new DataRow
-                DataGridViewRow row = new DataGridViewRow();
-                row.CreateCells(dgEntries);
+				DateTime.TryParseExact(row.Cells["colTargetDate"].Value.ToString(), "dd-MM-yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out dt);
+				timeEntry.TargetDate = dt;
 
-                // Add values to each cell
-                for (int i = 0; i < values.Length; i++)
+                if (row.Cells["colOperationMode"].Value.ToString() == "Create")
                 {
-                    row.Cells[i].Value = values[i];
+					timeEntry.Story = row.Cells["colStory"].Value.ToString();
+					timeEntry.ParentId = Convert.ToInt32(row.Cells["colParentId"].Value.ToString());
+
+					DateTime.TryParseExact(row.Cells["colStartDate"].Value.ToString(), "dd-MM-yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out dt);
+					timeEntry.StartDate = dt;
+
+					timeEntry.OriginalEstimate = row.Cells["colOriginalEstimate"].Value.ToString();
+					timeEntry.WbsCode = row.Cells["colWbsCode"].Value.ToString();
+					timeEntry.State = row.Cells["colState"].Value.ToString();
+				}
+
+                db.SaveTimeEntry(timeEntry);
+                timeEntry.Clear();
+			}
+		}
+
+        private void LoadTimeEntries(DateTime selectedDate)
+        {
+            //clear existing rows
+            dgEntries.RowCount = 0;
+
+            string sql = "SELECT * FROM TimeEntries WHERE CreateDate = '" + selectedDate.ToString("yyyy\\-MM\\-dd 00:00:00") + "'";
+
+            try
+            {
+                //read the time entries from DB
+                SQLiteDataReader reader = db.LoadTimeEntries(sql);
+
+				while (reader.Read())
+                {
+                    int rowIndex = dgEntries.Rows.Add();
+                    DataGridViewRow row = dgEntries.Rows[rowIndex];
+
+                    row.Cells["colCategory"].Value = reader["Category"].ToString();
+                    if (Convert.ToInt32(reader["ItemId"]) != 0)
+                        row.Cells["colItemId"].Value = Convert.ToInt32(reader["ItemId"]);
+                    row.Cells["colItemType"].Value = reader["ItemType"].ToString();
+                    row.Cells["colTitle"].Value = reader["Title"].ToString();
+                    row.Cells["colBoard"].Value = reader["Board"].ToString();
+                    row.Cells["colStory"].Value = reader["Story"].ToString();
+                    row.Cells["colStartTime"].Value = reader.GetString(reader.GetOrdinal("StartTime"));
+                    row.Cells["colEndTime"].Value = reader.GetString(reader.GetOrdinal("EndTime"));
+                    row.Cells["colDuration"].Value = reader.GetString(reader.GetOrdinal("Duration"));
+                    row.Cells["colTags"].Value = reader["Tags"].ToString();
+                    row.Cells["colDescription"].Value = reader["Description"].ToString();
+                    row.Cells["colProject"].Value = reader["Project"].ToString();
+                    row.Cells["colAreaPath"].Value = reader["AreaPath"].ToString();
+                    row.Cells["colIteration"].Value = reader["Iteration"].ToString();
+                    row.Cells["colCloseItem"].Value = Convert.ToBoolean(reader["CloseItem"]);
+
+                    if (Convert.ToInt32(reader["ParentId"]) != 0)
+                        row.Cells["colParentId"].Value = Convert.ToInt32(reader["ParentId"]);
+                    row.Cells["colCreateDate"].Value = reader.GetDateTime(reader.GetOrdinal("CreateDate")).ToShortDateString();
+                    row.Cells["colOperationMode"].Value = reader["OperationMode"].ToString();
+                    row.Cells["colSaved"].Value = Convert.ToBoolean(reader["Saved"]);
+                    if (reader["StartDate"].ToString() != string.Empty)
+                        row.Cells["colStartDate"].Value = reader.GetDateTime(reader.GetOrdinal("StartDate")).ToShortDateString();
+
+                    row.Cells["colTargetDate"].Value = reader.GetDateTime(reader.GetOrdinal("TargetDate")).ToShortDateString();
+
+                    if (!reader.IsDBNull(reader.GetOrdinal("OriginalEstimate")))
+                        row.Cells["colOriginalEstimate"].Value = reader.GetString(reader.GetOrdinal("OriginalEstimate"));
+                    row.Cells["colUpdateOrgEst"].Value = Convert.ToBoolean(reader["UpdateOrgEst"]);
+                    row.Cells["colWbsCode"].Value = reader["WbsCode"].ToString();
+                    row.Cells["colState"].Value = reader["State"].ToString();
                 }
-
-                // Add the row to the DataGridView
-                dgEntries.Rows.Add(row);
             }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+		}
 
-            reader.Close();
-
-            //update status strip
-            CalculateTotalDuration();
-        }
-
-        private void cmbArea_SelectedIndexChanged(object sender, EventArgs e)
+		private void cmbArea_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (cmbArea.SelectedIndex > 0)
             {
@@ -748,7 +774,6 @@ namespace TimeTracker
                 _ = LoadTasksAsync(cmbArea.Text, cmbItemType.Text);
             }
         }
-
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (isTimerRunning)
@@ -774,7 +799,6 @@ namespace TimeTracker
             lblItemText.Text = "Description";
 
             //btnListActiveItems.Enabled = false;
-
 		}
         private void rbUpdateTask_CheckedChanged(object sender, EventArgs e)
         {
@@ -829,7 +853,7 @@ namespace TimeTracker
 
             //get list of open tasks under a given area path
             //var workItems = await ado.GetItemList(itemType, areaPath: areaPath, state: "Active", assignedToMe: true);
-			var workItems = await ado.GetItemList(itemType, areaPath: areaPath, assignedToMe: true);
+			var workItems = await ado.GetItemList("Task", areaPath: areaPath, assignedToMe: true);
 
 			//add tasks to a dictionary
 			foreach (var workItem in workItems)
@@ -837,8 +861,16 @@ namespace TimeTracker
                 taskList.Add(Convert.ToInt32(workItem.Id), workItem.Id.ToString() + " - " + workItem.Fields["System.Title"].ToString());
             }
 
-            //populate combo box using task list.
-            if (taskList.Count > 0)
+			workItems = await ado.GetItemList("Bug", areaPath: areaPath, assignedToMe: true);
+
+			//add bugs to a dictionary
+			foreach (var workItem in workItems)
+			{
+				taskList.Add(Convert.ToInt32(workItem.Id), workItem.Id.ToString() + " - " + workItem.Fields["System.Title"].ToString());
+			}
+
+			//populate combo box using task list.
+			if (taskList.Count > 0)
             {
                 taskList.Add(0, "");
                 var sortedDict = taskList.OrderBy(pair => pair.Key).ToDictionary(pair => pair.Key, pair => pair.Value);
@@ -881,11 +913,15 @@ namespace TimeTracker
                 ix++;
                 if (dateRange == string.Empty) continue;
 
-                // Split the date range into start and end dates
-                string[] dates = dateRange.Split('_');
+				// Split the date range into start and end dates
+				string[] dates;
+				if (dateRange.Contains("_"))
+					dates = dateRange.Split('_');
+				else
+					continue;
 
-                // Parse the start and end dates into DateTime objects
-                DateTime.TryParseExact(dates[0], dateFormat, CultureInfo.CurrentCulture, DateTimeStyles.None, out dt);
+				// Parse the start and end dates into DateTime objects
+				DateTime.TryParseExact(dates[0], dateFormat, CultureInfo.CurrentCulture, DateTimeStyles.None, out dt);
                 DateTime startDate = dt;
 
                 DateTime.TryParseExact(dates[1], dateFormat, CultureInfo.CurrentCulture, DateTimeStyles.None, out dt);
@@ -1009,8 +1045,10 @@ namespace TimeTracker
 
         private void frmTracker_FormClosed(object sender, FormClosedEventArgs e)
         {
-            SaveGridToFile();
-        }
+			//SaveGridToFile();
+			db.DeleteTimeEntries(DateTime.Now);
+			SaveTimeEntries();
+		}
 
         private void saveListToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -1023,10 +1061,12 @@ namespace TimeTracker
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-                ProcessListForAdo();
-                SaveGridToFile();
+				SaveTimeEntriesToAdo(); 
+                
+                db.DeleteTimeEntries(DateTime.Now);
+				SaveTimeEntries();
 
-                MessageBox.Show("Save completed!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				MessageBox.Show("Save completed!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (AggregateException ex)
             {
@@ -1115,8 +1155,10 @@ namespace TimeTracker
 
         private void mnExit_Click(object sender, EventArgs e)
         {
-            SaveGridToFile();
-            this.Close();
+			db.DeleteTimeEntries(DateTime.Now);
+			SaveTimeEntries();
+
+			this.Close();
         }
 
         private void mnAbout_Click(object sender, EventArgs e)
@@ -1127,9 +1169,34 @@ namespace TimeTracker
 
         private void mnLoadData_Click(object sender, EventArgs e)
         {
-            openFileDialog1.InitialDirectory = dataDirectory;
-            openFileDialog1.ShowDialog();
-        }
+
+			if (isTimerRunning)
+			{
+				MessageBox.Show("Timer is running. Stop timer first!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				return;
+			}
+
+			DateTime selectedDate = DateTime.Now;
+			using (var dialogForm = new frmDateSelection())
+			{
+
+				if (dialogForm.ShowDialog() == DialogResult.OK)
+				{
+					// Retrieve the value from the dialog form
+					selectedDate = dialogForm.selectedDate;
+				}
+			}
+
+			LoadTimeEntries(selectedDate);
+
+            statusStrip1.Items[0].Text = selectedDate.ToShortDateString();
+
+			//do not let to start time if date is not today.
+			bool isTodaysData = string.Equals(selectedDate.ToShortDateString(), DateTime.Now.ToShortDateString());
+
+			btnStart.Enabled = isTodaysData;
+
+		}
 
         private void dgEntries_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -1170,38 +1237,9 @@ namespace TimeTracker
             }
         }
 
-        private void openFileDialog1_FileOk(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (isTimerRunning)
-            {
-                MessageBox.Show("Timer is running. Stop timer first!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            //save current list beofre loading data
-            SaveGridToFile();
-            
-            string fileName = openFileDialog1.FileName;
-            //load data to grid from file
-            LoadGridFromFile(fileName);
-
-            //set date in status strip
-            string safeFileName = openFileDialog1.SafeFileName;
-            string dateInFile = Convert.ToDateTime(safeFileName.Replace("Entry ", "").Replace(".hkn", "")).ToString("dd\\-MM\\-yyyy");
-
-            //dgEntries.Rows[dgEntries.Rows.Count - 1].Cells[dgEntries.Columns["colCreateDate"].Index].Value.ToString();
-            statusStrip1.Items[0].Text = dateInFile;
-
-            //do not let to start time if date is not today.
-            bool isTodaysData = string.Equals(dateInFile, DateTime.Now.ToString("dd\\-MM\\-yyyy"));
-
-            btnStart.Enabled = isTodaysData;           
-        }
-
         private void mnTodoList_Click(object sender, EventArgs e)
         {
             frmTodo f2 = new frmTodo(); //this is the change, code for redirect  
-            f2.dataDirectory = dataDirectory;
             f2.ShowDialog();
         }
 
@@ -1215,7 +1253,6 @@ namespace TimeTracker
 
             using (var dialogForm = new frmTodo())
             {
-                dialogForm.dataDirectory = dataDirectory;
                 if (dialogForm.ShowDialog() == DialogResult.OK)
                 {
                     // Retrieve the value from the dialog form
@@ -1228,36 +1265,33 @@ namespace TimeTracker
         private void mnFavoriteBoards_Click(object sender, EventArgs e)
         {
             frmFavoriteBoards f = new frmFavoriteBoards();
-            f.dataDirectory = dataDirectory;
             f.ShowDialog();
         }
 
         private List<String> LoadMyFavoriteBoards()
         {
-            List<string> myBoards = new List<string>();
-            
+            List<string> myFavoriteBoardList = new List<string>();
 
-            string fileName = dataDirectory + "\\boards.txt";
-            if (File.Exists(fileName))
-            { 
-                StreamReader reader = new StreamReader(fileName);
+			try
+			{
+				SQLiteDataReader reader = db.LoadFavoriteBoards();
+				while (reader.Read())
+				{
+					myFavoriteBoardList.Add(reader["BoardName"].ToString());
+				}
 
-                string line;
-                while ((line = reader.ReadLine()) != null)
-                {
-                    myBoards.Add((string)line);
-                }
-
-                reader.Close();
-            }
-            
-            if (myBoards.Count > 0)
-            {
-				myBoards.Sort();
-				myBoards.Insert(0, "");
-            }
+				if (myFavoriteBoardList.Count > 0)
+				{
+					myFavoriteBoardList.Sort();
+					myFavoriteBoardList.Insert(0, "");
+				}
+			}
+			catch (Exception exc)
+			{
+				MessageBox.Show("Error in loading favorite boards! /n" + exc.Message);
+			}           
 			
-            return myBoards;
+            return myFavoriteBoardList;
 		}
 
 		private void txtStartTime_Leave(object sender, EventArgs e)
@@ -1335,9 +1369,13 @@ namespace TimeTracker
             {
                 string todaysDate = DateTime.Now.ToString("dd\\-MM\\-yyyy");
 
-                statusStrip1.Items[0].Text = todaysDate;
-                dgEntries.RowCount = 0;
-            }
+				statusStrip1.Items[0].Text = DateTime.Now.ToShortDateString();
+				dgEntries.RowCount = 0;
+                btnStart.Enabled = true;
+
+                dtStartDate.Value = DateTime.Now;
+                dtTargetDate.Value = DateTime.Now;
+			}
 		}
 
 		private void LoadTags()
@@ -1380,31 +1418,7 @@ namespace TimeTracker
 			{
 				dialogForm.ado = ado;
                 dialogForm.projectName = cmbProject.Text;
-				if (dialogForm.ShowDialog() == DialogResult.OK)
-				{
-     //               adoTask = dialogForm.adoTask;
-
-     //               string board = adoTask.AreaPath.Split('\\')[3];
-
-     //               for (int i = 0; i < cmbBoard.Items.Count; i++)
-     //               {
-     //                   if (cmbBoard.Items[i].ToString() == board)
-     //                       cmbBoard.SelectedIndex = i;
-     //               }
-
-     //               cmbArea.SelectedIndex = 1;
-
-     //               rbTask.Checked = adoTask.ItemType == "Task" ? true : false;
-					//rbBug.Checked = adoTask.ItemType == "Bug" ? true : false;
-
-     //               string task = adoTask.Id.ToString() + " - " + adoTask.Title;
-
-					//for (int i = 0; i < cmbTask.Items.Count; i++)
-					//{
-					//	if (cmbTask.Items[i].ToString().Contains(adoTask.Id.ToString()))
-					//		cmbTask.SelectedIndex = i;
-					//}
-				}
+                dialogForm.ShowDialog();
 			}
 		}
 
@@ -1461,5 +1475,6 @@ namespace TimeTracker
                     break;
             }
         }
+
 	}
 }

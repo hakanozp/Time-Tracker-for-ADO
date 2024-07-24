@@ -28,7 +28,8 @@ namespace TimeTracker
 
 		private async Task LoadActiveItems()
 		{
-			
+			dgActiveItems.RowCount = 0;
+
 			Dictionary<int, string> storyList = new Dictionary<int, string>();
 
 			var workItems = await ado.GetOpenItems(projectName);
@@ -36,7 +37,7 @@ namespace TimeTracker
 			foreach (var workItem in workItems)
 			{
 				//"System.Id", "System.Title", "System.State", "System.AreaPath", "System.WorkItemType", "System.IterationPath",
-				
+
 				DataGridViewRow row = new DataGridViewRow();
 				row.CreateCells(dgActiveItems);
 
@@ -52,6 +53,7 @@ namespace TimeTracker
 				if (workItem.Fields.ContainsKey("Microsoft.VSTS.Scheduling.CompletedWork"))
 					row.Cells[dgActiveItems.Columns["colCompeted"].Index].Value = workItem.Fields["Microsoft.VSTS.Scheduling.CompletedWork"].ToString();
 
+				//row.Cells[dgActiveItems.Columns["colWbsCode"].Index].Value = workItem.Fields["Custom.AccountType"].ToString();
 				dgActiveItems.Rows.Add(row);
 			}
 		}
@@ -84,6 +86,52 @@ namespace TimeTracker
 				{
 					string link = String.Format("{0}/{1}/_workitems/edit//{2}", ado.OrganizationUrl, "PBI_DS", row.Cells[dgActiveItems.Columns["colId"].Index].Value.ToString());
 					System.Diagnostics.Process.Start(link);
+				}
+			}
+		}
+
+		private void btnRefreshList_Click(object sender, EventArgs e)
+		{
+			_ = LoadActiveItems();
+		}
+
+		private void dgActiveItems_ColumnHeaderMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			if (e.ColumnIndex == dgActiveItems.Columns["colSelect"].Index)
+			{
+				bool checkState = !AreAllCheckboxesChecked();
+				foreach (DataGridViewRow row in dgActiveItems.Rows)
+				{
+					row.Cells["colSelect"].Value = checkState;
+				}
+			}
+		}
+
+		private bool AreAllCheckboxesChecked()
+		{
+			foreach (DataGridViewRow row in dgActiveItems.Rows)
+			{
+				if (!row.IsNewRow && (bool?)row.Cells["colSelect"].Value != true)
+				{
+					return false; // At least one checkbox is not checked
+				}
+			}
+			return true; // All checkboxes are checked
+		}
+
+		private void btnCloseSelected_Click(object sender, EventArgs e)
+		{
+			double completed = 0;
+			foreach (DataGridViewRow row in dgActiveItems.Rows)
+			{
+				if ((bool?)row.Cells["colSelect"].Value == true)
+				{
+					int itemId = Convert.ToInt32(row.Cells[dgActiveItems.Columns["colId"].Index].Value);
+
+					if (row.Cells["colCompeted"].Value != null)
+						completed = Convert.ToDouble(row.Cells["colCompeted"].Value.ToString());
+
+					//ado.CloseItem(itemId, chkUpdateOriginal.Checked, completed);
 				}
 			}
 		}
