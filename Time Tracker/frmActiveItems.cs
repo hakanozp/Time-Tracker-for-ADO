@@ -131,7 +131,7 @@ namespace TimeTracker
 					if (row.Cells["colCompeted"].Value != null)
 						completed = Convert.ToDouble(row.Cells["colCompeted"].Value.ToString());
 
-					//ado.CloseItem(itemId, chkUpdateOriginal.Checked, completed);
+					ado.CloseItem(itemId, chkUpdateOriginal.Checked, completed);
 				}
 			}
 		}

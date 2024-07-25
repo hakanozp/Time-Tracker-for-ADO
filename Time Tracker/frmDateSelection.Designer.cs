@@ -45,11 +45,11 @@
 			// 
 			this.label1.AutoSize = true;
 			this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.label1.Location = new System.Drawing.Point(59, 35);
+			this.label1.Location = new System.Drawing.Point(77, 43);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(183, 13);
+			this.label1.Size = new System.Drawing.Size(155, 13);
 			this.label1.TabIndex = 1;
-			this.label1.Text = "Select a date to load data from";
+			this.label1.Text = "Select a date to load data";
 			// 
 			// btnSelectDate
 			// 
@@ -74,6 +74,7 @@
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "Select Date";
+			this.Load += new System.EventHandler(this.frmDateSelection_Load);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 

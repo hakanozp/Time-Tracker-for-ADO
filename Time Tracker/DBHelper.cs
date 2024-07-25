@@ -78,6 +78,39 @@ namespace TimeTracker
 	{
 		internal static string connectionString = "Data Source='TimeTracker.db';Version=3;";
 
+		//        public SQLiteConnection CreateConnection(string connectionString)
+		//        {
+		//            cn = new SQLiteConnection(connectionString);
+
+		//            return cn;
+		//        }
+
+		//        public DataTable GetData(string commandText)
+		//        {
+		//            DataTable result = new DataTable();
+		//            using (SQLiteCommand cmd = new SQLiteCommand(commandText, cn))
+		//            {
+		//                cn.Open();
+		//                using (SQLiteDataReader reader = cmd.ExecuteReader())
+		//                {
+		//                    result.Load(reader);
+		//                }
+		//                cn.Close();
+		//            }
+		//            return result;
+		//        }
+
+		//        public void ExecuteStatement(string sql)
+		//        {
+		//            using (SQLiteCommand cmd = new SQLiteCommand(sql, cn))
+		//            {
+		//                cn.Open();
+		//                cmd.ExecuteNonQuery();
+		//                cn.Close();
+		//            }
+		//        }
+		//    }
+
 		public void CreateTables()
 		{
 			try

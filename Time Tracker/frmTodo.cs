@@ -1,13 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SQLite;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TimeTracker
@@ -83,11 +75,6 @@ namespace TimeTracker
 			{
 				MessageBox.Show("Error in saving favorite boards! /n" + exc.Message);
 			}
-			// Loop through each row
-			//foreach (DataGridViewRow row in dgTodoList.Rows)
-			//{
-
-			//}
 		}
 
         private void LoadTodoList()

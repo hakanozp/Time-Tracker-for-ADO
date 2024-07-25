@@ -26,5 +26,10 @@ namespace TimeTracker
 			DialogResult = DialogResult.OK;
 			Close();
 		}
+
+		private void frmDateSelection_Load(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

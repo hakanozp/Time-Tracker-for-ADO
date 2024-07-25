@@ -1,21 +1,13 @@
 ﻿using Microsoft.Win32;
 using System;
-//using System.Collections.Generic;
-//using System.ComponentModel;
 using System.Data;
-//using System.Drawing;
-//using System.IO;
 using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace TimeTracker
 {
     public partial class frmSettings : Form
     {
-		public string dataDirectory;
-
 		public frmSettings()
         {
             InitializeComponent();
@@ -58,8 +50,7 @@ namespace TimeTracker
 					string[] items = key.GetValue("TagGroup4").ToString().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
 					txtTags4.Lines = items.Select(item => item.Trim()).ToArray();
 				}
-			}
-			
+			}			
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -96,6 +87,9 @@ namespace TimeTracker
 
 		}
 
+		private void frmSettings_Load(object sender, EventArgs e)
+		{
 
+		}
 	}
 }

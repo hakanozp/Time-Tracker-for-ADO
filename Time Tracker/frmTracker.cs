@@ -5,14 +5,11 @@ using System.Linq;
 using System.Timers;
 using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Threading;
 using Microsoft.Win32;
 using System.Deployment.Application;
 using System.Data.SQLite;
-using System.Runtime.Remoting;
-using Newtonsoft.Json.Linq;
 
 
 namespace TimeTracker
@@ -29,7 +26,6 @@ namespace TimeTracker
         private bool isTimerRunning;
         private bool isTimerPaused = false;
         private bool isSettingsOk = false;
-        private string dataDirectory;
 		private List<string> areaPathsList = new List<string>();
         private string wbsRun = string.Empty;
         private string wbsProject = string.Empty;
@@ -783,7 +779,6 @@ namespace TimeTracker
             }
 
             frmSettings f2 = new frmSettings(); //this is the change, code for redirect  
-			f2.dataDirectory = dataDirectory;
 			f2.ShowDialog();
         }
 

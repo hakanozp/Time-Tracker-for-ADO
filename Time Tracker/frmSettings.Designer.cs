@@ -32,7 +32,6 @@
 			this.tabAdo = new System.Windows.Forms.TabPage();
 			this.label5 = new System.Windows.Forms.Label();
 			this.txtUser = new System.Windows.Forms.TextBox();
-			this.btnSave = new System.Windows.Forms.Button();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
 			this.label2 = new System.Windows.Forms.Label();
@@ -54,6 +53,7 @@
 			this.txtWbsProject = new System.Windows.Forms.TextBox();
 			this.label11 = new System.Windows.Forms.Label();
 			this.txtWbsRun = new System.Windows.Forms.TextBox();
+			this.btnSave = new System.Windows.Forms.Button();
 			this.label1 = new System.Windows.Forms.Label();
 			this.tabSettings.SuspendLayout();
 			this.tabAdo.SuspendLayout();
@@ -107,17 +107,6 @@
 			this.txtUser.Name = "txtUser";
 			this.txtUser.Size = new System.Drawing.Size(299, 22);
 			this.txtUser.TabIndex = 18;
-			// 
-			// btnSave
-			// 
-			this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.btnSave.Location = new System.Drawing.Point(245, 272);
-			this.btnSave.Name = "btnSave";
-			this.btnSave.Size = new System.Drawing.Size(125, 30);
-			this.btnSave.TabIndex = 17;
-			this.btnSave.Text = "Save Settings";
-			this.btnSave.UseVisualStyleBackColor = true;
-			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
 			// 
 			// label4
 			// 
@@ -323,6 +312,17 @@
 			this.txtWbsRun.Size = new System.Drawing.Size(180, 22);
 			this.txtWbsRun.TabIndex = 15;
 			// 
+			// btnSave
+			// 
+			this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.btnSave.Location = new System.Drawing.Point(245, 272);
+			this.btnSave.Name = "btnSave";
+			this.btnSave.Size = new System.Drawing.Size(125, 30);
+			this.btnSave.TabIndex = 17;
+			this.btnSave.Text = "Save Settings";
+			this.btnSave.UseVisualStyleBackColor = true;
+			this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
@@ -344,6 +344,7 @@
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
 			this.Text = "Settings";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmSettings_FormClosed);
+			this.Load += new System.EventHandler(this.frmSettings_Load);
 			this.tabSettings.ResumeLayout(false);
 			this.tabAdo.ResumeLayout(false);
 			this.tabAdo.PerformLayout();
