@@ -107,13 +107,13 @@ namespace TimeTracker
 				LoadTags();
 
             }
-            statusStrip1.Items[0].Text = DateTime.Now.ToShortDateString();
-            statusStrip1.Items[4].Text = assignedTo;
+            slDate.Text = DateTime.Now.ToShortDateString();
+            slUser.Text = assignedTo;
 
             if (ApplicationDeployment.IsNetworkDeployed)
             {
                 Version version = ApplicationDeployment.CurrentDeployment.CurrentVersion;
-                statusStrip1.Items[5].Text = "Ver: " + version.Major.ToString() + "." + version.Minor.ToString();
+                slVersion.Text = "Ver: " + version.Major.ToString() + "." + version.Minor.ToString();
             }
 
             cmbItemType.SelectedIndex = 0;
@@ -155,18 +155,18 @@ namespace TimeTracker
                     return;
                 }
 
-				if (cmbWbsCode.Text == string.Empty)
-				{
-					MessageBox.Show("You must select a WBS breakdown!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-					return;
-				}
-
 				if (txtTitle.Text == "")
                 {
                     MessageBox.Show("You must enter a title!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
-			}
+
+                if (cmbWbsCode.Text == string.Empty)
+                {
+                    MessageBox.Show("You must select a WBS breakdown!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
             else if (rbUpdateTask.Checked)
             {
                 if (cmbBoard.SelectedIndex <= 0)
@@ -1114,22 +1114,11 @@ namespace TimeTracker
                     {
                         // Add the parsed duration to the total
                         totalDuration = totalDuration.Add(duration);
-
-                        if (String.IsNullOrEmpty(row.Cells["colOperationMode"].Value.ToString()))
-                        {
-                            otherDuration = otherDuration.Add(duration);
-                        }
-                        else
-                        {
-                            adoDuration = adoDuration.Add(duration);
-                        }
                     }
                 }
             }
 
-            statusStrip1.Items[1].Text = "ADO: " + adoDuration.ToString();
-            statusStrip1.Items[2].Text = "Others: " + otherDuration.ToString();
-            statusStrip1.Items[3].Text = "Total: " + totalDuration.ToString();
+            slTotal.Text = "Total: " + totalDuration.ToString();
         }
 
         private void btnRefreshTaskBug_Click(object sender, EventArgs e)
@@ -1184,7 +1173,7 @@ namespace TimeTracker
 
 			LoadTimeEntries(selectedDate);
 
-            statusStrip1.Items[0].Text = selectedDate.ToShortDateString();
+            slDate.Text = selectedDate.ToShortDateString();
 
 			//do not let to start time if date is not today.
 			bool isTodaysData = string.Equals(selectedDate.ToShortDateString(), DateTime.Now.ToShortDateString());
@@ -1364,14 +1353,14 @@ namespace TimeTracker
             {
                 string todaysDate = DateTime.Now.ToString("dd\\-MM\\-yyyy");
 
-				statusStrip1.Items[0].Text = DateTime.Now.ToShortDateString();
+				slDate.Text = DateTime.Now.ToShortDateString();
 				dgEntries.RowCount = 0;
                 btnStart.Enabled = true;
 
-                dtStartDate.Value = DateTime.Now;
                 dtTargetDate.Value = DateTime.Now;
-			}
-		}
+                dtStartDate.Value = DateTime.Now;
+            }
+        }
 
 		private void LoadTags()
 		{
