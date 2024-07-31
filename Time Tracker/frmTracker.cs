@@ -29,12 +29,13 @@ namespace TimeTracker
 		private List<string> areaPathsList = new List<string>();
         private string wbsRun = string.Empty;
         private string wbsProject = string.Empty;
+        private bool gridCellValueChanged = false;
 
 		ADOHelper ado = new ADOHelper();
         DBHelper db = new DBHelper();
-        
-        //CultureInfo culture = new CultureInfo("en-US");
-        public frmTracker()
+
+		CultureInfo currentCulture = CultureInfo.CurrentCulture;
+		public frmTracker()
         {
             InitializeComponent();
             //System.Threading.Thread.CurrentThread.CurrentCulture = culture;
@@ -43,7 +44,8 @@ namespace TimeTracker
 
         private void frmTracker_Load(object sender, EventArgs e)
         {
-            try
+
+			try
             {
 				db.CreateTables();
 			}
@@ -107,8 +109,8 @@ namespace TimeTracker
 				LoadTags();
 
             }
-            slDate.Text = DateTime.Now.ToShortDateString();
-            slUser.Text = assignedTo;
+            slDate.Text = DateTime.Now.ToString("d", currentCulture);
+			slUser.Text = assignedTo;
 
             if (ApplicationDeployment.IsNetworkDeployed)
             {
@@ -284,7 +286,7 @@ namespace TimeTracker
             row.Cells[dgEntries.Columns["colStartTime"].Index].Value = lblStartTime.Text;
             row.Cells[dgEntries.Columns["colEndTime"].Index].Value = DateTime.Now.ToString("HH\\:mm"); ;
             row.Cells[dgEntries.Columns["colDuration"].Index].Value = Convert.ToDateTime(lblDuration.Text).ToString("HH\\:mm");
-            row.Cells[dgEntries.Columns["colCreateDate"].Index].Value = DateTime.Now.ToString("dd\\-MM\\-yyyy");
+            row.Cells[dgEntries.Columns["colCreateDate"].Index].Value = DateTime.Now.ToString("d", currentCulture);
 
 			if (rbCreateNew.Checked)
             {
@@ -301,10 +303,10 @@ namespace TimeTracker
                 row.Cells[dgEntries.Columns["colTags"].Index].Value = CreateTagList();
                 row.Cells[dgEntries.Columns["colCloseItem"].Index].Value = chkCloseItem.Checked;
                 row.Cells[dgEntries.Columns["colOperationMode"].Index].Value = "Create";
-                row.Cells[dgEntries.Columns["colStartDate"].Index].Value = dtStartDate.Value.ToString("dd\\-MM\\-yyyy");
-                row.Cells[dgEntries.Columns["colTargetDate"].Index].Value = dtTargetDate.Value.ToString("dd\\-MM\\-yyyy");
+                row.Cells[dgEntries.Columns["colStartDate"].Index].Value = dtStartDate.Value.ToString("d", currentCulture);
+				row.Cells[dgEntries.Columns["colTargetDate"].Index].Value = dtTargetDate.Value.ToString("d", currentCulture);
 
-                txtOriginalEstimate.Text = txtOriginalEstimate.Text.Replace('_', '0');
+				txtOriginalEstimate.Text = txtOriginalEstimate.Text.Replace('_', '0');
                 row.Cells[dgEntries.Columns["colOriginalEstimate"].Index].Value = Convert.ToDateTime(txtOriginalEstimate.Text).ToString("HH\\:mm");
                 row.Cells[dgEntries.Columns["colUpdateOrgEst"].Index].Value = chkUpdateOriginal.Checked;
                 row.Cells[dgEntries.Columns["colState"].Index].Value = cmbState.Text;
@@ -326,14 +328,15 @@ namespace TimeTracker
                 row.Cells[dgEntries.Columns["colCloseItem"].Index].Value = chkCloseItem.Checked;
                 row.Cells[dgEntries.Columns["colIteration"].Index].Value = cmbIteration.Text;
                 row.Cells[dgEntries.Columns["colOperationMode"].Index].Value = "Update";
-                row.Cells[dgEntries.Columns["colTargetDate"].Index].Value = dtTargetDate.Value.ToString("dd\\-MM\\-yyyy");
-                row.Cells[dgEntries.Columns["colUpdateOrgEst"].Index].Value = chkUpdateOriginal.Checked;
+                row.Cells[dgEntries.Columns["colTargetDate"].Index].Value = dtTargetDate.Value.ToString("d", currentCulture);
+				row.Cells[dgEntries.Columns["colUpdateOrgEst"].Index].Value = chkUpdateOriginal.Checked;
 			}
 
             dgEntries.Rows.Add(row);
 
             lblDuration.Text = "00:00:00"; // Reset the label text
             CalculateTotalDuration();
+
 
             if (cmbState.Text == "Active")
             {
@@ -355,6 +358,7 @@ namespace TimeTracker
 			dtStartDate.Value = DateTime.Now.Date;
 			dtTargetDate.Value = DateTime.Now.Date;
 			cmbTask.SelectedIndex = -1;
+			gridCellValueChanged = true;
 		}
 
 		private void btnCancel_Click(object sender, EventArgs e)
@@ -406,7 +410,8 @@ namespace TimeTracker
             if (dgEntries.SelectedRows.Count > 0)
             {
                 dgEntries.Rows.RemoveAt(dgEntries.SelectedRows[0].Index);
-                return;
+				gridCellValueChanged = true;
+				return;
             }
 
             if (dgEntries.SelectedCells.Count > 0)
@@ -574,10 +579,10 @@ namespace TimeTracker
                         newItem.AreaPath = row.Cells["colAreaPath"].Value.ToString();
 
                         //DateTime.TryParseExact(row.Cells["colStartDate"].Value.ToString(), format, CultureInfo.InvariantCulture, DateTimeStyles.None, out datetime)
-                        DateTime.TryParseExact(row.Cells["colStartDate"].Value.ToString(), "dd-MM-yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out dt);
+                        DateTime.TryParseExact(row.Cells["colStartDate"].Value.ToString(), "d", CultureInfo.CurrentCulture, DateTimeStyles.None, out dt);
                         newItem.StartDate = dt;
 
-                        DateTime.TryParseExact(row.Cells["colTargetDate"].Value.ToString(), "dd-MM-yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out dt);
+                        DateTime.TryParseExact(row.Cells["colTargetDate"].Value.ToString(), "d", CultureInfo.CurrentCulture, DateTimeStyles.None, out dt);
                         newItem.TargetDate = dt;
 
                         newItem.OriginalEstimate = CalculateHour(row.Cells["colOriginalEstimate"].Value.ToString());
@@ -622,7 +627,7 @@ namespace TimeTracker
 
                         updateItem.Id = Convert.ToInt32(row.Cells["colItemId"].Value.ToString());
                         
-                        DateTime.TryParseExact(row.Cells["colTargetDate"].Value.ToString(), "dd-MM-yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out dt);
+                        DateTime.TryParseExact(row.Cells["colTargetDate"].Value.ToString(), "d", CultureInfo.CurrentCulture, DateTimeStyles.None, out dt);
                         updateItem.TargetDate = dt;
 
                         updateItem.IterationPath = row.Cells["colIteration"].Value.ToString();
@@ -655,8 +660,6 @@ namespace TimeTracker
         {
 			TimeEntry timeEntry = new TimeEntry();
             DateTime dt;
-            return;
-
             
 			foreach (DataGridViewRow row in dgEntries.Rows)
 			{
@@ -668,7 +671,7 @@ namespace TimeTracker
 				timeEntry.EndTime = row.Cells["colEndTime"].Value.ToString();
 				timeEntry.Duration = row.Cells["colDuration"].Value.ToString();
 
-                DateTime.TryParseExact(row.Cells["colCreateDate"].Value.ToString(), "dd-MM-yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out dt);
+                DateTime.TryParseExact(row.Cells["colCreateDate"].Value.ToString(), "d", CultureInfo.CurrentCulture, DateTimeStyles.None, out dt);
                 timeEntry.CreateDate = dt;
 
 				timeEntry.Title = row.Cells["colTitle"].Value.ToString();
@@ -686,7 +689,7 @@ namespace TimeTracker
 				if (row.Cells["colSaved"].Value != null && row.Cells["colSaved"].Value.ToString() != "")
 					timeEntry.Saved = Convert.ToBoolean(row.Cells["colSaved"].Value.ToString());
 
-				DateTime.TryParseExact(row.Cells["colTargetDate"].Value.ToString(), "dd-MM-yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out dt);
+				DateTime.TryParseExact(row.Cells["colTargetDate"].Value.ToString(), "d", CultureInfo.CurrentCulture, DateTimeStyles.None, out dt);
 				timeEntry.TargetDate = dt;
 
                 if (row.Cells["colOperationMode"].Value.ToString() == "Create")
@@ -694,7 +697,7 @@ namespace TimeTracker
 					timeEntry.Story = row.Cells["colStory"].Value.ToString();
 					timeEntry.ParentId = Convert.ToInt32(row.Cells["colParentId"].Value.ToString());
 
-					DateTime.TryParseExact(row.Cells["colStartDate"].Value.ToString(), "dd-MM-yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out dt);
+					DateTime.TryParseExact(row.Cells["colStartDate"].Value.ToString(), "d", CultureInfo.CurrentCulture, DateTimeStyles.None, out dt);
 					timeEntry.StartDate = dt;
 
 					timeEntry.OriginalEstimate = row.Cells["colOriginalEstimate"].Value.ToString();
@@ -743,13 +746,13 @@ namespace TimeTracker
 
                     if (Convert.ToInt32(reader["ParentId"]) != 0)
                         row.Cells["colParentId"].Value = Convert.ToInt32(reader["ParentId"]);
-                    row.Cells["colCreateDate"].Value = reader.GetDateTime(reader.GetOrdinal("CreateDate")).ToShortDateString();
-                    row.Cells["colOperationMode"].Value = reader["OperationMode"].ToString();
+                    row.Cells["colCreateDate"].Value = reader.GetDateTime(reader.GetOrdinal("CreateDate")).ToString("d", currentCulture);
+					row.Cells["colOperationMode"].Value = reader["OperationMode"].ToString();
                     row.Cells["colSaved"].Value = Convert.ToBoolean(reader["Saved"]);
                     if (reader["StartDate"].ToString() != string.Empty)
-                        row.Cells["colStartDate"].Value = reader.GetDateTime(reader.GetOrdinal("StartDate")).ToShortDateString();
+                        row.Cells["colStartDate"].Value = reader.GetDateTime(reader.GetOrdinal("StartDate")).ToString("d", currentCulture);
 
-                    row.Cells["colTargetDate"].Value = reader.GetDateTime(reader.GetOrdinal("TargetDate")).ToShortDateString();
+                    row.Cells["colTargetDate"].Value = reader.GetDateTime(reader.GetOrdinal("TargetDate")).ToString("d", currentCulture);
 
                     if (!reader.IsDBNull(reader.GetOrdinal("OriginalEstimate")))
                         row.Cells["colOriginalEstimate"].Value = reader.GetString(reader.GetOrdinal("OriginalEstimate"));
@@ -1043,9 +1046,13 @@ namespace TimeTracker
 
         private void frmTracker_FormClosed(object sender, FormClosedEventArgs e)
         {
-			//SaveGridToFile();
-			db.DeleteTimeEntries(DateTime.Now);
-			SaveTimeEntries();
+            //SaveGridToFile();
+            if (gridCellValueChanged == true && MessageBox.Show("Do you want to save grid data?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+
+            {
+                db.DeleteTimeEntries(DateTime.Now);
+                SaveTimeEntries();
+            }
 		}
 
         private void saveListToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -1142,8 +1149,12 @@ namespace TimeTracker
 
         private void mnExit_Click(object sender, EventArgs e)
         {
-			db.DeleteTimeEntries(DateTime.Now);
-			SaveTimeEntries();
+            if (gridCellValueChanged == true && MessageBox.Show("Do you want to save grid data?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+
+            {
+                db.DeleteTimeEntries(DateTime.Now);
+                SaveTimeEntries();
+            }
 
 			this.Close();
         }
@@ -1221,7 +1232,9 @@ namespace TimeTracker
 
                 //update the total hours according to the selected file
                 CalculateTotalDuration();
-            }
+
+				gridCellValueChanged = true;
+			}
         }
 
         private void mnTodoList_Click(object sender, EventArgs e)
@@ -1354,9 +1367,7 @@ namespace TimeTracker
 
             if (MessageBox.Show("Any unsaved entries will be lost, are you sure?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                string todaysDate = DateTime.Now.ToString("dd\\-MM\\-yyyy");
-
-				slDate.Text = DateTime.Now.ToShortDateString();
+                slDate.Text = DateTime.Now.ToString("d", currentCulture);
 				dgEntries.RowCount = 0;
                 btnStart.Enabled = true;
 
@@ -1463,5 +1474,9 @@ namespace TimeTracker
             }
         }
 
+		private void dgEntries_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+		{
+
+		}
 	}
 }
