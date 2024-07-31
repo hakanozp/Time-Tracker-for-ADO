@@ -1,15 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data.SQLite;
-using Microsoft.TeamFoundation.Build.WebApi;
-using Microsoft.TeamFoundation.Work.WebApi;
-using System.Windows.Controls;
-using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
+using System.IO;
 using System.Windows.Forms;
-using System.Data.Entity.ModelConfiguration.Configuration;
 
 
 namespace TimeTracker
@@ -76,7 +69,7 @@ namespace TimeTracker
 
 	public class DBHelper
 	{
-		internal static string connectionString = "Data Source='TimeTracker.db';Version=3;";
+		internal static string connectionString;
 
 		//        public SQLiteConnection CreateConnection(string connectionString)
 		//        {
@@ -111,10 +104,20 @@ namespace TimeTracker
 		//        }
 		//    }
 
+		public DBHelper() 
+		{
+            string dataDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "\\TimeTrackerData";
+            //create data directory if not exists.
+            if (!Directory.Exists(dataDirectory))
+            {
+                Directory.CreateDirectory(dataDirectory);
+            }
+            connectionString = "Data Source='" + dataDirectory + "\\TimeTracker.db';Version=3;";
+        }
 		public void CreateTables()
 		{
-			try
-			{
+            try
+            {
 				CreateTimeEntryTable();
 				CreateFavoriteBoardsTable();
 				CreateFavoriteToDoListTable();

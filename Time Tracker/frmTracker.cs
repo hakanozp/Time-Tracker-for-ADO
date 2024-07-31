@@ -49,7 +49,7 @@ namespace TimeTracker
 			}
             catch (Exception exc)
             {
-
+                MessageBox.Show(exc.Message);
                 throw exc;
             }
             
@@ -655,6 +655,7 @@ namespace TimeTracker
         {
 			TimeEntry timeEntry = new TimeEntry();
             DateTime dt;
+            return;
 
             
 			foreach (DataGridViewRow row in dgEntries.Rows)
@@ -666,7 +667,9 @@ namespace TimeTracker
 				timeEntry.StartTime = row.Cells["colStartTime"].Value.ToString();
 				timeEntry.EndTime = row.Cells["colEndTime"].Value.ToString();
 				timeEntry.Duration = row.Cells["colDuration"].Value.ToString();
-				timeEntry.CreateDate = Convert.ToDateTime(DateTime.Now.ToString("dd\\-MM\\-yyyy"));
+
+                DateTime.TryParseExact(row.Cells["colCreateDate"].Value.ToString(), "dd-MM-yyyy", CultureInfo.CurrentCulture, DateTimeStyles.None, out dt);
+                timeEntry.CreateDate = dt;
 
 				timeEntry.Title = row.Cells["colTitle"].Value.ToString();
 				timeEntry.Project = row.Cells["colProject"].Value.ToString();
