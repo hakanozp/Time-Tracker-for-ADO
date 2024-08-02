@@ -115,7 +115,7 @@ namespace TimeTracker
             if (ApplicationDeployment.IsNetworkDeployed)
             {
                 Version version = ApplicationDeployment.CurrentDeployment.CurrentVersion;
-                slVersion.Text = "Ver: " + version.Major.ToString() + "." + version.Minor.ToString();
+                slVersion.Text = "Ver: " + version.Major.ToString() + "." + version.Minor.ToString() + "." + version.Build.ToString();
             }
 
             cmbItemType.SelectedIndex = 0;
@@ -210,6 +210,9 @@ namespace TimeTracker
             btnPause.Enabled = true;
             btnStop.Enabled = true;
             btnCancel.Enabled = true;
+
+            rbCreateNew.Enabled = false;
+            rbUpdateTask.Enabled = false;
         }
 
         private void btnPause_Click(object sender, EventArgs e)
@@ -359,9 +362,13 @@ namespace TimeTracker
 			dtTargetDate.Value = DateTime.Now.Date;
 			cmbTask.SelectedIndex = -1;
 			gridCellValueChanged = true;
-		}
 
-		private void btnCancel_Click(object sender, EventArgs e)
+            rbCreateNew.Enabled = true;
+            rbUpdateTask.Enabled = true;
+
+        }
+
+        private void btnCancel_Click(object sender, EventArgs e)
         {
             lblDuration.Text = "00:00:00";
             timer.Stop(); 
@@ -375,6 +382,10 @@ namespace TimeTracker
             btnStop.Enabled = false;
             btnCancel.Enabled = false;
             txtStartTime.Text = "";
+
+            rbCreateNew.Enabled = true;
+            rbUpdateTask.Enabled = true;
+
         }
 
         // This method is called when the timer interval elapses
@@ -1078,6 +1089,7 @@ namespace TimeTracker
                 MessageBox.Show(ex.InnerException.Message, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             Cursor.Current = Cursors.Default;
+            gridCellValueChanged = false;
         }
 
         private void frmTracker_FormClosing(object sender, FormClosingEventArgs e)
