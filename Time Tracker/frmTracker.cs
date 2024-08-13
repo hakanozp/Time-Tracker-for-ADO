@@ -115,7 +115,7 @@ namespace TimeTracker
             if (ApplicationDeployment.IsNetworkDeployed)
             {
                 Version version = ApplicationDeployment.CurrentDeployment.CurrentVersion;
-                slVersion.Text = "Ver: " + version.Major.ToString() + "." + version.Minor.ToString() + "." + version.Build.ToString();
+                slVersion.Text = "Ver: " + version.Major.ToString() + "." + version.Minor.ToString() + "." + version.Revision.ToString();
             }
 
             cmbItemType.SelectedIndex = 0;
@@ -309,8 +309,8 @@ namespace TimeTracker
                 row.Cells[dgEntries.Columns["colStartDate"].Index].Value = dtStartDate.Value.ToString("d", currentCulture);
 				row.Cells[dgEntries.Columns["colTargetDate"].Index].Value = dtTargetDate.Value.ToString("d", currentCulture);
 
-				txtOriginalEstimate.Text = txtOriginalEstimate.Text.Replace('_', '0');
-                row.Cells[dgEntries.Columns["colOriginalEstimate"].Index].Value = Convert.ToDateTime(txtOriginalEstimate.Text).ToString("HH\\:mm");
+				//txtOriginalEstimate.Text = txtOriginalEstimate.Text.Replace('_', '0');
+                row.Cells[dgEntries.Columns["colOriginalEstimate"].Index].Value = txtOriginalEstimate.Text.Replace('_', '0');
                 row.Cells[dgEntries.Columns["colUpdateOrgEst"].Index].Value = chkUpdateOriginal.Checked;
                 row.Cells[dgEntries.Columns["colState"].Index].Value = cmbState.Text;
 				row.Cells[dgEntries.Columns["colWbsCode"].Index].Value = cmbWbsCode.Text;

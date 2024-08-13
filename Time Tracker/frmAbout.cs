@@ -24,7 +24,7 @@ namespace TimeTracker
             if (ApplicationDeployment.IsNetworkDeployed)
             {
                 Version version = ApplicationDeployment.CurrentDeployment.CurrentVersion;
-                lblVersion.Text = "Ver: " + version.Major.ToString() + "." + version.Minor.ToString();
+                lblVersion.Text = "Ver: " + version.Major.ToString() + "." + version.Minor.ToString() + "." + version.Revision.ToString();
             }
             
         }

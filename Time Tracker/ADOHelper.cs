@@ -42,7 +42,7 @@ namespace TimeTracker
             }
             if (state == "")
             {
-                query += "And [System.State] <> 'Closed'";
+                query += "And [System.State] NOT IN ('Closed', 'Removed', 'Resolved')";
             }
             else
             {
