@@ -157,17 +157,23 @@ namespace TimeTracker
                     return;
                 }
 
+				if (txtOriginalEstimate.Text== "__:__")
+				{
+					MessageBox.Show("You must enter an original estimate!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+					return;
+				}
+
 				if (txtTitle.Text == "")
                 {
                     MessageBox.Show("You must enter a title!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                if (cmbWbsCode.Text == string.Empty)
-                {
-                    MessageBox.Show("You must select a WBS breakdown!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+                //if (cmbWbsCode.Text == string.Empty)
+                //{
+                //    MessageBox.Show("You must select a WBS breakdown!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //    return;
+                //}
             }
             else if (rbUpdateTask.Checked)
             {
@@ -213,6 +219,11 @@ namespace TimeTracker
 
             rbCreateNew.Enabled = false;
             rbUpdateTask.Enabled = false;
+
+            grpMain.Enabled = false;
+            grpNewItem.Enabled = false; 
+            grpExistingItem.Enabled = false;
+            grpText.Enabled = false;
         }
 
         private void btnPause_Click(object sender, EventArgs e)
@@ -366,7 +377,12 @@ namespace TimeTracker
             rbCreateNew.Enabled = true;
             rbUpdateTask.Enabled = true;
 
-        }
+			grpMain.Enabled = true;
+			grpNewItem.Enabled = true;
+			grpExistingItem.Enabled = true;
+			grpText.Enabled = true;
+
+		}
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
@@ -385,6 +401,12 @@ namespace TimeTracker
 
             rbCreateNew.Enabled = true;
             rbUpdateTask.Enabled = true;
+
+            grpMain.Enabled = true;
+            grpNewItem.Enabled = true;
+            grpExistingItem.Enabled = true;
+            grpText.Enabled = true;
+
 
         }
 
@@ -630,7 +652,7 @@ namespace TimeTracker
                         //update the item id
                         row.Cells["colItemId"].Value = itemId.ToString();
 
-                        db.SaveNewItem(itemId, newItem.WBS);
+                        db.SaveNewItem(itemId, newItem.WBS, row.Cells["colCategory"].Value.ToString());
                         
                         break;
                     case "Update":
@@ -712,8 +734,10 @@ namespace TimeTracker
 					timeEntry.StartDate = dt;
 
 					timeEntry.OriginalEstimate = row.Cells["colOriginalEstimate"].Value.ToString();
-					timeEntry.WbsCode = row.Cells["colWbsCode"].Value.ToString();
-					timeEntry.State = row.Cells["colState"].Value.ToString();
+					if (row.Cells["colWbsCode"].Value != null && row.Cells["colWbsCode"].Value.ToString() != "")
+						timeEntry.WbsCode = row.Cells["colWbsCode"].Value.ToString();
+					
+                    timeEntry.State = row.Cells["colState"].Value.ToString();
 				}
 
                 db.SaveTimeEntry(timeEntry);
@@ -1385,6 +1409,8 @@ namespace TimeTracker
 
                 dtTargetDate.Value = DateTime.Now;
                 dtStartDate.Value = DateTime.Now;
+
+                slTotal.Text = "Total:";
             }
         }
 

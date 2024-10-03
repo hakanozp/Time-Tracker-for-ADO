@@ -28,14 +28,15 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.dgActiveItems = new System.Windows.Forms.DataGridView();
 			this.btnRefreshList = new System.Windows.Forms.Button();
 			this.btnCloseSelected = new System.Windows.Forms.Button();
 			this.chkUpdateOriginal = new System.Windows.Forms.CheckBox();
 			this.colItemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colSelect = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+			this.colUpdateOrgEst = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.colId = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -56,6 +57,7 @@
 			this.dgActiveItems.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colItemType,
             this.colSelect,
+            this.colUpdateOrgEst,
             this.colId,
             this.colTitle,
             this.colState,
@@ -65,10 +67,10 @@
             this.colCompeted,
             this.colWbsCode});
 			this.dgActiveItems.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.dgActiveItems.Location = new System.Drawing.Point(0, 61);
+			this.dgActiveItems.Location = new System.Drawing.Point(0, 52);
 			this.dgActiveItems.MultiSelect = false;
 			this.dgActiveItems.Name = "dgActiveItems";
-			this.dgActiveItems.Size = new System.Drawing.Size(908, 371);
+			this.dgActiveItems.Size = new System.Drawing.Size(1088, 398);
 			this.dgActiveItems.TabIndex = 0;
 			this.dgActiveItems.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgActiveItems_CellContentClick);
 			this.dgActiveItems.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgActiveItems_CellDoubleClick);
@@ -108,11 +110,10 @@
 			// 
 			// colItemType
 			// 
-			this.colItemType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
 			this.colItemType.HeaderText = "Item Type";
 			this.colItemType.Name = "colItemType";
 			this.colItemType.ReadOnly = true;
-			this.colItemType.Width = 79;
+			this.colItemType.Width = 75;
 			// 
 			// colSelect
 			// 
@@ -120,6 +121,14 @@
 			this.colSelect.HeaderText = "Select";
 			this.colSelect.Name = "colSelect";
 			this.colSelect.Width = 43;
+			// 
+			// colUpdateOrgEst
+			// 
+			this.colUpdateOrgEst.HeaderText = "Update Org.Est.";
+			this.colUpdateOrgEst.Name = "colUpdateOrgEst";
+			this.colUpdateOrgEst.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+			this.colUpdateOrgEst.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			this.colUpdateOrgEst.Width = 60;
 			// 
 			// colId
 			// 
@@ -153,7 +162,7 @@
 			this.colAreaPath.HeaderText = "Area Path";
 			this.colAreaPath.Name = "colAreaPath";
 			this.colAreaPath.ReadOnly = true;
-			this.colAreaPath.Width = 79;
+			this.colAreaPath.Width = 73;
 			// 
 			// colIterationPath
 			// 
@@ -161,26 +170,26 @@
 			this.colIterationPath.HeaderText = "Iteration Path";
 			this.colIterationPath.Name = "colIterationPath";
 			this.colIterationPath.ReadOnly = true;
-			this.colIterationPath.Width = 95;
+			this.colIterationPath.Width = 88;
 			// 
 			// colOriginalEstimate
 			// 
-			this.colOriginalEstimate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			this.colOriginalEstimate.DefaultCellStyle = dataGridViewCellStyle1;
+			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.colOriginalEstimate.DefaultCellStyle = dataGridViewCellStyle3;
 			this.colOriginalEstimate.HeaderText = "Original Estimate";
 			this.colOriginalEstimate.Name = "colOriginalEstimate";
 			this.colOriginalEstimate.ReadOnly = true;
-			this.colOriginalEstimate.Width = 101;
+			this.colOriginalEstimate.Width = 60;
 			// 
 			// colCompeted
 			// 
-			this.colCompeted.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			this.colCompeted.DefaultCellStyle = dataGridViewCellStyle2;
+			this.colCompeted.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.colCompeted.DefaultCellStyle = dataGridViewCellStyle4;
 			this.colCompeted.HeaderText = "Competed Work";
 			this.colCompeted.Name = "colCompeted";
 			this.colCompeted.ReadOnly = true;
+			this.colCompeted.Width = 60;
 			// 
 			// colWbsCode
 			// 
@@ -193,7 +202,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(908, 432);
+			this.ClientSize = new System.Drawing.Size(1088, 450);
 			this.Controls.Add(this.chkUpdateOriginal);
 			this.Controls.Add(this.btnCloseSelected);
 			this.Controls.Add(this.btnRefreshList);
@@ -203,7 +212,7 @@
 			this.MinimizeBox = false;
 			this.Name = "frmActiveItems";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "frmActiveItems";
+			this.Text = "Active Items";
 			this.Load += new System.EventHandler(this.frmActiveItems_Load);
 			((System.ComponentModel.ISupportInitialize)(this.dgActiveItems)).EndInit();
 			this.ResumeLayout(false);
@@ -219,6 +228,7 @@
 		private System.Windows.Forms.CheckBox chkUpdateOriginal;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colItemType;
 		private System.Windows.Forms.DataGridViewCheckBoxColumn colSelect;
+		private System.Windows.Forms.DataGridViewCheckBoxColumn colUpdateOrgEst;
 		private System.Windows.Forms.DataGridViewLinkColumn colId;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colTitle;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colState;

@@ -121,19 +121,32 @@ namespace TimeTracker
 
 		private void btnCloseSelected_Click(object sender, EventArgs e)
 		{
-			double completed = 0;
-			foreach (DataGridViewRow row in dgActiveItems.Rows)
+			double completedWork = 0;
+			Cursor.Current = Cursors.WaitCursor;
+			try
 			{
-				if ((bool?)row.Cells["colSelect"].Value == true)
+				foreach (DataGridViewRow row in dgActiveItems.Rows)
 				{
-					int itemId = Convert.ToInt32(row.Cells[dgActiveItems.Columns["colId"].Index].Value);
+					if ((bool?)row.Cells["colSelect"].Value == true)
+					{
+						int itemId = Convert.ToInt32(row.Cells[dgActiveItems.Columns["colId"].Index].Value);
+						bool updateOriginalestimate = (bool)row.Cells["colUpdateOrgEst"].Value;
 
-					if (row.Cells["colCompeted"].Value != null)
-						completed = Convert.ToDouble(row.Cells["colCompeted"].Value.ToString());
+						if (row.Cells["colCompeted"].Value != null)
+							completedWork = Convert.ToDouble(row.Cells["colCompeted"].Value.ToString());
 
-					ado.CloseItem(itemId, chkUpdateOriginal.Checked, completed);
+						ado.CloseItem(itemId, updateOriginalestimate, completedWork);
+					}
 				}
+				_ = LoadActiveItems();
 			}
+			catch (Exception exc)
+			{
+				MessageBox.Show(exc.InnerException.Message, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+			}
+			Cursor.Current = Cursors.Default;
+
 		}
 	}
 }
