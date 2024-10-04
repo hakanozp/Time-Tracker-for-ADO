@@ -467,5 +467,17 @@ namespace TimeTracker
 			}
 
 		}
-	}
+		public SQLiteDataReader ExecuteSQL(string sql)
+		{
+            SQLiteConnection connection = new SQLiteConnection(connectionString);
+
+            connection.Open();
+
+            SQLiteCommand selectCommand = new SQLiteCommand(sql, connection);
+            SQLiteDataReader reader = selectCommand.ExecuteReader();
+
+            return reader;
+
+        }
+    }
 }

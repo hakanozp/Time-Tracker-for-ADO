@@ -157,7 +157,7 @@ namespace TimeTracker
                     return;
                 }
 
-				if (txtOriginalEstimate.Text== "__:__")
+				if (txtOriginalEstimate.Text== "__:__" || txtOriginalEstimate.Text == "00:00")
 				{
 					MessageBox.Show("You must enter an original estimate!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 					return;
@@ -631,15 +631,19 @@ namespace TimeTracker
                         if (newItem.UpdateOriginalEstimate == true)
                             newItem.OriginalEstimate = newItem.CompletedWork;
 
-                        if (row.Cells["colWbsCode"].Value != null)
+                        if (row.Cells["colWbsCode"].Value != null && row.Cells["colWbsCode"].Value != "")
                         {
                             if (row.Cells["colWbsCode"].Value.ToString().Contains("Run"))
                                 newItem.WBS = wbsRun;
                             else if (row.Cells["colWbsCode"].Value.ToString().Contains("Project"))
                                 newItem.WBS = wbsProject;
                         }
-						//create the ADO item
-						int itemId = ado.CreateAdoItem(newItem);
+                        else
+                        {
+                            newItem.WBS = string.Empty;
+                        }
+                        //create the ADO item
+                        int itemId = ado.CreateAdoItem(newItem);
 
                         //set item status again
                         bool closeItem = Convert.ToBoolean(row.Cells["colCloseItem"].Value.ToString());
@@ -1082,12 +1086,6 @@ namespace TimeTracker
         private void frmTracker_FormClosed(object sender, FormClosedEventArgs e)
         {
             //SaveGridToFile();
-            if (gridCellValueChanged == true && MessageBox.Show("Do you want to save grid data?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-
-            {
-                db.DeleteTimeEntries(DateTime.Now);
-                SaveTimeEntries();
-            }
 		}
 
         private void saveListToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -1122,6 +1120,28 @@ namespace TimeTracker
             {
                 MessageBox.Show("Timer is running. Stop timer first!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 e.Cancel = true;
+            }
+
+            if (gridCellValueChanged == true)
+            {
+                DialogResult dg = DialogResult.None;
+
+                dg = MessageBox.Show("Do you want to save grid data?", "Confirm", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+                switch (dg)
+                {
+                    case DialogResult.Yes:
+                        db.DeleteTimeEntries(DateTime.Now);
+                        SaveTimeEntries();
+                        break;
+                    case DialogResult.No:
+                        break;
+                    case DialogResult.Cancel:
+                        e.Cancel = true;
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
@@ -1516,5 +1536,25 @@ namespace TimeTracker
 		{
 
 		}
-	}
+
+        private void cmbTask_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbTask.SelectedIndex > 0)
+            {
+                string sql = "SELECT Category from NewItems ni where ni.ItemId = " + cmbTask.SelectedValue;
+
+                SQLiteDataReader rd = db.ExecuteSQL(sql);
+                if (rd.HasRows)
+                {
+                    rd.Read();
+                    string category = rd["Category"].ToString();
+
+                    cmbCategory.Text = category;
+
+
+                }
+
+            }
+        }
+    }
 }
