@@ -129,12 +129,15 @@ namespace TimeTracker
 				{
 					if ((bool?)row.Cells["colSelect"].Value == true)
 					{
+						bool updateOriginalestimate = false;
 						int itemId = Convert.ToInt32(row.Cells[dgActiveItems.Columns["colId"].Index].Value);
-						bool updateOriginalestimate = (bool)row.Cells["colUpdateOrgEst"].Value;
+						if (row.Cells["colUpdateOrgEst"].Value != null)
+						{
+							updateOriginalestimate = (bool)row.Cells["colUpdateOrgEst"].Value;
 
-						if (row.Cells["colCompeted"].Value != null)
-							completedWork = Convert.ToDouble(row.Cells["colCompeted"].Value.ToString());
-
+							if (row.Cells["colCompeted"].Value != null)
+								completedWork = Convert.ToDouble(row.Cells["colCompeted"].Value.ToString());
+						}
 						ado.CloseItem(itemId, updateOriginalestimate, completedWork);
 					}
 				}

@@ -28,8 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.dgActiveItems = new System.Windows.Forms.DataGridView();
 			this.btnRefreshList = new System.Windows.Forms.Button();
 			this.btnCloseSelected = new System.Windows.Forms.Button();
@@ -39,11 +39,11 @@
 			this.colUpdateOrgEst = new System.Windows.Forms.DataGridViewCheckBoxColumn();
 			this.colId = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colOriginalEstimate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.colCompeted = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colAreaPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colIterationPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.colOriginalEstimate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.colCompeted = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.colWbsCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.dgActiveItems)).BeginInit();
 			this.SuspendLayout();
@@ -60,11 +60,11 @@
             this.colUpdateOrgEst,
             this.colId,
             this.colTitle,
+            this.colOriginalEstimate,
+            this.colCompeted,
             this.colState,
             this.colAreaPath,
             this.colIterationPath,
-            this.colOriginalEstimate,
-            this.colCompeted,
             this.colWbsCode});
 			this.dgActiveItems.Dock = System.Windows.Forms.DockStyle.Bottom;
 			this.dgActiveItems.Location = new System.Drawing.Point(0, 52);
@@ -148,6 +148,25 @@
 			this.colTitle.ReadOnly = true;
 			this.colTitle.Width = 52;
 			// 
+			// colOriginalEstimate
+			// 
+			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.colOriginalEstimate.DefaultCellStyle = dataGridViewCellStyle1;
+			this.colOriginalEstimate.HeaderText = "Original Estimate";
+			this.colOriginalEstimate.Name = "colOriginalEstimate";
+			this.colOriginalEstimate.ReadOnly = true;
+			this.colOriginalEstimate.Width = 60;
+			// 
+			// colCompeted
+			// 
+			this.colCompeted.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.colCompeted.DefaultCellStyle = dataGridViewCellStyle2;
+			this.colCompeted.HeaderText = "Competed Work";
+			this.colCompeted.Name = "colCompeted";
+			this.colCompeted.ReadOnly = true;
+			this.colCompeted.Width = 60;
+			// 
 			// colState
 			// 
 			this.colState.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -171,25 +190,6 @@
 			this.colIterationPath.Name = "colIterationPath";
 			this.colIterationPath.ReadOnly = true;
 			this.colIterationPath.Width = 88;
-			// 
-			// colOriginalEstimate
-			// 
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			this.colOriginalEstimate.DefaultCellStyle = dataGridViewCellStyle3;
-			this.colOriginalEstimate.HeaderText = "Original Estimate";
-			this.colOriginalEstimate.Name = "colOriginalEstimate";
-			this.colOriginalEstimate.ReadOnly = true;
-			this.colOriginalEstimate.Width = 60;
-			// 
-			// colCompeted
-			// 
-			this.colCompeted.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			this.colCompeted.DefaultCellStyle = dataGridViewCellStyle4;
-			this.colCompeted.HeaderText = "Competed Work";
-			this.colCompeted.Name = "colCompeted";
-			this.colCompeted.ReadOnly = true;
-			this.colCompeted.Width = 60;
 			// 
 			// colWbsCode
 			// 
@@ -231,11 +231,11 @@
 		private System.Windows.Forms.DataGridViewCheckBoxColumn colUpdateOrgEst;
 		private System.Windows.Forms.DataGridViewLinkColumn colId;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colTitle;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colOriginalEstimate;
+		private System.Windows.Forms.DataGridViewTextBoxColumn colCompeted;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colState;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colAreaPath;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colIterationPath;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colOriginalEstimate;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colCompeted;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colWbsCode;
 	}
 }

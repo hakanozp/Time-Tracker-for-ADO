@@ -631,7 +631,7 @@ namespace TimeTracker
                         if (newItem.UpdateOriginalEstimate == true)
                             newItem.OriginalEstimate = newItem.CompletedWork;
 
-                        if (row.Cells["colWbsCode"].Value != null && row.Cells["colWbsCode"].Value != "")
+                        if (row.Cells["colWbsCode"].Value != null && row.Cells["colWbsCode"].Value.ToString() != "")
                         {
                             if (row.Cells["colWbsCode"].Value.ToString().Contains("Run"))
                                 newItem.WBS = wbsRun;
