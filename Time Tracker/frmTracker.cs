@@ -10,6 +10,7 @@ using System.Threading;
 using Microsoft.Win32;
 using System.Deployment.Application;
 using System.Data.SQLite;
+using System.ComponentModel;
 
 
 namespace TimeTracker
@@ -275,11 +276,11 @@ namespace TimeTracker
 					MessageBox.Show("You must select a parent story!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 					return;
 				}
-				if (cmbWbsCode.Text == string.Empty)
-				{
-					MessageBox.Show("You must select a WBS breakdown!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-					return;
-				}
+				//if (cmbWbsCode.Text == string.Empty)
+				//{
+				//	MessageBox.Show("You must select a WBS breakdown!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+				//	return;
+				//}
 				if (txtTitle.Text == "")
 				{
 					MessageBox.Show("You must enter a title!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -347,7 +348,7 @@ namespace TimeTracker
 			}
 
             dgEntries.Rows.Add(row);
-
+            dgEntries.Sort(dgEntries.Columns["colStartTime"], ListSortDirection.Ascending);
             lblDuration.Text = "00:00:00"; // Reset the label text
             CalculateTotalDuration();
 
@@ -382,6 +383,14 @@ namespace TimeTracker
 			grpExistingItem.Enabled = true;
 			grpText.Enabled = true;
 
+            if (rbUpdateTask.Checked)
+            {                
+                rbUpdateTask_CheckedChanged(this, EventArgs.Empty);
+            }
+            else if (rbCreateNew.Checked)
+            { 
+                rbCreateNew_CheckedChanged(this, EventArgs.Empty);
+            }
 		}
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -406,6 +415,15 @@ namespace TimeTracker
             grpNewItem.Enabled = true;
             grpExistingItem.Enabled = true;
             grpText.Enabled = true;
+
+            if (rbUpdateTask.Checked)
+            {
+                rbUpdateTask_CheckedChanged(this, EventArgs.Empty);
+            }
+            else if (rbCreateNew.Checked)
+            {
+                rbCreateNew_CheckedChanged(this, EventArgs.Empty);
+            }
 
 
         }
@@ -631,17 +649,23 @@ namespace TimeTracker
                         if (newItem.UpdateOriginalEstimate == true)
                             newItem.OriginalEstimate = newItem.CompletedWork;
 
-                        if (row.Cells["colWbsCode"].Value != null && row.Cells["colWbsCode"].Value != "")
+                        //if (row.Cells["colWbsCode"].Value != null && row.Cells["colWbsCode"].Value.ToString() != "")
+                        //{
+                        //    if (row.Cells["colWbsCode"].Value.ToString().Contains("Run"))
+                        //        newItem.WBS = wbsRun;
+                        //    else if (row.Cells["colWbsCode"].Value.ToString().Contains("Project"))
+                        //        newItem.WBS = wbsProject;
+                        //}
+                        //else
+                        //{
+                        //    newItem.WBS = string.Empty;
+                        //}
+
+                        if (row.Cells["colWbsCode"].Value != null && row.Cells["colWbsCode"].Value.ToString() != "")
                         {
-                            if (row.Cells["colWbsCode"].Value.ToString().Contains("Run"))
-                                newItem.WBS = wbsRun;
-                            else if (row.Cells["colWbsCode"].Value.ToString().Contains("Project"))
-                                newItem.WBS = wbsProject;
+                            newItem.WBS = row.Cells["colWbsCode"].Value.ToString();
                         }
-                        else
-                        {
-                            newItem.WBS = string.Empty;
-                        }
+
                         //create the ADO item
                         int itemId = ado.CreateAdoItem(newItem);
 
@@ -799,6 +823,7 @@ namespace TimeTracker
                     row.Cells["colWbsCode"].Value = reader["WbsCode"].ToString();
                     row.Cells["colState"].Value = reader["State"].ToString();
                 }
+                CalculateTotalDuration();
             }
             catch (Exception exc)
             {
@@ -858,9 +883,6 @@ namespace TimeTracker
             chkCloseItem.Checked = false;
             chkCloseItem.Enabled = true;
             lblItemText.Text = "Discussion";
-
-            //btnListActiveItems.Enabled = true;
-
 		}
 
         private void rbTimeEntry_CheckedChanged(object sender, EventArgs e)
@@ -1288,8 +1310,9 @@ namespace TimeTracker
 
                 //update the total hours according to the selected file
                 CalculateTotalDuration();
+                dgEntries.Sort(dgEntries.Columns["colStartTime"], ListSortDirection.Ascending);
 
-				gridCellValueChanged = true;
+                gridCellValueChanged = true;
 			}
         }
 
@@ -1541,15 +1564,17 @@ namespace TimeTracker
         {
             if (cmbTask.SelectedIndex > 0)
             {
-                string sql = "SELECT Category from NewItems ni where ni.ItemId = " + cmbTask.SelectedValue;
+                string sql = "SELECT Category, WbsBreakdown FROM NewItems ni WHERE ni.ItemId = " + cmbTask.SelectedValue;
 
                 SQLiteDataReader rd = db.ExecuteSQL(sql);
                 if (rd.HasRows)
                 {
                     rd.Read();
                     string category = rd["Category"].ToString();
+                    string WbsBreakdown = rd["WbsBreakdown"].ToString();
 
                     cmbCategory.Text = category;
+                    cmbWbsCode.Text = WbsBreakdown;
 
 
                 }

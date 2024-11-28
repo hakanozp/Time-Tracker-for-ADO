@@ -51,7 +51,7 @@ namespace TimeTracker
 					row.Cells[dgActiveItems.Columns["colOriginalEstimate"].Index].Value = workItem.Fields["Microsoft.VSTS.Scheduling.OriginalEstimate"].ToString();
 
 				if (workItem.Fields.ContainsKey("Microsoft.VSTS.Scheduling.CompletedWork"))
-					row.Cells[dgActiveItems.Columns["colCompeted"].Index].Value = workItem.Fields["Microsoft.VSTS.Scheduling.CompletedWork"].ToString();
+					row.Cells[dgActiveItems.Columns["colCompleted"].Index].Value = workItem.Fields["Microsoft.VSTS.Scheduling.CompletedWork"].ToString();
 
 				//row.Cells[dgActiveItems.Columns["colWbsCode"].Index].Value = workItem.Fields["Custom.AccountType"].ToString();
 				dgActiveItems.Rows.Add(row);
@@ -130,10 +130,10 @@ namespace TimeTracker
 					if ((bool?)row.Cells["colSelect"].Value == true)
 					{
 						int itemId = Convert.ToInt32(row.Cells[dgActiveItems.Columns["colId"].Index].Value);
-						bool updateOriginalestimate = (bool)row.Cells["colUpdateOrgEst"].Value;
+						bool updateOriginalestimate = ((bool?)row.Cells["colUpdateOrgEst"].Value == true);
 
-						if (row.Cells["colCompeted"].Value != null)
-							completedWork = Convert.ToDouble(row.Cells["colCompeted"].Value.ToString());
+						if (row.Cells["colCompleted"].Value != null)
+							completedWork = Convert.ToDouble(row.Cells["colCompleted"].Value.ToString());
 
 						ado.CloseItem(itemId, updateOriginalestimate, completedWork);
 					}

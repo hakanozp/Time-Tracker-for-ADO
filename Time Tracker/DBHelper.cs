@@ -238,7 +238,7 @@ namespace TimeTracker
 				string createTableQuery = @"
                 CREATE TABLE IF NOT EXISTS NewItems (
 					ItemId INTEGER PRIMARY KEY,
-                    WbsCode TEXT,
+                    WbsBreakdown TEXT,
 					Category TEXT
                 )";
 				using (SQLiteCommand createTableCommand = new SQLiteCommand(createTableQuery, connection))
@@ -444,7 +444,7 @@ namespace TimeTracker
 			connection.Close();
 		}
 
-		public void SaveNewItem(int itemId, string wbsCode, string category)
+		public void SaveNewItem(int itemId, string WbsBreakdown, string category)
 		{
 
 			using (SQLiteConnection connection = new SQLiteConnection(connectionString))
@@ -452,12 +452,12 @@ namespace TimeTracker
 				connection.Open();
 
 				string sql = @"
-                INSERT INTO NewItems (ItemId, WbsCode, Category)
-                VALUES (@ItemId, @WbsCode, @Category)";
+                INSERT INTO NewItems (ItemId, WbsBreakdown, Category)
+                VALUES (@ItemId, @WbsBreakdown, @Category)";
 				using (SQLiteCommand insertCommand = new SQLiteCommand(sql, connection))
 				{
 					insertCommand.Parameters.AddWithValue("@ItemId", itemId);
-					insertCommand.Parameters.AddWithValue("@WbsCode", wbsCode);
+					insertCommand.Parameters.AddWithValue("@WbsBreakdown", WbsBreakdown);
 					insertCommand.Parameters.AddWithValue("@Category", category);
 
 					insertCommand.ExecuteNonQuery();

@@ -28,7 +28,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ProductName>Time Tracker for ADO</ProductName>
     <PublisherName>Hakan Ozpalamutcu</PublisherName>
-    <ApplicationRevision>4</ApplicationRevision>
+    <AutorunEnabled>true</AutorunEnabled>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
