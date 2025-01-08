@@ -221,7 +221,7 @@ namespace TimeTracker
             return iterationList;
         }
 
-        public int CreateAdoItem(ADOTask newEntry)
+        public int CreateTask(ADOTask newEntry)
         {
             int itemId = 0;
 
@@ -333,7 +333,7 @@ namespace TimeTracker
                 }
                 );
 
-                string rel_url = string.Format("{0}/{1}/_apis/wit/workitems/{2}", OrganizationUrl, Project, newEntry.ParentUserStoryId);
+                string rel_url = string.Format("{0}/{1}/_apis/wit/workitems/{2}", OrganizationUrl, Project, newEntry.ParentId);
 
                 patchDocument.Add(new JsonPatchOperation()
                 {
@@ -368,6 +368,91 @@ namespace TimeTracker
 
             return itemId;
         }
+
+        public int CreateUserStory(ADOTask newEntry)
+        {
+            int itemId = 0;
+
+            using (HttpClient client = new HttpClient())
+            {
+
+                VssBasicCredential credentials = new VssBasicCredential("", PersonalAccessToken);
+                JsonPatchDocument patchDocument = new JsonPatchDocument();
+
+                Uri uri = new Uri(OrganizationUrl);
+
+                patchDocument.Add(new JsonPatchOperation()
+                {
+                    Operation = Operation.Add,
+                    Path = "/fields/System.AssignedTo",
+                    Value = newEntry.AssignedTo
+                }
+                                  );
+
+                patchDocument.Add(new JsonPatchOperation()
+                {
+                    Operation = Operation.Add,
+                    Path = "/fields/System.Title",
+                    Value = newEntry.Title
+                }
+                                  );
+                patchDocument.Add(new JsonPatchOperation()
+                {
+                    Operation = Operation.Add,
+                    Path = "/fields/System.Description",
+                    Value = newEntry.Description
+                }
+                                  );
+
+                patchDocument.Add(new JsonPatchOperation()
+                {
+                    Operation = Operation.Add,
+                    Path = "/fields/System.State",
+                    Value = newEntry.State
+                }
+                                  );
+
+                patchDocument.Add(new JsonPatchOperation()
+                {
+                    Operation = Operation.Add,
+                    Path = "/fields/System.IterationPath",
+                    Value = newEntry.IterationPath
+                }
+                                  );
+                patchDocument.Add(new JsonPatchOperation()
+                {
+                    Operation = Operation.Add,
+                    Path = "/fields/System.AreaPath",
+                    Value = newEntry.AreaPath
+                }
+                                  );
+
+
+                string rel_url = string.Format("{0}/{1}/_apis/wit/workitems/{2}", OrganizationUrl, Project, newEntry.ParentId);
+
+                patchDocument.Add(new JsonPatchOperation()
+                {
+                    Operation = Operation.Add,
+                    Path = "/relations/-",
+                    Value = new
+                    {
+                        rel = "System.LinkTypes.Hierarchy-Reverse",
+                        url = rel_url
+                    }
+                }
+                                  );
+
+
+                VssConnection connection = new VssConnection(uri, credentials);
+                WorkItemTrackingHttpClient workItemTrackingHttpClient = connection.GetClient<WorkItemTrackingHttpClient>();
+
+                WorkItem result = workItemTrackingHttpClient.CreateWorkItemAsync(patchDocument, Project, newEntry.ItemType).Result;
+                itemId = (int)result.Id;
+            }
+
+            return itemId;
+        }
+
 
         public void SetItemState(int itemId, string newState)
         {

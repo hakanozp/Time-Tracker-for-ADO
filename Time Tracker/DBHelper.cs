@@ -296,6 +296,8 @@ namespace TimeTracker
 				}
 
 
+
+
 				// Close the connection
 				connection.Close();
 			}
@@ -452,7 +454,7 @@ namespace TimeTracker
 				connection.Open();
 
 				string sql = @"
-                INSERT INTO NewItems (ItemId, WbsBreakdown, Category)
+                REPLACE INTO NewItems (ItemId, WbsBreakdown, Category)
                 VALUES (@ItemId, @WbsBreakdown, @Category)";
 				using (SQLiteCommand insertCommand = new SQLiteCommand(sql, connection))
 				{

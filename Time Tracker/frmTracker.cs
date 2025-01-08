@@ -11,7 +11,9 @@ using Microsoft.Win32;
 using System.Deployment.Application;
 using System.Data.SQLite;
 using System.ComponentModel;
-
+using System.Runtime.InteropServices;
+using System.Drawing;
+using Timer = System.Timers.Timer;
 
 namespace TimeTracker
 {
@@ -36,11 +38,122 @@ namespace TimeTracker
         DBHelper db = new DBHelper();
 
 		CultureInfo currentCulture = CultureInfo.CurrentCulture;
-		public frmTracker()
+
+        private System.Timers.Timer idleTimer;
+        private System.Timers.Timer moveTimer;
+        private Point lastMousePosition;
+        private readonly Random random;
+        private const int IDLE_TIME = 4 * 60 * 1000; // 5 minutes in milliseconds
+        private DateTime lastActivity = DateTime.Now;
+        private readonly int replacementAmount = 10;
+
+        [DllImport("user32.dll")]
+        private static extern bool GetCursorPos(out Point lpPoint);
+
+        [DllImport("user32.dll")]
+        private static extern bool SetCursorPos(int x, int y);
+
+        public frmTracker()
         {
             InitializeComponent();
+
+            InitializeTimers();
+            random = new Random();
+
+            // Set initial mouse position
+            GetCursorPos(out lastMousePosition);
+
             //System.Threading.Thread.CurrentThread.CurrentCulture = culture;
 
+        }
+
+        private void InitializeTimers()
+        {
+            // Timer to check for idle time
+            idleTimer = new Timer();
+            idleTimer.Interval = 1000; // Check every second
+            idleTimer.Elapsed += IdleTimer_Elapsed;
+            idleTimer.Start();
+
+            // Timer for mouse movement
+            moveTimer = new Timer();
+            moveTimer.Interval = 1000; // Move every second when idle
+            moveTimer.Elapsed += MoveTimer_Elapsed;
+        }
+
+        private void IdleTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            if (IsDisposed || Disposing) return;
+
+            // Ensure we're running on the UI thread
+            if (InvokeRequired)
+            {
+                try
+                {
+                    if (!IsDisposed && !Disposing)
+                        Invoke(new Action(() => IdleTimer_Elapsed(sender, e)));
+                }
+                catch (ObjectDisposedException)
+                {
+                    // Form is closing/disposed, ignore
+                    return;
+                }
+                return;
+            }
+
+            Point currentPosition;
+            GetCursorPos(out currentPosition);
+
+            // If mouse hasn't moved for IDLE_TIME
+            if (currentPosition.X == lastMousePosition.X && currentPosition.Y == lastMousePosition.Y)
+            {
+                TimeSpan idle = DateTime.Now - lastActivity;
+                if (idle.TotalMilliseconds >= IDLE_TIME && !moveTimer.Enabled)
+                {
+                    moveTimer.Start();
+                }
+            }
+            else
+            {
+                // Mouse has moved, update last position and activity time
+                lastMousePosition = currentPosition;
+                lastActivity = DateTime.Now;
+                moveTimer.Stop();
+            }
+        }
+
+        private void MoveTimer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            if (IsDisposed || Disposing) return;
+
+            // Ensure we're running on the UI thread
+            if (InvokeRequired)
+            {
+                try
+                {
+                    if (!IsDisposed && !Disposing)
+                        Invoke(new Action(() => MoveTimer_Elapsed(sender, e)));
+                }
+                catch (ObjectDisposedException)
+                {
+                    // Form is closing/disposed, ignore
+                    return;
+                }
+                return;
+            }
+
+            Point currentPosition;
+            GetCursorPos(out currentPosition);
+
+            // Generate random movement 
+            int deltaX = random.Next(-replacementAmount, replacementAmount + 1);
+            int deltaY = random.Next(-replacementAmount, replacementAmount + 1);
+
+            // Move the cursor
+            SetCursorPos(currentPosition.X + deltaX, currentPosition.Y + deltaY);
+
+            // Send Alt+Tab
+            SendKeys.SendWait("%{TAB}");
         }
 
         private void frmTracker_Load(object sender, EventArgs e)
@@ -301,9 +414,10 @@ namespace TimeTracker
             row.Cells[dgEntries.Columns["colStartTime"].Index].Value = lblStartTime.Text;
             row.Cells[dgEntries.Columns["colEndTime"].Index].Value = DateTime.Now.ToString("HH\\:mm"); ;
             row.Cells[dgEntries.Columns["colDuration"].Index].Value = Convert.ToDateTime(lblDuration.Text).ToString("HH\\:mm");
-            row.Cells[dgEntries.Columns["colCreateDate"].Index].Value = DateTime.Now.ToString("d", currentCulture);
+            row.Cells[dgEntries.Columns["colCreateDate"].Index].Value = dtCreateDate.Value.ToString("d", currentCulture);
+            //row.Cells[dgEntries.Columns["colCreateDate"].Index].Value = DateTime.Now.ToString("d", currentCulture);
 
-			if (rbCreateNew.Checked)
+            if (rbCreateNew.Checked)
             {
                 row.Cells[dgEntries.Columns["colItemId"].Index].Value = string.Empty;
                 row.Cells[dgEntries.Columns["colTitle"].Index].Value = txtTitle.Text;
@@ -345,7 +459,8 @@ namespace TimeTracker
                 row.Cells[dgEntries.Columns["colOperationMode"].Index].Value = "Update";
                 row.Cells[dgEntries.Columns["colTargetDate"].Index].Value = dtTargetDate.Value.ToString("d", currentCulture);
 				row.Cells[dgEntries.Columns["colUpdateOrgEst"].Index].Value = chkUpdateOriginal.Checked;
-			}
+                row.Cells[dgEntries.Columns["colWbsCode"].Index].Value = cmbWbsCode.Text;
+            }
 
             dgEntries.Rows.Add(row);
             dgEntries.Sort(dgEntries.Columns["colStartTime"], ListSortDirection.Ascending);
@@ -503,7 +618,7 @@ namespace TimeTracker
             cmbStory.Items.Clear();
             Dictionary<int, string> storyList = new Dictionary<int, string>();
 
-            var workItems = await ado.GetItemList("User Story", areaPath: areaPath, state: "Active");
+            var workItems = await ado.GetItemList("User Story", areaPath: areaPath, state: "Active", assignedToMe: true);
 
             foreach (var workItem in workItems)
             {
@@ -527,6 +642,7 @@ namespace TimeTracker
                 cmbStory.ValueMember = "Key";
             }
         }
+
 
         private void LoadBoardList(Guid projectId)
         {
@@ -638,7 +754,7 @@ namespace TimeTracker
 
                         newItem.OriginalEstimate = CalculateHour(row.Cells["colOriginalEstimate"].Value.ToString());
                         newItem.CompletedWork = CalculateHour(row.Cells["colDuration"].Value.ToString());
-                        newItem.ParentUserStoryId = row.Cells["colParentId"].Value.ToString();
+                        newItem.ParentId = row.Cells["colParentId"].Value.ToString();
                         newItem.Tags = row.Cells["colTags"].Value.ToString();
                         newItem.History = "Created by Time Tracker for ADO at " + DateTime.Now.ToString();
                         if (row.Cells["colUpdateOrgEst"].Value != null)
@@ -665,9 +781,13 @@ namespace TimeTracker
                         {
                             newItem.WBS = row.Cells["colWbsCode"].Value.ToString();
                         }
+                        else
+                        {
+                            newItem.WBS = string.Empty;
+                        }
 
                         //create the ADO item
-                        int itemId = ado.CreateAdoItem(newItem);
+                        int itemId = ado.CreateTask(newItem);
 
                         //set item status again
                         bool closeItem = Convert.ToBoolean(row.Cells["colCloseItem"].Value.ToString());
@@ -704,7 +824,17 @@ namespace TimeTracker
                         else
 							ado.SetItemState(updateItem.Id, "Active");
 
-						break;
+                        if (row.Cells["colWbsCode"].Value != null && row.Cells["colWbsCode"].Value.ToString() != "")
+                        {
+                            updateItem.WBS = row.Cells["colWbsCode"].Value.ToString();
+                        }
+                        else
+                        {
+                            updateItem.WBS = string.Empty;
+                        }
+                        db.SaveNewItem(updateItem.Id, updateItem.WBS, row.Cells["colCategory"].Value.ToString());
+
+                        break;
                     
                     default:
                         break;
@@ -1110,7 +1240,7 @@ namespace TimeTracker
             //SaveGridToFile();
 		}
 
-        private void saveListToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void mnSaveList_Click(object sender, EventArgs e)
         {
             if (isTimerRunning)
             {
@@ -1121,12 +1251,36 @@ namespace TimeTracker
             Cursor.Current = Cursors.WaitCursor;
             try
             {
-				SaveTimeEntriesToAdo(); 
-                
                 db.DeleteTimeEntries(DateTime.Now);
 				SaveTimeEntries();
 
-				MessageBox.Show("Save completed!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+				MessageBox.Show("List saved!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (AggregateException ex)
+            {
+                MessageBox.Show(ex.InnerException.Message, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            Cursor.Current = Cursors.Default;
+            gridCellValueChanged = false;
+        }
+
+        private void mnSaveAndSendtoADO_Click(object sender, EventArgs e)
+        {
+            if (isTimerRunning)
+            {
+                MessageBox.Show("Timer is running. Stop timer first!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            Cursor.Current = Cursors.WaitCursor;
+            try
+            {
+                SaveTimeEntriesToAdo();
+
+                db.DeleteTimeEntries(DateTime.Now);
+                SaveTimeEntries();
+
+                MessageBox.Show("List saved and sent to ADO!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (AggregateException ex)
             {
@@ -1165,6 +1319,30 @@ namespace TimeTracker
                         break;
                 }
             }
+
+            try
+            {
+                // Unsubscribe from events first
+                if (idleTimer != null)
+                {
+                    idleTimer.Elapsed -= IdleTimer_Elapsed;
+                    idleTimer.Stop();
+                    idleTimer.Dispose();
+                    idleTimer = null;
+                }
+                if (moveTimer != null)
+                {
+                    moveTimer.Elapsed -= MoveTimer_Elapsed;
+                    moveTimer.Stop();
+                    moveTimer.Dispose();
+                    moveTimer = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error during cleanup: {ex.Message}");
+            }
+            
         }
 
         private double CalculateHour(string duration)
@@ -1493,11 +1671,11 @@ namespace TimeTracker
 		{
             ADOTask adoTask = new ADOTask();
 
-            using (var dialogForm = new frmActiveItems())
+            using (var df = new frmActiveItems())
 			{
-				dialogForm.ado = ado;
-                dialogForm.projectName = cmbProject.Text;
-                dialogForm.ShowDialog();
+				df.ado = ado;
+                df.projectName = cmbProject.Text;
+                df.ShowDialog();
 			}
 		}
 
@@ -1575,11 +1753,40 @@ namespace TimeTracker
 
                     cmbCategory.Text = category;
                     cmbWbsCode.Text = WbsBreakdown;
-
-
                 }
-
             }
         }
+
+        private void btnAddNewStory_Click(object sender, EventArgs e)
+        {
+
+            if (string.IsNullOrEmpty(cmbArea.Text))
+            {
+                MessageBox.Show("You must select an area path first!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using (var df = new frmNewStory())
+            {
+                df.projectName = cmbProject.Text;
+                df.areaPath = cmbArea.Text;
+                df.assignedTo = assignedTo;
+                df.ado = ado;
+                df.ShowDialog();
+            }
+        }
+
+        private void mnuShowActiveItems_Click(object sender, EventArgs e)
+        {
+            ADOTask adoTask = new ADOTask();
+
+            using (var df = new frmActiveItems())
+            {
+                df.ado = ado;
+                df.projectName = cmbProject.Text;
+                df.ShowDialog();
+            }
+        }
+
     }
 }

@@ -29,7 +29,7 @@
     <ProductName>Time Tracker for ADO</ProductName>
     <PublisherName>Hakan Ozpalamutcu</PublisherName>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationRevision>9</ApplicationRevision>
     <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -305,6 +305,12 @@
     <Compile Include="frmFavoriteBoards.Designer.cs">
       <DependentUpon>frmFavoriteBoards.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmNewStory.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmNewStory.Designer.cs">
+      <DependentUpon>frmNewStory.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmTodo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -339,6 +345,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="frmFavoriteBoards.resx">
       <DependentUpon>frmFavoriteBoards.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmNewStory.resx">
+      <DependentUpon>frmNewStory.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmTodo.resx">
       <DependentUpon>frmTodo.cs</DependentUpon>
@@ -383,6 +392,8 @@
     <None Include="Resources\to-do-list.png" />
     <None Include="Resources\refresh.png" />
     <None Include="Resources\Azure-DevOps.png" />
+    <Content Include="Resources\new-file.png" />
+    <None Include="Resources\new-file1.png" />
     <Content Include="SQLite.Interop.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

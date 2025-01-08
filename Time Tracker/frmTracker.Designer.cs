@@ -30,31 +30,6 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmTracker));
             this.dgEntries = new System.Windows.Forms.DataGridView();
-            this.colCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemId = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.colItemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBoard = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStory = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStartTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEndTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTags = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colProject = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAreaPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colIteration = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCloseItem = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colParentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCreateDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOperationMode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSaved = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colStartDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTargetDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOriginalEstimate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colUpdateOrgEst = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colWbsCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblStartTime = new System.Windows.Forms.Label();
             this.btnDeleteRow = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -63,8 +38,11 @@
             this.slUser = new System.Windows.Forms.ToolStripStatusLabel();
             this.slVersion = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.mnTimeTracket = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnTimeTracker = new System.Windows.Forms.ToolStripMenuItem();
             this.mnSaveList = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnSaveAndSendtoADO = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuShowActiveItems = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.mnLoadData = new System.Windows.Forms.ToolStripMenuItem();
             this.mnStartNewDay = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -76,6 +54,7 @@
             this.mnExit = new System.Windows.Forms.ToolStripMenuItem();
             this.mnAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.grpNewItem = new System.Windows.Forms.GroupBox();
+            this.btnAddNewStory = new System.Windows.Forms.Button();
             this.label14 = new System.Windows.Forms.Label();
             this.cmbState = new System.Windows.Forms.ComboBox();
             this.cmbItemType = new System.Windows.Forms.ComboBox();
@@ -102,6 +81,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.cmbCategory = new System.Windows.Forms.ComboBox();
             this.grpText = new System.Windows.Forms.GroupBox();
+            this.dtCreateDate = new System.Windows.Forms.DateTimePicker();
+            this.label15 = new System.Windows.Forms.Label();
             this.chkUpdateOriginal = new System.Windows.Forms.CheckBox();
             this.btnGetFromTodoList = new System.Windows.Forms.Button();
             this.lblItemText = new System.Windows.Forms.Label();
@@ -132,6 +113,31 @@
             this.btnStart = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.txtStartTime = new System.Windows.Forms.MaskedTextBox();
+            this.colCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemId = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.colItemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBoard = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStartTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEndTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTags = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colProject = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAreaPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colIteration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStartDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTargetDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOriginalEstimate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCloseItem = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colParentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCreateDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOperationMode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSaved = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colUpdateOrgEst = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colWbsCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgEntries)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -160,14 +166,14 @@
             this.colProject,
             this.colAreaPath,
             this.colIteration,
+            this.colStartDate,
+            this.colTargetDate,
+            this.colOriginalEstimate,
             this.colCloseItem,
             this.colParentId,
             this.colCreateDate,
             this.colOperationMode,
             this.colSaved,
-            this.colStartDate,
-            this.colTargetDate,
-            this.colOriginalEstimate,
             this.colUpdateOrgEst,
             this.colWbsCode,
             this.colState});
@@ -179,198 +185,6 @@
             this.dgEntries.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgEntries_CellContentClick);
             this.dgEntries.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgEntries_CellDoubleClick);
             this.dgEntries.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgEntries_CellValueChanged);
-            // 
-            // colCategory
-            // 
-            this.colCategory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colCategory.HeaderText = "Category";
-            this.colCategory.Name = "colCategory";
-            this.colCategory.ReadOnly = true;
-            this.colCategory.Width = 74;
-            // 
-            // colItemId
-            // 
-            this.colItemId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colItemId.HeaderText = "Item Id";
-            this.colItemId.Name = "colItemId";
-            this.colItemId.ReadOnly = true;
-            this.colItemId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colItemId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colItemId.Width = 70;
-            // 
-            // colItemType
-            // 
-            this.colItemType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colItemType.HeaderText = "Item Type";
-            this.colItemType.Name = "colItemType";
-            this.colItemType.ReadOnly = true;
-            this.colItemType.Width = 73;
-            // 
-            // colTitle
-            // 
-            this.colTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colTitle.HeaderText = "Title";
-            this.colTitle.Name = "colTitle";
-            this.colTitle.ReadOnly = true;
-            this.colTitle.Width = 52;
-            // 
-            // colBoard
-            // 
-            this.colBoard.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colBoard.HeaderText = "Board";
-            this.colBoard.Name = "colBoard";
-            this.colBoard.ReadOnly = true;
-            this.colBoard.Width = 60;
-            // 
-            // colStory
-            // 
-            this.colStory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colStory.HeaderText = "Parent Story";
-            this.colStory.Name = "colStory";
-            this.colStory.ReadOnly = true;
-            this.colStory.Width = 83;
-            // 
-            // colStartTime
-            // 
-            this.colStartTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colStartTime.HeaderText = "Start Time";
-            this.colStartTime.Name = "colStartTime";
-            this.colStartTime.ReadOnly = true;
-            this.colStartTime.Width = 80;
-            // 
-            // colEndTime
-            // 
-            this.colEndTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colEndTime.HeaderText = "End Time";
-            this.colEndTime.Name = "colEndTime";
-            this.colEndTime.ReadOnly = true;
-            this.colEndTime.Width = 80;
-            // 
-            // colDuration
-            // 
-            this.colDuration.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colDuration.HeaderText = "Duration";
-            this.colDuration.Name = "colDuration";
-            this.colDuration.ReadOnly = true;
-            this.colDuration.Width = 72;
-            // 
-            // colTags
-            // 
-            this.colTags.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colTags.HeaderText = "Tags";
-            this.colTags.Name = "colTags";
-            this.colTags.ReadOnly = true;
-            this.colTags.Width = 56;
-            // 
-            // colDescription
-            // 
-            this.colDescription.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colDescription.HeaderText = "Description/Discussion";
-            this.colDescription.Name = "colDescription";
-            this.colDescription.ReadOnly = true;
-            this.colDescription.Width = 141;
-            // 
-            // colProject
-            // 
-            this.colProject.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colProject.HeaderText = "Project";
-            this.colProject.Name = "colProject";
-            this.colProject.ReadOnly = true;
-            this.colProject.Width = 65;
-            // 
-            // colAreaPath
-            // 
-            this.colAreaPath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colAreaPath.HeaderText = "Area Path";
-            this.colAreaPath.Name = "colAreaPath";
-            this.colAreaPath.ReadOnly = true;
-            this.colAreaPath.Width = 73;
-            // 
-            // colIteration
-            // 
-            this.colIteration.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colIteration.HeaderText = "Iteration";
-            this.colIteration.Name = "colIteration";
-            this.colIteration.ReadOnly = true;
-            this.colIteration.Width = 70;
-            // 
-            // colCloseItem
-            // 
-            this.colCloseItem.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colCloseItem.HeaderText = "Close Item";
-            this.colCloseItem.Name = "colCloseItem";
-            this.colCloseItem.ReadOnly = true;
-            this.colCloseItem.Width = 56;
-            // 
-            // colParentId
-            // 
-            this.colParentId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colParentId.HeaderText = "Parent Id";
-            this.colParentId.Name = "colParentId";
-            this.colParentId.ReadOnly = true;
-            this.colParentId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colParentId.Width = 75;
-            // 
-            // colCreateDate
-            // 
-            this.colCreateDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colCreateDate.HeaderText = "Create Date";
-            this.colCreateDate.Name = "colCreateDate";
-            this.colCreateDate.ReadOnly = true;
-            this.colCreateDate.Width = 82;
-            // 
-            // colOperationMode
-            // 
-            this.colOperationMode.HeaderText = "Operation";
-            this.colOperationMode.Name = "colOperationMode";
-            this.colOperationMode.ReadOnly = true;
-            this.colOperationMode.Width = 80;
-            // 
-            // colSaved
-            // 
-            this.colSaved.HeaderText = "Saved";
-            this.colSaved.Name = "colSaved";
-            this.colSaved.ReadOnly = true;
-            this.colSaved.Width = 70;
-            // 
-            // colStartDate
-            // 
-            this.colStartDate.HeaderText = "Start Date";
-            this.colStartDate.Name = "colStartDate";
-            this.colStartDate.ReadOnly = true;
-            // 
-            // colTargetDate
-            // 
-            this.colTargetDate.HeaderText = "Target Date";
-            this.colTargetDate.Name = "colTargetDate";
-            this.colTargetDate.ReadOnly = true;
-            // 
-            // colOriginalEstimate
-            // 
-            this.colOriginalEstimate.HeaderText = "Original Estimate";
-            this.colOriginalEstimate.Name = "colOriginalEstimate";
-            this.colOriginalEstimate.ReadOnly = true;
-            this.colOriginalEstimate.Width = 120;
-            // 
-            // colUpdateOrgEst
-            // 
-            this.colUpdateOrgEst.HeaderText = "Update Org.Est.";
-            this.colUpdateOrgEst.Name = "colUpdateOrgEst";
-            this.colUpdateOrgEst.ReadOnly = true;
-            // 
-            // colWbsCode
-            // 
-            this.colWbsCode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colWbsCode.HeaderText = "WBS Code";
-            this.colWbsCode.Name = "colWbsCode";
-            this.colWbsCode.ReadOnly = true;
-            this.colWbsCode.Width = 79;
-            // 
-            // colState
-            // 
-            this.colState.HeaderText = "State";
-            this.colState.Name = "colState";
-            this.colState.ReadOnly = true;
             // 
             // lblStartTime
             // 
@@ -444,7 +258,7 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mnTimeTracket,
+            this.mnTimeTracker,
             this.mnAbout});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -452,10 +266,13 @@
             this.menuStrip1.TabIndex = 29;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // mnTimeTracket
+            // mnTimeTracker
             // 
-            this.mnTimeTracket.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnTimeTracker.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnSaveList,
+            this.mnSaveAndSendtoADO,
+            this.mnuShowActiveItems,
+            this.toolStripSeparator2,
             this.mnLoadData,
             this.mnStartNewDay,
             this.toolStripSeparator1,
@@ -465,73 +282,92 @@
             this.mnSettings,
             this.toolStripMenuItem2,
             this.mnExit});
-            this.mnTimeTracket.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.mnTimeTracket.Name = "mnTimeTracket";
-            this.mnTimeTracket.Size = new System.Drawing.Size(41, 23);
-            this.mnTimeTracket.Text = "File";
+            this.mnTimeTracker.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.mnTimeTracker.Name = "mnTimeTracker";
+            this.mnTimeTracker.Size = new System.Drawing.Size(41, 23);
+            this.mnTimeTracker.Text = "File";
             // 
             // mnSaveList
             // 
             this.mnSaveList.Image = ((System.Drawing.Image)(resources.GetObject("mnSaveList.Image")));
             this.mnSaveList.Name = "mnSaveList";
-            this.mnSaveList.Size = new System.Drawing.Size(203, 24);
-            this.mnSaveList.Text = "Send List to ADO";
-            this.mnSaveList.Click += new System.EventHandler(this.saveListToolStripMenuItem1_Click);
+            this.mnSaveList.Size = new System.Drawing.Size(243, 24);
+            this.mnSaveList.Text = "Save List";
+            this.mnSaveList.Click += new System.EventHandler(this.mnSaveList_Click);
+            // 
+            // mnSaveAndSendtoADO
+            // 
+            this.mnSaveAndSendtoADO.Name = "mnSaveAndSendtoADO";
+            this.mnSaveAndSendtoADO.Size = new System.Drawing.Size(243, 24);
+            this.mnSaveAndSendtoADO.Text = "Save List and Send to ADO";
+            this.mnSaveAndSendtoADO.Click += new System.EventHandler(this.mnSaveAndSendtoADO_Click);
+            // 
+            // mnuShowActiveItems
+            // 
+            this.mnuShowActiveItems.Name = "mnuShowActiveItems";
+            this.mnuShowActiveItems.Size = new System.Drawing.Size(243, 24);
+            this.mnuShowActiveItems.Text = "Show Active Items";
+            this.mnuShowActiveItems.Click += new System.EventHandler(this.mnuShowActiveItems_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(240, 6);
             // 
             // mnLoadData
             // 
             this.mnLoadData.Name = "mnLoadData";
-            this.mnLoadData.Size = new System.Drawing.Size(203, 24);
+            this.mnLoadData.Size = new System.Drawing.Size(243, 24);
             this.mnLoadData.Text = "Load data";
             this.mnLoadData.Click += new System.EventHandler(this.mnLoadData_Click);
             // 
             // mnStartNewDay
             // 
             this.mnStartNewDay.Name = "mnStartNewDay";
-            this.mnStartNewDay.Size = new System.Drawing.Size(203, 24);
+            this.mnStartNewDay.Size = new System.Drawing.Size(243, 24);
             this.mnStartNewDay.Text = "Start New Day";
             this.mnStartNewDay.Click += new System.EventHandler(this.mnStartNewDay_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(200, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(240, 6);
             // 
             // mnTodoList
             // 
             this.mnTodoList.Name = "mnTodoList";
-            this.mnTodoList.Size = new System.Drawing.Size(203, 24);
+            this.mnTodoList.Size = new System.Drawing.Size(243, 24);
             this.mnTodoList.Text = "My to-do List...";
             this.mnTodoList.Click += new System.EventHandler(this.mnTodoList_Click);
             // 
             // mnFavoriteBoards
             // 
             this.mnFavoriteBoards.Name = "mnFavoriteBoards";
-            this.mnFavoriteBoards.Size = new System.Drawing.Size(203, 24);
+            this.mnFavoriteBoards.Size = new System.Drawing.Size(243, 24);
             this.mnFavoriteBoards.Text = "My favorite boards...";
             this.mnFavoriteBoards.Click += new System.EventHandler(this.mnFavoriteBoards_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(200, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(240, 6);
             // 
             // mnSettings
             // 
             this.mnSettings.Name = "mnSettings";
-            this.mnSettings.Size = new System.Drawing.Size(203, 24);
+            this.mnSettings.Size = new System.Drawing.Size(243, 24);
             this.mnSettings.Text = "Settings...";
             this.mnSettings.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(200, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(240, 6);
             // 
             // mnExit
             // 
             this.mnExit.Name = "mnExit";
-            this.mnExit.Size = new System.Drawing.Size(203, 24);
+            this.mnExit.Size = new System.Drawing.Size(243, 24);
             this.mnExit.Text = "Exit";
             this.mnExit.Click += new System.EventHandler(this.mnExit_Click);
             // 
@@ -544,6 +380,7 @@
             // 
             // grpNewItem
             // 
+            this.grpNewItem.Controls.Add(this.btnAddNewStory);
             this.grpNewItem.Controls.Add(this.label14);
             this.grpNewItem.Controls.Add(this.cmbState);
             this.grpNewItem.Controls.Add(this.cmbItemType);
@@ -570,6 +407,17 @@
             this.grpNewItem.Size = new System.Drawing.Size(476, 198);
             this.grpNewItem.TabIndex = 37;
             this.grpNewItem.TabStop = false;
+            // 
+            // btnAddNewStory
+            // 
+            this.btnAddNewStory.BackgroundImage = global::TimeTracker.Properties.Resources.new_file;
+            this.btnAddNewStory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnAddNewStory.Location = new System.Drawing.Point(448, 74);
+            this.btnAddNewStory.Name = "btnAddNewStory";
+            this.btnAddNewStory.Size = new System.Drawing.Size(23, 23);
+            this.btnAddNewStory.TabIndex = 79;
+            this.btnAddNewStory.UseVisualStyleBackColor = true;
+            this.btnAddNewStory.Click += new System.EventHandler(this.btnAddNewStory_Click);
             // 
             // label14
             // 
@@ -654,7 +502,7 @@
             // 
             this.btnOpenStoryLink.BackgroundImage = global::TimeTracker.Properties.Resources.Azure_DevOps;
             this.btnOpenStoryLink.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnOpenStoryLink.Location = new System.Drawing.Point(440, 74);
+            this.btnOpenStoryLink.Location = new System.Drawing.Point(424, 74);
             this.btnOpenStoryLink.Name = "btnOpenStoryLink";
             this.btnOpenStoryLink.Size = new System.Drawing.Size(23, 23);
             this.btnOpenStoryLink.TabIndex = 73;
@@ -675,7 +523,7 @@
             // 
             this.btnRefreshStory.BackgroundImage = global::TimeTracker.Properties.Resources.refresh;
             this.btnRefreshStory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnRefreshStory.Location = new System.Drawing.Point(417, 74);
+            this.btnRefreshStory.Location = new System.Drawing.Point(400, 74);
             this.btnRefreshStory.Name = "btnRefreshStory";
             this.btnRefreshStory.Size = new System.Drawing.Size(23, 23);
             this.btnRefreshStory.TabIndex = 71;
@@ -783,7 +631,7 @@
             this.cmbStory.FormattingEnabled = true;
             this.cmbStory.Location = new System.Drawing.Point(98, 75);
             this.cmbStory.Name = "cmbStory";
-            this.cmbStory.Size = new System.Drawing.Size(319, 21);
+            this.cmbStory.Size = new System.Drawing.Size(300, 21);
             this.cmbStory.TabIndex = 38;
             this.cmbStory.SelectedIndexChanged += new System.EventHandler(this.cmbStory_SelectedIndexChanged);
             // 
@@ -791,7 +639,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(21, 103);
+            this.label10.Location = new System.Drawing.Point(19, 99);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(35, 13);
             this.label10.TabIndex = 79;
@@ -820,7 +668,7 @@
             "Project-Strategic Initiatives",
             "Project-Project Management",
             "Project-Other"});
-            this.cmbWbsCode.Location = new System.Drawing.Point(100, 100);
+            this.cmbWbsCode.Location = new System.Drawing.Point(100, 95);
             this.cmbWbsCode.Name = "cmbWbsCode";
             this.cmbWbsCode.Size = new System.Drawing.Size(216, 21);
             this.cmbWbsCode.TabIndex = 78;
@@ -829,7 +677,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(19, 135);
+            this.label3.Location = new System.Drawing.Point(19, 128);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(57, 13);
             this.label3.TabIndex = 74;
@@ -846,13 +694,15 @@
             "Daily Work",
             "Learning",
             "Others"});
-            this.cmbCategory.Location = new System.Drawing.Point(100, 132);
+            this.cmbCategory.Location = new System.Drawing.Point(100, 124);
             this.cmbCategory.Name = "cmbCategory";
             this.cmbCategory.Size = new System.Drawing.Size(121, 21);
             this.cmbCategory.TabIndex = 73;
             // 
             // grpText
             // 
+            this.grpText.Controls.Add(this.dtCreateDate);
+            this.grpText.Controls.Add(this.label15);
             this.grpText.Controls.Add(this.label10);
             this.grpText.Controls.Add(this.chkUpdateOriginal);
             this.grpText.Controls.Add(this.btnGetFromTodoList);
@@ -866,15 +716,33 @@
             this.grpText.Controls.Add(this.chkCloseItem);
             this.grpText.Location = new System.Drawing.Point(526, 62);
             this.grpText.Name = "grpText";
-            this.grpText.Size = new System.Drawing.Size(566, 227);
+            this.grpText.Size = new System.Drawing.Size(566, 234);
             this.grpText.TabIndex = 38;
             this.grpText.TabStop = false;
+            // 
+            // dtCreateDate
+            // 
+            this.dtCreateDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtCreateDate.Location = new System.Drawing.Point(100, 153);
+            this.dtCreateDate.Name = "dtCreateDate";
+            this.dtCreateDate.Size = new System.Drawing.Size(93, 20);
+            this.dtCreateDate.TabIndex = 81;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label15.Location = new System.Drawing.Point(19, 157);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(75, 13);
+            this.label15.TabIndex = 80;
+            this.label15.Text = "Create Date";
             // 
             // chkUpdateOriginal
             // 
             this.chkUpdateOriginal.AutoSize = true;
             this.chkUpdateOriginal.Enabled = false;
-            this.chkUpdateOriginal.Location = new System.Drawing.Point(129, 194);
+            this.chkUpdateOriginal.Location = new System.Drawing.Point(129, 209);
             this.chkUpdateOriginal.Name = "chkUpdateOriginal";
             this.chkUpdateOriginal.Size = new System.Drawing.Size(202, 17);
             this.chkUpdateOriginal.TabIndex = 77;
@@ -897,7 +765,7 @@
             // 
             this.lblItemText.AutoSize = true;
             this.lblItemText.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblItemText.Location = new System.Drawing.Point(19, 49);
+            this.lblItemText.Location = new System.Drawing.Point(19, 51);
             this.lblItemText.Name = "lblItemText";
             this.lblItemText.Size = new System.Drawing.Size(71, 13);
             this.lblItemText.TabIndex = 25;
@@ -915,7 +783,7 @@
             // 
             // txtDescription
             // 
-            this.txtDescription.Location = new System.Drawing.Point(100, 45);
+            this.txtDescription.Location = new System.Drawing.Point(100, 42);
             this.txtDescription.Multiline = true;
             this.txtDescription.Name = "txtDescription";
             this.txtDescription.Size = new System.Drawing.Size(451, 45);
@@ -923,7 +791,7 @@
             // 
             // txtTitle
             // 
-            this.txtTitle.Location = new System.Drawing.Point(100, 15);
+            this.txtTitle.Location = new System.Drawing.Point(100, 14);
             this.txtTitle.Name = "txtTitle";
             this.txtTitle.Size = new System.Drawing.Size(428, 20);
             this.txtTitle.TabIndex = 22;
@@ -931,7 +799,7 @@
             // chkCloseItem
             // 
             this.chkCloseItem.AutoSize = true;
-            this.chkCloseItem.Location = new System.Drawing.Point(100, 171);
+            this.chkCloseItem.Location = new System.Drawing.Point(100, 186);
             this.chkCloseItem.Name = "chkCloseItem";
             this.chkCloseItem.Size = new System.Drawing.Size(150, 17);
             this.chkCloseItem.TabIndex = 62;
@@ -956,7 +824,7 @@
             // 
             this.btnOpenItemLink.BackgroundImage = global::TimeTracker.Properties.Resources.Azure_DevOps;
             this.btnOpenItemLink.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnOpenItemLink.Location = new System.Drawing.Point(440, 16);
+            this.btnOpenItemLink.Location = new System.Drawing.Point(448, 16);
             this.btnOpenItemLink.Name = "btnOpenItemLink";
             this.btnOpenItemLink.Size = new System.Drawing.Size(23, 23);
             this.btnOpenItemLink.TabIndex = 73;
@@ -967,7 +835,7 @@
             // 
             this.btnRefreshTaskBug.BackgroundImage = global::TimeTracker.Properties.Resources.refresh;
             this.btnRefreshTaskBug.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnRefreshTaskBug.Location = new System.Drawing.Point(417, 16);
+            this.btnRefreshTaskBug.Location = new System.Drawing.Point(424, 16);
             this.btnRefreshTaskBug.Name = "btnRefreshTaskBug";
             this.btnRefreshTaskBug.Size = new System.Drawing.Size(23, 23);
             this.btnRefreshTaskBug.TabIndex = 72;
@@ -990,7 +858,7 @@
             this.cmbTask.FormattingEnabled = true;
             this.cmbTask.Location = new System.Drawing.Point(97, 17);
             this.cmbTask.Name = "cmbTask";
-            this.cmbTask.Size = new System.Drawing.Size(320, 21);
+            this.cmbTask.Size = new System.Drawing.Size(324, 21);
             this.cmbTask.TabIndex = 41;
             this.cmbTask.SelectedIndexChanged += new System.EventHandler(this.cmbTask_SelectedIndexChanged);
             // 
@@ -1016,18 +884,19 @@
             this.btnListActiveItems.BackgroundImage = global::TimeTracker.Properties.Resources.to_do_list;
             this.btnListActiveItems.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnListActiveItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnListActiveItems.Location = new System.Drawing.Point(422, 44);
+            this.btnListActiveItems.Location = new System.Drawing.Point(448, 44);
             this.btnListActiveItems.Name = "btnListActiveItems";
             this.btnListActiveItems.Size = new System.Drawing.Size(23, 23);
             this.btnListActiveItems.TabIndex = 75;
             this.btnListActiveItems.UseVisualStyleBackColor = true;
+            this.btnListActiveItems.Visible = false;
             this.btnListActiveItems.Click += new System.EventHandler(this.btnListActiveItems_Click);
             // 
             // btnRefreshBoard
             // 
             this.btnRefreshBoard.BackgroundImage = global::TimeTracker.Properties.Resources.refresh;
             this.btnRefreshBoard.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnRefreshBoard.Location = new System.Drawing.Point(375, 44);
+            this.btnRefreshBoard.Location = new System.Drawing.Point(400, 44);
             this.btnRefreshBoard.Name = "btnRefreshBoard";
             this.btnRefreshBoard.Size = new System.Drawing.Size(23, 23);
             this.btnRefreshBoard.TabIndex = 73;
@@ -1038,7 +907,7 @@
             // 
             this.btnOpenBoardLink.BackgroundImage = global::TimeTracker.Properties.Resources.Azure_DevOps;
             this.btnOpenBoardLink.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnOpenBoardLink.Location = new System.Drawing.Point(398, 44);
+            this.btnOpenBoardLink.Location = new System.Drawing.Point(424, 44);
             this.btnOpenBoardLink.Name = "btnOpenBoardLink";
             this.btnOpenBoardLink.Size = new System.Drawing.Size(23, 23);
             this.btnOpenBoardLink.TabIndex = 72;
@@ -1101,7 +970,7 @@
             this.cmbBoard.FormattingEnabled = true;
             this.cmbBoard.Location = new System.Drawing.Point(98, 45);
             this.cmbBoard.Name = "cmbBoard";
-            this.cmbBoard.Size = new System.Drawing.Size(277, 21);
+            this.cmbBoard.Size = new System.Drawing.Size(300, 21);
             this.cmbBoard.TabIndex = 49;
             this.cmbBoard.SelectedIndexChanged += new System.EventHandler(this.cmbBoard_SelectedIndexChanged);
             // 
@@ -1138,7 +1007,7 @@
             this.lblDuration.AutoSize = true;
             this.lblDuration.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDuration.ForeColor = System.Drawing.Color.Black;
-            this.lblDuration.Location = new System.Drawing.Point(738, 351);
+            this.lblDuration.Location = new System.Drawing.Point(738, 357);
             this.lblDuration.Name = "lblDuration";
             this.lblDuration.Size = new System.Drawing.Size(143, 37);
             this.lblDuration.TabIndex = 72;
@@ -1149,7 +1018,7 @@
             this.btnStop.Enabled = false;
             this.btnStop.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStop.ForeColor = System.Drawing.Color.Red;
-            this.btnStop.Location = new System.Drawing.Point(809, 308);
+            this.btnStop.Location = new System.Drawing.Point(809, 314);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(100, 31);
             this.btnStop.TabIndex = 71;
@@ -1162,7 +1031,7 @@
             this.btnPause.Enabled = false;
             this.btnPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnPause.ForeColor = System.Drawing.Color.Orange;
-            this.btnPause.Location = new System.Drawing.Point(702, 308);
+            this.btnPause.Location = new System.Drawing.Point(702, 314);
             this.btnPause.Name = "btnPause";
             this.btnPause.Size = new System.Drawing.Size(100, 31);
             this.btnPause.TabIndex = 70;
@@ -1174,7 +1043,7 @@
             // 
             this.btnStart.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnStart.ForeColor = System.Drawing.Color.Green;
-            this.btnStart.Location = new System.Drawing.Point(595, 308);
+            this.btnStart.Location = new System.Drawing.Point(595, 314);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(100, 31);
             this.btnStart.TabIndex = 69;
@@ -1187,7 +1056,7 @@
             this.btnCancel.Enabled = false;
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.btnCancel.Location = new System.Drawing.Point(916, 308);
+            this.btnCancel.Location = new System.Drawing.Point(916, 314);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(100, 31);
             this.btnCancel.TabIndex = 75;
@@ -1208,6 +1077,198 @@
             this.txtStartTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtStartTime.ValidatingType = typeof(System.DateTime);
             this.txtStartTime.Leave += new System.EventHandler(this.txtStartTime_Leave);
+            // 
+            // colCategory
+            // 
+            this.colCategory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colCategory.HeaderText = "Category";
+            this.colCategory.Name = "colCategory";
+            this.colCategory.ReadOnly = true;
+            this.colCategory.Width = 74;
+            // 
+            // colItemId
+            // 
+            this.colItemId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colItemId.HeaderText = "Item Id";
+            this.colItemId.Name = "colItemId";
+            this.colItemId.ReadOnly = true;
+            this.colItemId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colItemId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colItemId.Width = 70;
+            // 
+            // colItemType
+            // 
+            this.colItemType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colItemType.HeaderText = "Item Type";
+            this.colItemType.Name = "colItemType";
+            this.colItemType.ReadOnly = true;
+            this.colItemType.Width = 79;
+            // 
+            // colTitle
+            // 
+            this.colTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colTitle.HeaderText = "Title";
+            this.colTitle.Name = "colTitle";
+            this.colTitle.ReadOnly = true;
+            this.colTitle.Width = 52;
+            // 
+            // colBoard
+            // 
+            this.colBoard.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colBoard.HeaderText = "Board";
+            this.colBoard.Name = "colBoard";
+            this.colBoard.ReadOnly = true;
+            this.colBoard.Width = 60;
+            // 
+            // colStory
+            // 
+            this.colStory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colStory.HeaderText = "Parent Story";
+            this.colStory.Name = "colStory";
+            this.colStory.ReadOnly = true;
+            this.colStory.Width = 90;
+            // 
+            // colStartTime
+            // 
+            this.colStartTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colStartTime.HeaderText = "Start Time";
+            this.colStartTime.Name = "colStartTime";
+            this.colStartTime.ReadOnly = true;
+            this.colStartTime.Width = 80;
+            // 
+            // colEndTime
+            // 
+            this.colEndTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colEndTime.HeaderText = "End Time";
+            this.colEndTime.Name = "colEndTime";
+            this.colEndTime.ReadOnly = true;
+            this.colEndTime.Width = 80;
+            // 
+            // colDuration
+            // 
+            this.colDuration.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colDuration.HeaderText = "Duration";
+            this.colDuration.Name = "colDuration";
+            this.colDuration.ReadOnly = true;
+            this.colDuration.Width = 72;
+            // 
+            // colTags
+            // 
+            this.colTags.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colTags.HeaderText = "Tags";
+            this.colTags.Name = "colTags";
+            this.colTags.ReadOnly = true;
+            this.colTags.Width = 56;
+            // 
+            // colDescription
+            // 
+            this.colDescription.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colDescription.HeaderText = "Description/Discussion";
+            this.colDescription.Name = "colDescription";
+            this.colDescription.ReadOnly = true;
+            this.colDescription.Width = 141;
+            // 
+            // colProject
+            // 
+            this.colProject.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colProject.HeaderText = "Project";
+            this.colProject.Name = "colProject";
+            this.colProject.ReadOnly = true;
+            this.colProject.Width = 65;
+            // 
+            // colAreaPath
+            // 
+            this.colAreaPath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colAreaPath.HeaderText = "Area Path";
+            this.colAreaPath.Name = "colAreaPath";
+            this.colAreaPath.ReadOnly = true;
+            this.colAreaPath.Width = 79;
+            // 
+            // colIteration
+            // 
+            this.colIteration.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colIteration.HeaderText = "Iteration";
+            this.colIteration.Name = "colIteration";
+            this.colIteration.ReadOnly = true;
+            this.colIteration.Width = 70;
+            // 
+            // colStartDate
+            // 
+            this.colStartDate.HeaderText = "Start Date";
+            this.colStartDate.Name = "colStartDate";
+            this.colStartDate.ReadOnly = true;
+            // 
+            // colTargetDate
+            // 
+            this.colTargetDate.HeaderText = "Target Date";
+            this.colTargetDate.Name = "colTargetDate";
+            this.colTargetDate.ReadOnly = true;
+            // 
+            // colOriginalEstimate
+            // 
+            this.colOriginalEstimate.HeaderText = "Original Estimate";
+            this.colOriginalEstimate.Name = "colOriginalEstimate";
+            this.colOriginalEstimate.ReadOnly = true;
+            this.colOriginalEstimate.Width = 120;
+            // 
+            // colCloseItem
+            // 
+            this.colCloseItem.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colCloseItem.HeaderText = "Close Item";
+            this.colCloseItem.Name = "colCloseItem";
+            this.colCloseItem.ReadOnly = true;
+            this.colCloseItem.Width = 62;
+            // 
+            // colParentId
+            // 
+            this.colParentId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colParentId.HeaderText = "Parent Id";
+            this.colParentId.Name = "colParentId";
+            this.colParentId.ReadOnly = true;
+            this.colParentId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.colParentId.Width = 75;
+            // 
+            // colCreateDate
+            // 
+            this.colCreateDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colCreateDate.HeaderText = "Create Date";
+            this.colCreateDate.Name = "colCreateDate";
+            this.colCreateDate.ReadOnly = true;
+            this.colCreateDate.Width = 89;
+            // 
+            // colOperationMode
+            // 
+            this.colOperationMode.HeaderText = "Operation";
+            this.colOperationMode.Name = "colOperationMode";
+            this.colOperationMode.ReadOnly = true;
+            this.colOperationMode.Width = 80;
+            // 
+            // colSaved
+            // 
+            this.colSaved.HeaderText = "Saved";
+            this.colSaved.Name = "colSaved";
+            this.colSaved.ReadOnly = true;
+            this.colSaved.Width = 70;
+            // 
+            // colUpdateOrgEst
+            // 
+            this.colUpdateOrgEst.HeaderText = "Update Org.Est.";
+            this.colUpdateOrgEst.Name = "colUpdateOrgEst";
+            this.colUpdateOrgEst.ReadOnly = true;
+            // 
+            // colWbsCode
+            // 
+            this.colWbsCode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colWbsCode.HeaderText = "WBS Code";
+            this.colWbsCode.Name = "colWbsCode";
+            this.colWbsCode.ReadOnly = true;
+            this.colWbsCode.Width = 85;
+            // 
+            // colState
+            // 
+            this.colState.HeaderText = "State";
+            this.colState.Name = "colState";
+            this.colState.ReadOnly = true;
             // 
             // frmTracker
             // 
@@ -1267,7 +1328,7 @@
         private System.Windows.Forms.ToolStripStatusLabel slDate;
         private System.Windows.Forms.ToolStripStatusLabel slTotal;
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem mnTimeTracket;
+        private System.Windows.Forms.ToolStripMenuItem mnTimeTracker;
         private System.Windows.Forms.ToolStripMenuItem mnSaveList;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem mnExit;
@@ -1336,33 +1397,39 @@
 		private System.Windows.Forms.ComboBox cmbItemType;
 		private System.Windows.Forms.Label label14;
 		private System.Windows.Forms.ComboBox cmbState;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colCategory;
-		private System.Windows.Forms.DataGridViewLinkColumn colItemId;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colItemType;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colTitle;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colBoard;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colStory;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colStartTime;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colEndTime;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colDuration;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colTags;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colDescription;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colProject;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colAreaPath;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colIteration;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn colCloseItem;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colParentId;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colCreateDate;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colOperationMode;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn colSaved;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colStartDate;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colTargetDate;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colOriginalEstimate;
-		private System.Windows.Forms.DataGridViewCheckBoxColumn colUpdateOrgEst;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colWbsCode;
-		private System.Windows.Forms.DataGridViewTextBoxColumn colState;
 		private System.Windows.Forms.CheckBox chkUpdateOriginal;
 		private System.Windows.Forms.CheckBox chkCloseItem;
-	}
+        private System.Windows.Forms.ToolStripMenuItem mnSaveAndSendtoADO;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.DateTimePicker dtCreateDate;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Button btnAddNewStory;
+        private System.Windows.Forms.ToolStripMenuItem mnuShowActiveItems;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCategory;
+        private System.Windows.Forms.DataGridViewLinkColumn colItemId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colItemType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colBoard;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStory;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStartTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colEndTime;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDuration;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTags;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDescription;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colProject;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colAreaPath;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colIteration;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colStartDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTargetDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOriginalEstimate;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colCloseItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colParentId;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCreateDate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colOperationMode;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colSaved;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colUpdateOrgEst;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colWbsCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colState;
+    }
 }
 

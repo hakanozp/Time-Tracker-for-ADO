@@ -11,7 +11,7 @@ namespace TimeTracker
         public int Id {  get; set; }
         public string ItemType { get; set; }
         public string AssignedTo { get; set; }
-        public string ParentUserStoryId { get; set; }
+        public string ParentId { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string AreaPath { get; set; }
