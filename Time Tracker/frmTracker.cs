@@ -45,7 +45,7 @@ namespace TimeTracker
         private readonly Random random;
         private const int IDLE_TIME = 4 * 60 * 1000; // 5 minutes in milliseconds
         private DateTime lastActivity = DateTime.Now;
-        private readonly int replacementAmount = 10;
+        private readonly int replacementAmount = 3;
 
         [DllImport("user32.dll")]
         private static extern bool GetCursorPos(out Point lpPoint);
@@ -120,6 +120,12 @@ namespace TimeTracker
                 lastActivity = DateTime.Now;
                 moveTimer.Stop();
             }
+
+            //TimeSpan idle = DateTime.Now - lastActivity;
+            //if (idle.TotalMilliseconds >= IDLE_TIME && !moveTimer.Enabled)
+            //{
+            //    moveTimer.Start();
+            //}
         }
 
         private void MoveTimer_Elapsed(object sender, ElapsedEventArgs e)
@@ -411,11 +417,14 @@ namespace TimeTracker
             row.CreateCells(dgEntries);
 
             row.Cells[dgEntries.Columns["colCategory"].Index].Value = cmbCategory.Text;
-            row.Cells[dgEntries.Columns["colStartTime"].Index].Value = lblStartTime.Text;
-            row.Cells[dgEntries.Columns["colEndTime"].Index].Value = DateTime.Now.ToString("HH\\:mm"); ;
-            row.Cells[dgEntries.Columns["colDuration"].Index].Value = Convert.ToDateTime(lblDuration.Text).ToString("HH\\:mm");
             row.Cells[dgEntries.Columns["colCreateDate"].Index].Value = dtCreateDate.Value.ToString("d", currentCulture);
-            //row.Cells[dgEntries.Columns["colCreateDate"].Index].Value = DateTime.Now.ToString("d", currentCulture);
+
+            if (cmbState.Text == "Active")
+            {
+                row.Cells[dgEntries.Columns["colStartTime"].Index].Value = lblStartTime.Text;
+                row.Cells[dgEntries.Columns["colEndTime"].Index].Value = DateTime.Now.ToString("HH\\:mm"); ;
+                row.Cells[dgEntries.Columns["colDuration"].Index].Value = Convert.ToDateTime(lblDuration.Text).ToString("HH\\:mm");
+            }
 
             if (rbCreateNew.Checked)
             {
@@ -1465,7 +1474,7 @@ namespace TimeTracker
             DataGridViewRow row = dgEntries.Rows[e.RowIndex];
             if (row == null) return;
 
-            ///start time and end time cells can triggrer editing
+            ///start time and end time cells can trigger editing
             if (e.ColumnIndex == dgEntries.Columns["colStartTime"].Index || e.ColumnIndex == dgEntries.Columns["colEndTime"].Index)
             {
                 //only unsaved row can be edited
@@ -1481,9 +1490,13 @@ namespace TimeTracker
                 f2.endTime = dt;
                 f2.ShowDialog();
 
-                row.Cells[dgEntries.Columns["colStartTime"].Index].Value = f2.startTime.ToString("HH\\:mm");
-                row.Cells[dgEntries.Columns["colEndtime"].Index].Value = f2.endTime.ToString("HH\\:mm");
-                row.Cells[dgEntries.Columns["colDuration"].Index].Value = f2.duration;
+                DateTime updatedStartTime = f2.startTime;
+                DateTime updatedEndTime = f2.endTime;
+                string updatedDuration = f2.duration;
+
+                row.Cells[dgEntries.Columns["colStartTime"].Index].Value = updatedStartTime.ToString("HH\\:mm");
+                row.Cells[dgEntries.Columns["colEndtime"].Index].Value = updatedEndTime.ToString("HH\\:mm");
+                row.Cells[dgEntries.Columns["colDuration"].Index].Value = updatedDuration;
                 row.SetValues();
 
                 //update the total hours according to the selected file
@@ -1491,7 +1504,7 @@ namespace TimeTracker
                 dgEntries.Sort(dgEntries.Columns["colStartTime"], ListSortDirection.Ascending);
 
                 gridCellValueChanged = true;
-			}
+            }
         }
 
         private void mnTodoList_Click(object sender, EventArgs e)
@@ -1591,6 +1604,16 @@ namespace TimeTracker
             System.Diagnostics.Process.Start(link);
         }
 
+
+        private void btnOpenSupportApp_Click(object sender, EventArgs e)
+        {
+            if (cmbTask.SelectedIndex < 1 || !cmbTask.Text.Contains("Support Ticket"))
+                return;
+
+            string link = String.Format("https://apps.powerapps.com/play/e/a5a703bc-f18b-ec5f-adeb-f2db83c5ad0e/a/cca2955c-d258-408b-96e4-3789324eddec?tenantId=f260df36-bc43-424c-8f44-c85226657b01&TicketID={0}", cmbTask.Text.Split('-')[2].Trim());
+            System.Diagnostics.Process.Start(link);
+        }
+
         private void chkCloseItem_CheckedChanged(object sender, EventArgs e)
         {
             chkUpdateOriginal.Enabled = chkCloseItem.Checked;
@@ -1630,6 +1653,7 @@ namespace TimeTracker
 
                 dtTargetDate.Value = DateTime.Now;
                 dtStartDate.Value = DateTime.Now;
+                dtCreateDate.Value = DateTime.Now;
 
                 slTotal.Text = "Total:";
             }

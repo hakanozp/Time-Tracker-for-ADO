@@ -55,6 +55,8 @@
             this.txtWbsRun = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtWeeklyWorkingHours = new System.Windows.Forms.MaskedTextBox();
             this.tabSettings.SuspendLayout();
             this.tabAdo.SuspendLayout();
             this.tabTags.SuspendLayout();
@@ -265,6 +267,8 @@
             // tabWBS
             // 
             this.tabWBS.BackColor = System.Drawing.SystemColors.Control;
+            this.tabWBS.Controls.Add(this.txtWeeklyWorkingHours);
+            this.tabWBS.Controls.Add(this.label13);
             this.tabWBS.Controls.Add(this.label12);
             this.tabWBS.Controls.Add(this.txtWbsProject);
             this.tabWBS.Controls.Add(this.label11);
@@ -274,7 +278,7 @@
             this.tabWBS.Padding = new System.Windows.Forms.Padding(3);
             this.tabWBS.Size = new System.Drawing.Size(590, 228);
             this.tabWBS.TabIndex = 2;
-            this.tabWBS.Text = "WBS codes";
+            this.tabWBS.Text = "Others";
             // 
             // label12
             // 
@@ -332,6 +336,27 @@
             this.label1.TabIndex = 13;
             this.label1.Text = "*Settings will be applied when you restart the application!";
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(19, 92);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(145, 16);
+            this.label13.TabIndex = 20;
+            this.label13.Text = "Weekly Working Hours";
+            // 
+            // txtWeeklyWorkingHours
+            // 
+            this.txtWeeklyWorkingHours.CutCopyMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
+            this.txtWeeklyWorkingHours.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtWeeklyWorkingHours.Location = new System.Drawing.Point(179, 89);
+            this.txtWeeklyWorkingHours.Mask = "00";
+            this.txtWeeklyWorkingHours.Name = "txtWeeklyWorkingHours";
+            this.txtWeeklyWorkingHours.Size = new System.Drawing.Size(35, 22);
+            this.txtWeeklyWorkingHours.TabIndex = 21;
+            this.txtWeeklyWorkingHours.ValidatingType = typeof(int);
+            // 
             // frmSettings
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -385,5 +410,7 @@
 		private System.Windows.Forms.TextBox txtWbsProject;
 		private System.Windows.Forms.Label label11;
 		private System.Windows.Forms.TextBox txtWbsRun;
-	}
+        private System.Windows.Forms.MaskedTextBox txtWeeklyWorkingHours;
+        private System.Windows.Forms.Label label13;
+    }
 }

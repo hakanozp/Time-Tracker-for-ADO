@@ -30,6 +30,31 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmTracker));
             this.dgEntries = new System.Windows.Forms.DataGridView();
+            this.colCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colItemId = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.colItemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colBoard = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStory = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStartTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colEndTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTags = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colProject = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAreaPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colIteration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStartDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colTargetDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOriginalEstimate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCloseItem = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colParentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCreateDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colOperationMode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSaved = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colUpdateOrgEst = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colWbsCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lblStartTime = new System.Windows.Forms.Label();
             this.btnDeleteRow = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -41,17 +66,18 @@
             this.mnTimeTracker = new System.Windows.Forms.ToolStripMenuItem();
             this.mnSaveList = new System.Windows.Forms.ToolStripMenuItem();
             this.mnSaveAndSendtoADO = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnuShowActiveItems = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnLoadData = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnStartNewDay = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.mnTodoList = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnFavoriteBoards = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.mnSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.mnExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnTools = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnLoadData = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnStartNewDay = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuShowActiveItems = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnTodoList = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnFavoriteBoards = new System.Windows.Forms.ToolStripMenuItem();
             this.mnAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.grpNewItem = new System.Windows.Forms.GroupBox();
             this.btnAddNewStory = new System.Windows.Forms.Button();
@@ -91,6 +117,7 @@
             this.txtTitle = new System.Windows.Forms.TextBox();
             this.chkCloseItem = new System.Windows.Forms.CheckBox();
             this.grpExistingItem = new System.Windows.Forms.GroupBox();
+            this.btnOpenSupportApp = new System.Windows.Forms.Button();
             this.btnOpenItemLink = new System.Windows.Forms.Button();
             this.btnRefreshTaskBug = new System.Windows.Forms.Button();
             this.lblItemtype = new System.Windows.Forms.Label();
@@ -113,31 +140,6 @@
             this.btnStart = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.txtStartTime = new System.Windows.Forms.MaskedTextBox();
-            this.colCategory = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colItemId = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.colItemType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colBoard = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStory = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStartTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colEndTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTags = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colProject = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colAreaPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colIteration = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStartDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colTargetDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOriginalEstimate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCloseItem = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colParentId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCreateDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colOperationMode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSaved = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colUpdateOrgEst = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colWbsCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgEntries)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -150,6 +152,7 @@
             // dgEntries
             // 
             this.dgEntries.AllowUserToAddRows = false;
+            this.dgEntries.AllowUserToDeleteRows = false;
             this.dgEntries.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgEntries.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colCategory,
@@ -185,6 +188,198 @@
             this.dgEntries.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgEntries_CellContentClick);
             this.dgEntries.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgEntries_CellDoubleClick);
             this.dgEntries.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgEntries_CellValueChanged);
+            // 
+            // colCategory
+            // 
+            this.colCategory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colCategory.HeaderText = "Category";
+            this.colCategory.Name = "colCategory";
+            this.colCategory.ReadOnly = true;
+            this.colCategory.Width = 74;
+            // 
+            // colItemId
+            // 
+            this.colItemId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colItemId.HeaderText = "Item Id";
+            this.colItemId.Name = "colItemId";
+            this.colItemId.ReadOnly = true;
+            this.colItemId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colItemId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colItemId.Width = 70;
+            // 
+            // colItemType
+            // 
+            this.colItemType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colItemType.HeaderText = "Item Type";
+            this.colItemType.Name = "colItemType";
+            this.colItemType.ReadOnly = true;
+            this.colItemType.Width = 73;
+            // 
+            // colTitle
+            // 
+            this.colTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colTitle.HeaderText = "Title";
+            this.colTitle.Name = "colTitle";
+            this.colTitle.ReadOnly = true;
+            this.colTitle.Width = 52;
+            // 
+            // colBoard
+            // 
+            this.colBoard.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colBoard.HeaderText = "Board";
+            this.colBoard.Name = "colBoard";
+            this.colBoard.ReadOnly = true;
+            this.colBoard.Width = 60;
+            // 
+            // colStory
+            // 
+            this.colStory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colStory.HeaderText = "Parent Story";
+            this.colStory.Name = "colStory";
+            this.colStory.ReadOnly = true;
+            this.colStory.Width = 83;
+            // 
+            // colStartTime
+            // 
+            this.colStartTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colStartTime.HeaderText = "Start Time";
+            this.colStartTime.Name = "colStartTime";
+            this.colStartTime.ReadOnly = true;
+            this.colStartTime.Width = 80;
+            // 
+            // colEndTime
+            // 
+            this.colEndTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colEndTime.HeaderText = "End Time";
+            this.colEndTime.Name = "colEndTime";
+            this.colEndTime.ReadOnly = true;
+            this.colEndTime.Width = 80;
+            // 
+            // colDuration
+            // 
+            this.colDuration.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colDuration.HeaderText = "Duration";
+            this.colDuration.Name = "colDuration";
+            this.colDuration.ReadOnly = true;
+            this.colDuration.Width = 72;
+            // 
+            // colTags
+            // 
+            this.colTags.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colTags.HeaderText = "Tags";
+            this.colTags.Name = "colTags";
+            this.colTags.ReadOnly = true;
+            this.colTags.Width = 56;
+            // 
+            // colDescription
+            // 
+            this.colDescription.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colDescription.HeaderText = "Description/Discussion";
+            this.colDescription.Name = "colDescription";
+            this.colDescription.ReadOnly = true;
+            this.colDescription.Width = 141;
+            // 
+            // colProject
+            // 
+            this.colProject.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colProject.HeaderText = "Project";
+            this.colProject.Name = "colProject";
+            this.colProject.ReadOnly = true;
+            this.colProject.Width = 65;
+            // 
+            // colAreaPath
+            // 
+            this.colAreaPath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colAreaPath.HeaderText = "Area Path";
+            this.colAreaPath.Name = "colAreaPath";
+            this.colAreaPath.ReadOnly = true;
+            this.colAreaPath.Width = 73;
+            // 
+            // colIteration
+            // 
+            this.colIteration.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colIteration.HeaderText = "Iteration";
+            this.colIteration.Name = "colIteration";
+            this.colIteration.ReadOnly = true;
+            this.colIteration.Width = 70;
+            // 
+            // colStartDate
+            // 
+            this.colStartDate.HeaderText = "Start Date";
+            this.colStartDate.Name = "colStartDate";
+            this.colStartDate.ReadOnly = true;
+            // 
+            // colTargetDate
+            // 
+            this.colTargetDate.HeaderText = "Target Date";
+            this.colTargetDate.Name = "colTargetDate";
+            this.colTargetDate.ReadOnly = true;
+            // 
+            // colOriginalEstimate
+            // 
+            this.colOriginalEstimate.HeaderText = "Original Estimate";
+            this.colOriginalEstimate.Name = "colOriginalEstimate";
+            this.colOriginalEstimate.ReadOnly = true;
+            this.colOriginalEstimate.Width = 120;
+            // 
+            // colCloseItem
+            // 
+            this.colCloseItem.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colCloseItem.HeaderText = "Close Item";
+            this.colCloseItem.Name = "colCloseItem";
+            this.colCloseItem.ReadOnly = true;
+            this.colCloseItem.Width = 56;
+            // 
+            // colParentId
+            // 
+            this.colParentId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.colParentId.HeaderText = "Parent Id";
+            this.colParentId.Name = "colParentId";
+            this.colParentId.ReadOnly = true;
+            this.colParentId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.colParentId.Width = 75;
+            // 
+            // colCreateDate
+            // 
+            this.colCreateDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colCreateDate.HeaderText = "Create Date";
+            this.colCreateDate.Name = "colCreateDate";
+            this.colCreateDate.ReadOnly = true;
+            this.colCreateDate.Width = 82;
+            // 
+            // colOperationMode
+            // 
+            this.colOperationMode.HeaderText = "Operation";
+            this.colOperationMode.Name = "colOperationMode";
+            this.colOperationMode.ReadOnly = true;
+            this.colOperationMode.Width = 80;
+            // 
+            // colSaved
+            // 
+            this.colSaved.HeaderText = "Saved";
+            this.colSaved.Name = "colSaved";
+            this.colSaved.ReadOnly = true;
+            this.colSaved.Width = 70;
+            // 
+            // colUpdateOrgEst
+            // 
+            this.colUpdateOrgEst.HeaderText = "Update Org.Est.";
+            this.colUpdateOrgEst.Name = "colUpdateOrgEst";
+            this.colUpdateOrgEst.ReadOnly = true;
+            // 
+            // colWbsCode
+            // 
+            this.colWbsCode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colWbsCode.HeaderText = "WBS Code";
+            this.colWbsCode.Name = "colWbsCode";
+            this.colWbsCode.ReadOnly = true;
+            this.colWbsCode.Width = 79;
+            // 
+            // colState
+            // 
+            this.colState.HeaderText = "State";
+            this.colState.Name = "colState";
+            this.colState.ReadOnly = true;
             // 
             // lblStartTime
             // 
@@ -259,6 +454,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnTimeTracker,
+            this.mnTools,
             this.mnAbout});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -271,13 +467,6 @@
             this.mnTimeTracker.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnSaveList,
             this.mnSaveAndSendtoADO,
-            this.mnuShowActiveItems,
-            this.toolStripSeparator2,
-            this.mnLoadData,
-            this.mnStartNewDay,
-            this.toolStripSeparator1,
-            this.mnTodoList,
-            this.mnFavoriteBoards,
             this.toolStripMenuItem1,
             this.mnSettings,
             this.toolStripMenuItem2,
@@ -302,51 +491,6 @@
             this.mnSaveAndSendtoADO.Text = "Save List and Send to ADO";
             this.mnSaveAndSendtoADO.Click += new System.EventHandler(this.mnSaveAndSendtoADO_Click);
             // 
-            // mnuShowActiveItems
-            // 
-            this.mnuShowActiveItems.Name = "mnuShowActiveItems";
-            this.mnuShowActiveItems.Size = new System.Drawing.Size(243, 24);
-            this.mnuShowActiveItems.Text = "Show Active Items";
-            this.mnuShowActiveItems.Click += new System.EventHandler(this.mnuShowActiveItems_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(240, 6);
-            // 
-            // mnLoadData
-            // 
-            this.mnLoadData.Name = "mnLoadData";
-            this.mnLoadData.Size = new System.Drawing.Size(243, 24);
-            this.mnLoadData.Text = "Load data";
-            this.mnLoadData.Click += new System.EventHandler(this.mnLoadData_Click);
-            // 
-            // mnStartNewDay
-            // 
-            this.mnStartNewDay.Name = "mnStartNewDay";
-            this.mnStartNewDay.Size = new System.Drawing.Size(243, 24);
-            this.mnStartNewDay.Text = "Start New Day";
-            this.mnStartNewDay.Click += new System.EventHandler(this.mnStartNewDay_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(240, 6);
-            // 
-            // mnTodoList
-            // 
-            this.mnTodoList.Name = "mnTodoList";
-            this.mnTodoList.Size = new System.Drawing.Size(243, 24);
-            this.mnTodoList.Text = "My to-do List...";
-            this.mnTodoList.Click += new System.EventHandler(this.mnTodoList_Click);
-            // 
-            // mnFavoriteBoards
-            // 
-            this.mnFavoriteBoards.Name = "mnFavoriteBoards";
-            this.mnFavoriteBoards.Size = new System.Drawing.Size(243, 24);
-            this.mnFavoriteBoards.Text = "My favorite boards...";
-            this.mnFavoriteBoards.Click += new System.EventHandler(this.mnFavoriteBoards_Click);
-            // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
@@ -370,6 +514,66 @@
             this.mnExit.Size = new System.Drawing.Size(243, 24);
             this.mnExit.Text = "Exit";
             this.mnExit.Click += new System.EventHandler(this.mnExit_Click);
+            // 
+            // mnTools
+            // 
+            this.mnTools.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnLoadData,
+            this.mnStartNewDay,
+            this.toolStripSeparator1,
+            this.mnuShowActiveItems,
+            this.toolStripSeparator2,
+            this.mnTodoList,
+            this.mnFavoriteBoards});
+            this.mnTools.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.mnTools.Name = "mnTools";
+            this.mnTools.Size = new System.Drawing.Size(52, 23);
+            this.mnTools.Text = "Tools";
+            // 
+            // mnLoadData
+            // 
+            this.mnLoadData.Name = "mnLoadData";
+            this.mnLoadData.Size = new System.Drawing.Size(203, 24);
+            this.mnLoadData.Text = "Load data";
+            this.mnLoadData.Click += new System.EventHandler(this.mnLoadData_Click);
+            // 
+            // mnStartNewDay
+            // 
+            this.mnStartNewDay.Name = "mnStartNewDay";
+            this.mnStartNewDay.Size = new System.Drawing.Size(203, 24);
+            this.mnStartNewDay.Text = "Start New Day";
+            this.mnStartNewDay.Click += new System.EventHandler(this.mnStartNewDay_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(200, 6);
+            // 
+            // mnuShowActiveItems
+            // 
+            this.mnuShowActiveItems.Name = "mnuShowActiveItems";
+            this.mnuShowActiveItems.Size = new System.Drawing.Size(203, 24);
+            this.mnuShowActiveItems.Text = "Show Active Items";
+            this.mnuShowActiveItems.Click += new System.EventHandler(this.mnuShowActiveItems_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(200, 6);
+            // 
+            // mnTodoList
+            // 
+            this.mnTodoList.Name = "mnTodoList";
+            this.mnTodoList.Size = new System.Drawing.Size(203, 24);
+            this.mnTodoList.Text = "My to-do List...";
+            this.mnTodoList.Click += new System.EventHandler(this.mnTodoList_Click);
+            // 
+            // mnFavoriteBoards
+            // 
+            this.mnFavoriteBoards.Name = "mnFavoriteBoards";
+            this.mnFavoriteBoards.Size = new System.Drawing.Size(203, 24);
+            this.mnFavoriteBoards.Text = "My favorite boards...";
+            this.mnFavoriteBoards.Click += new System.EventHandler(this.mnFavoriteBoards_Click);
             // 
             // mnAbout
             // 
@@ -404,7 +608,7 @@
             this.grpNewItem.Controls.Add(this.cmbStory);
             this.grpNewItem.Location = new System.Drawing.Point(12, 164);
             this.grpNewItem.Name = "grpNewItem";
-            this.grpNewItem.Size = new System.Drawing.Size(476, 198);
+            this.grpNewItem.Size = new System.Drawing.Size(508, 198);
             this.grpNewItem.TabIndex = 37;
             this.grpNewItem.TabStop = false;
             // 
@@ -412,7 +616,7 @@
             // 
             this.btnAddNewStory.BackgroundImage = global::TimeTracker.Properties.Resources.new_file;
             this.btnAddNewStory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnAddNewStory.Location = new System.Drawing.Point(448, 74);
+            this.btnAddNewStory.Location = new System.Drawing.Point(478, 74);
             this.btnAddNewStory.Name = "btnAddNewStory";
             this.btnAddNewStory.Size = new System.Drawing.Size(23, 23);
             this.btnAddNewStory.TabIndex = 79;
@@ -502,7 +706,7 @@
             // 
             this.btnOpenStoryLink.BackgroundImage = global::TimeTracker.Properties.Resources.Azure_DevOps;
             this.btnOpenStoryLink.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnOpenStoryLink.Location = new System.Drawing.Point(424, 74);
+            this.btnOpenStoryLink.Location = new System.Drawing.Point(454, 74);
             this.btnOpenStoryLink.Name = "btnOpenStoryLink";
             this.btnOpenStoryLink.Size = new System.Drawing.Size(23, 23);
             this.btnOpenStoryLink.TabIndex = 73;
@@ -523,7 +727,7 @@
             // 
             this.btnRefreshStory.BackgroundImage = global::TimeTracker.Properties.Resources.refresh;
             this.btnRefreshStory.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnRefreshStory.Location = new System.Drawing.Point(400, 74);
+            this.btnRefreshStory.Location = new System.Drawing.Point(430, 74);
             this.btnRefreshStory.Name = "btnRefreshStory";
             this.btnRefreshStory.Size = new System.Drawing.Size(23, 23);
             this.btnRefreshStory.TabIndex = 71;
@@ -631,7 +835,7 @@
             this.cmbStory.FormattingEnabled = true;
             this.cmbStory.Location = new System.Drawing.Point(98, 75);
             this.cmbStory.Name = "cmbStory";
-            this.cmbStory.Size = new System.Drawing.Size(300, 21);
+            this.cmbStory.Size = new System.Drawing.Size(330, 21);
             this.cmbStory.TabIndex = 38;
             this.cmbStory.SelectedIndexChanged += new System.EventHandler(this.cmbStory_SelectedIndexChanged);
             // 
@@ -809,6 +1013,7 @@
             // 
             // grpExistingItem
             // 
+            this.grpExistingItem.Controls.Add(this.btnOpenSupportApp);
             this.grpExistingItem.Controls.Add(this.btnOpenItemLink);
             this.grpExistingItem.Controls.Add(this.btnRefreshTaskBug);
             this.grpExistingItem.Controls.Add(this.lblItemtype);
@@ -816,15 +1021,26 @@
             this.grpExistingItem.Enabled = false;
             this.grpExistingItem.Location = new System.Drawing.Point(12, 362);
             this.grpExistingItem.Name = "grpExistingItem";
-            this.grpExistingItem.Size = new System.Drawing.Size(476, 50);
+            this.grpExistingItem.Size = new System.Drawing.Size(508, 50);
             this.grpExistingItem.TabIndex = 43;
             this.grpExistingItem.TabStop = false;
+            // 
+            // btnOpenSupportApp
+            // 
+            this.btnOpenSupportApp.BackgroundImage = global::TimeTracker.Properties.Resources.icons8_power_apps_80;
+            this.btnOpenSupportApp.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.btnOpenSupportApp.Location = new System.Drawing.Point(478, 16);
+            this.btnOpenSupportApp.Name = "btnOpenSupportApp";
+            this.btnOpenSupportApp.Size = new System.Drawing.Size(23, 23);
+            this.btnOpenSupportApp.TabIndex = 80;
+            this.btnOpenSupportApp.UseVisualStyleBackColor = true;
+            this.btnOpenSupportApp.Click += new System.EventHandler(this.btnOpenSupportApp_Click);
             // 
             // btnOpenItemLink
             // 
             this.btnOpenItemLink.BackgroundImage = global::TimeTracker.Properties.Resources.Azure_DevOps;
             this.btnOpenItemLink.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnOpenItemLink.Location = new System.Drawing.Point(448, 16);
+            this.btnOpenItemLink.Location = new System.Drawing.Point(454, 16);
             this.btnOpenItemLink.Name = "btnOpenItemLink";
             this.btnOpenItemLink.Size = new System.Drawing.Size(23, 23);
             this.btnOpenItemLink.TabIndex = 73;
@@ -835,7 +1051,7 @@
             // 
             this.btnRefreshTaskBug.BackgroundImage = global::TimeTracker.Properties.Resources.refresh;
             this.btnRefreshTaskBug.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnRefreshTaskBug.Location = new System.Drawing.Point(424, 16);
+            this.btnRefreshTaskBug.Location = new System.Drawing.Point(430, 16);
             this.btnRefreshTaskBug.Name = "btnRefreshTaskBug";
             this.btnRefreshTaskBug.Size = new System.Drawing.Size(23, 23);
             this.btnRefreshTaskBug.TabIndex = 72;
@@ -858,7 +1074,7 @@
             this.cmbTask.FormattingEnabled = true;
             this.cmbTask.Location = new System.Drawing.Point(97, 17);
             this.cmbTask.Name = "cmbTask";
-            this.cmbTask.Size = new System.Drawing.Size(324, 21);
+            this.cmbTask.Size = new System.Drawing.Size(330, 21);
             this.cmbTask.TabIndex = 41;
             this.cmbTask.SelectedIndexChanged += new System.EventHandler(this.cmbTask_SelectedIndexChanged);
             // 
@@ -875,7 +1091,7 @@
             this.grpMain.Controls.Add(this.cmbBoard);
             this.grpMain.Location = new System.Drawing.Point(12, 60);
             this.grpMain.Name = "grpMain";
-            this.grpMain.Size = new System.Drawing.Size(476, 105);
+            this.grpMain.Size = new System.Drawing.Size(508, 105);
             this.grpMain.TabIndex = 50;
             this.grpMain.TabStop = false;
             // 
@@ -884,7 +1100,7 @@
             this.btnListActiveItems.BackgroundImage = global::TimeTracker.Properties.Resources.to_do_list;
             this.btnListActiveItems.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.btnListActiveItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnListActiveItems.Location = new System.Drawing.Point(448, 44);
+            this.btnListActiveItems.Location = new System.Drawing.Point(478, 44);
             this.btnListActiveItems.Name = "btnListActiveItems";
             this.btnListActiveItems.Size = new System.Drawing.Size(23, 23);
             this.btnListActiveItems.TabIndex = 75;
@@ -896,7 +1112,7 @@
             // 
             this.btnRefreshBoard.BackgroundImage = global::TimeTracker.Properties.Resources.refresh;
             this.btnRefreshBoard.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnRefreshBoard.Location = new System.Drawing.Point(400, 44);
+            this.btnRefreshBoard.Location = new System.Drawing.Point(430, 44);
             this.btnRefreshBoard.Name = "btnRefreshBoard";
             this.btnRefreshBoard.Size = new System.Drawing.Size(23, 23);
             this.btnRefreshBoard.TabIndex = 73;
@@ -907,7 +1123,7 @@
             // 
             this.btnOpenBoardLink.BackgroundImage = global::TimeTracker.Properties.Resources.Azure_DevOps;
             this.btnOpenBoardLink.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnOpenBoardLink.Location = new System.Drawing.Point(424, 44);
+            this.btnOpenBoardLink.Location = new System.Drawing.Point(454, 44);
             this.btnOpenBoardLink.Name = "btnOpenBoardLink";
             this.btnOpenBoardLink.Size = new System.Drawing.Size(23, 23);
             this.btnOpenBoardLink.TabIndex = 72;
@@ -970,7 +1186,7 @@
             this.cmbBoard.FormattingEnabled = true;
             this.cmbBoard.Location = new System.Drawing.Point(98, 45);
             this.cmbBoard.Name = "cmbBoard";
-            this.cmbBoard.Size = new System.Drawing.Size(300, 21);
+            this.cmbBoard.Size = new System.Drawing.Size(330, 21);
             this.cmbBoard.TabIndex = 49;
             this.cmbBoard.SelectedIndexChanged += new System.EventHandler(this.cmbBoard_SelectedIndexChanged);
             // 
@@ -1077,198 +1293,6 @@
             this.txtStartTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtStartTime.ValidatingType = typeof(System.DateTime);
             this.txtStartTime.Leave += new System.EventHandler(this.txtStartTime_Leave);
-            // 
-            // colCategory
-            // 
-            this.colCategory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colCategory.HeaderText = "Category";
-            this.colCategory.Name = "colCategory";
-            this.colCategory.ReadOnly = true;
-            this.colCategory.Width = 74;
-            // 
-            // colItemId
-            // 
-            this.colItemId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colItemId.HeaderText = "Item Id";
-            this.colItemId.Name = "colItemId";
-            this.colItemId.ReadOnly = true;
-            this.colItemId.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colItemId.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colItemId.Width = 70;
-            // 
-            // colItemType
-            // 
-            this.colItemType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colItemType.HeaderText = "Item Type";
-            this.colItemType.Name = "colItemType";
-            this.colItemType.ReadOnly = true;
-            this.colItemType.Width = 79;
-            // 
-            // colTitle
-            // 
-            this.colTitle.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colTitle.HeaderText = "Title";
-            this.colTitle.Name = "colTitle";
-            this.colTitle.ReadOnly = true;
-            this.colTitle.Width = 52;
-            // 
-            // colBoard
-            // 
-            this.colBoard.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colBoard.HeaderText = "Board";
-            this.colBoard.Name = "colBoard";
-            this.colBoard.ReadOnly = true;
-            this.colBoard.Width = 60;
-            // 
-            // colStory
-            // 
-            this.colStory.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colStory.HeaderText = "Parent Story";
-            this.colStory.Name = "colStory";
-            this.colStory.ReadOnly = true;
-            this.colStory.Width = 90;
-            // 
-            // colStartTime
-            // 
-            this.colStartTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colStartTime.HeaderText = "Start Time";
-            this.colStartTime.Name = "colStartTime";
-            this.colStartTime.ReadOnly = true;
-            this.colStartTime.Width = 80;
-            // 
-            // colEndTime
-            // 
-            this.colEndTime.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colEndTime.HeaderText = "End Time";
-            this.colEndTime.Name = "colEndTime";
-            this.colEndTime.ReadOnly = true;
-            this.colEndTime.Width = 80;
-            // 
-            // colDuration
-            // 
-            this.colDuration.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colDuration.HeaderText = "Duration";
-            this.colDuration.Name = "colDuration";
-            this.colDuration.ReadOnly = true;
-            this.colDuration.Width = 72;
-            // 
-            // colTags
-            // 
-            this.colTags.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colTags.HeaderText = "Tags";
-            this.colTags.Name = "colTags";
-            this.colTags.ReadOnly = true;
-            this.colTags.Width = 56;
-            // 
-            // colDescription
-            // 
-            this.colDescription.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colDescription.HeaderText = "Description/Discussion";
-            this.colDescription.Name = "colDescription";
-            this.colDescription.ReadOnly = true;
-            this.colDescription.Width = 141;
-            // 
-            // colProject
-            // 
-            this.colProject.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colProject.HeaderText = "Project";
-            this.colProject.Name = "colProject";
-            this.colProject.ReadOnly = true;
-            this.colProject.Width = 65;
-            // 
-            // colAreaPath
-            // 
-            this.colAreaPath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colAreaPath.HeaderText = "Area Path";
-            this.colAreaPath.Name = "colAreaPath";
-            this.colAreaPath.ReadOnly = true;
-            this.colAreaPath.Width = 79;
-            // 
-            // colIteration
-            // 
-            this.colIteration.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colIteration.HeaderText = "Iteration";
-            this.colIteration.Name = "colIteration";
-            this.colIteration.ReadOnly = true;
-            this.colIteration.Width = 70;
-            // 
-            // colStartDate
-            // 
-            this.colStartDate.HeaderText = "Start Date";
-            this.colStartDate.Name = "colStartDate";
-            this.colStartDate.ReadOnly = true;
-            // 
-            // colTargetDate
-            // 
-            this.colTargetDate.HeaderText = "Target Date";
-            this.colTargetDate.Name = "colTargetDate";
-            this.colTargetDate.ReadOnly = true;
-            // 
-            // colOriginalEstimate
-            // 
-            this.colOriginalEstimate.HeaderText = "Original Estimate";
-            this.colOriginalEstimate.Name = "colOriginalEstimate";
-            this.colOriginalEstimate.ReadOnly = true;
-            this.colOriginalEstimate.Width = 120;
-            // 
-            // colCloseItem
-            // 
-            this.colCloseItem.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colCloseItem.HeaderText = "Close Item";
-            this.colCloseItem.Name = "colCloseItem";
-            this.colCloseItem.ReadOnly = true;
-            this.colCloseItem.Width = 62;
-            // 
-            // colParentId
-            // 
-            this.colParentId.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.colParentId.HeaderText = "Parent Id";
-            this.colParentId.Name = "colParentId";
-            this.colParentId.ReadOnly = true;
-            this.colParentId.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.colParentId.Width = 75;
-            // 
-            // colCreateDate
-            // 
-            this.colCreateDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colCreateDate.HeaderText = "Create Date";
-            this.colCreateDate.Name = "colCreateDate";
-            this.colCreateDate.ReadOnly = true;
-            this.colCreateDate.Width = 89;
-            // 
-            // colOperationMode
-            // 
-            this.colOperationMode.HeaderText = "Operation";
-            this.colOperationMode.Name = "colOperationMode";
-            this.colOperationMode.ReadOnly = true;
-            this.colOperationMode.Width = 80;
-            // 
-            // colSaved
-            // 
-            this.colSaved.HeaderText = "Saved";
-            this.colSaved.Name = "colSaved";
-            this.colSaved.ReadOnly = true;
-            this.colSaved.Width = 70;
-            // 
-            // colUpdateOrgEst
-            // 
-            this.colUpdateOrgEst.HeaderText = "Update Org.Est.";
-            this.colUpdateOrgEst.Name = "colUpdateOrgEst";
-            this.colUpdateOrgEst.ReadOnly = true;
-            // 
-            // colWbsCode
-            // 
-            this.colWbsCode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.colWbsCode.HeaderText = "WBS Code";
-            this.colWbsCode.Name = "colWbsCode";
-            this.colWbsCode.ReadOnly = true;
-            this.colWbsCode.Width = 85;
-            // 
-            // colState
-            // 
-            this.colState.HeaderText = "State";
-            this.colState.Name = "colState";
-            this.colState.ReadOnly = true;
             // 
             // frmTracker
             // 
@@ -1430,6 +1454,8 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn colUpdateOrgEst;
         private System.Windows.Forms.DataGridViewTextBoxColumn colWbsCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn colState;
+        private System.Windows.Forms.Button btnOpenSupportApp;
+        private System.Windows.Forms.ToolStripMenuItem mnTools;
     }
 }
 

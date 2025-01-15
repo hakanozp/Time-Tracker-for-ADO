@@ -29,7 +29,7 @@
     <ProductName>Time Tracker for ADO</ProductName>
     <PublisherName>Hakan Ozpalamutcu</PublisherName>
     <AutorunEnabled>true</AutorunEnabled>
-    <ApplicationRevision>9</ApplicationRevision>
+    <ApplicationRevision>10</ApplicationRevision>
     <ApplicationVersion>2.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -392,6 +392,8 @@
     <None Include="Resources\to-do-list.png" />
     <None Include="Resources\refresh.png" />
     <None Include="Resources\Azure-DevOps.png" />
+    <Content Include="Resources\icons8-power-apps-80.png" />
+    <None Include="Resources\icons8-power-apps-801.png" />
     <Content Include="Resources\new-file.png" />
     <None Include="Resources\new-file1.png" />
     <Content Include="SQLite.Interop.dll">

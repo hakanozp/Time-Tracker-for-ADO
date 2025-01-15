@@ -27,6 +27,9 @@ namespace TimeTracker
 				if (key.GetValue("WBSPROJECT") != null)
 					txtWbsProject.Text = key.GetValue("WBSPROJECT").ToString();
 
+                if (key.GetValue("WeeklyWorkingHours") != null)
+                    txtWeeklyWorkingHours.Text = key.GetValue("WeeklyWorkingHours").ToString();
+                
 				if (key.GetValue("TagGroup1") != null)
 				{
 					string[] items = key.GetValue("TagGroup1").ToString().Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
@@ -63,8 +66,9 @@ namespace TimeTracker
 
 			key.SetValue("WBSRUN", txtWbsRun.Text);
 			key.SetValue("WBSPROJECT", txtWbsProject.Text);
+			key.SetValue("WeeklyWorkingHours", txtWeeklyWorkingHours.Text);
 
-			string tagList = string.Join(", ", txtTags1.Lines.Select(line => line.Trim()));
+            string tagList = string.Join(", ", txtTags1.Lines.Select(line => line.Trim()));
 			key.SetValue("TagGroup1", tagList);
 
 			tagList = string.Join(", ", txtTags2.Lines.Select(line => line.Trim()));
